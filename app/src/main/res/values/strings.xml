@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OneWeekOneBook</string>
+    <string name="admob_app_id">ca-app-pub-7727150178095243~2070810518</string>
+    <string name="banner_ad_unit_id">ca-app-pub-7727150178095243/9287240969</string>
+    <string name="banner_ad_unit_id_book">ca-app-pub-7727150178095243/4231786028</string>
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="naver_native_app_key">a27afe32d7b80a5c5fc2347fbb3a5362</string>
+    <string name="naver_rest_api_key">ff6bacb872604023c01804158858b53d</string>
+    <string name="naver_admin_key">336b7e5891124938ab6ea5c8d96fb105</string>
+
+</resources>

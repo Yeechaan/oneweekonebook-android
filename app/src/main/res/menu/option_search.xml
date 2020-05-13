@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/m1"
+        android:title="대륙별" />
+    <item
+        android:id="@+id/m2"
+        android:title="타입별"/>
+    <item
+        android:id="@+id/m3"
+        android:title="날짜 오름차순" />
+    <item
+        android:id="@+id/m4"
+        android:title="날짜 내림차순"/>
+    <item
+        android:id="@+id/m5"
+        android:title="오세아니아" />
+
+</menu>
