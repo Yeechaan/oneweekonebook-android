@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.lee.oneweekonebook.ui.home.HomeFragment"
+        android:label="@string/home_title">
+        <action
+            android:id="@+id/action_homeFragment_to_wishBookFragment"
+            app:destination="@id/wishBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_doneBookFragment"
+            app:destination="@id/doneBookFragment" />
+    </fragment>
+
+<!--    wish-->
+    <fragment
+        android:id="@+id/wishBookFragment"
+        android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"
+        android:label="@string/wish_title">
+        <action
+            android:id="@+id/action_wishBookFragment_to_wishBookAddFragment"
+            app:destination="@+id/wishBookAddFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/wishBookAddFragment"
+        android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"
+        android:label=""/>
+
+<!--    done-->
+    <fragment
+        android:id="@+id/doneBookFragment"
+        android:name="com.lee.oneweekonebook.ui.done.DoneBookFragment"
+        android:label="@string/done_title">
+        <action
+            android:id="@+id/action_doneBookFragment_to_doneBookDetailFragment"
+            app:destination="@+id/doneBookDetailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/doneBookDetailFragment"
+        android:name="com.lee.oneweekonebook.ui.done.DoneBookDetailFragment"
+        android:label="">
+
+    </fragment>
+
+</navigation>
