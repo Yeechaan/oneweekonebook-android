@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/wishBookAddFragment"
         android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"
-        android:label=""/>
+        android:label="@string/wish_add_title"/>
 
 <!--    done-->
     <fragment
@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/doneBookDetailFragment"
         android:name="com.lee.oneweekonebook.ui.done.DoneBookDetailFragment"
-        android:label="">
+        android:label="@string/done_edit_title">
 
     </fragment>
 

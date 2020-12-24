@@ -9,4 +9,6 @@
     <string name="wish_title">읽고 싶은 책</string>
     <string name="done_title">다 읽은 책</string>
 
+    <string name="wish_add_title">읽고 싶은 책 추가</string>
+    <string name="done_edit_title">다 읽은 책 수정</string>
 </resources>
