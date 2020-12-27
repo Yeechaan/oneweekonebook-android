@@ -1,12 +1,13 @@
 package com.lee.oneweekonebook.ui.search
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.lee.oneweekonebook.ui.search.model.SearchBookRequest
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://openapi.naver.com/"
 
@@ -19,11 +20,11 @@ private val retrofit = Retrofit.Builder()
 interface SearchBookApiService {
 
     @Headers(
-            //"Authorization: Token $TOKEN",
-            "Content-Type: application/json;charset=UTF-8"
+            "X-Naver-Client-Id: _44pqpd5AW8yjqYMzX52",
+            "X-Naver-Client-Secret: ocLrfBgqLF"
     )
     @GET("v1/search/book.json")
-    fun getSearchBookAsync(@Body data: SearchBookRequest): Deferred<SearchBookResponse>
+    fun getSearchBookAsync(@Query("query") query: String): Deferred<SearchBookResponse>
 }
 
 object SearchBookApi {

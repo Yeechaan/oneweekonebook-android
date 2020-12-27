@@ -23,6 +23,9 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDoneBookFragment())
             }
 
+            buttonSearch.setOnClickListener {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
+            }
         }
         return binding.root
     }

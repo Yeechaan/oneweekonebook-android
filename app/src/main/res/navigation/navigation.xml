@@ -14,37 +14,48 @@
         <action
             android:id="@+id/action_homeFragment_to_doneBookFragment"
             app:destination="@id/doneBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchBookFragment"
+            app:destination="@id/searchBookFragment" />
     </fragment>
 
-<!--    wish-->
+    <!--    wish-->
     <fragment
         android:id="@+id/wishBookFragment"
         android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"
         android:label="@string/wish_title">
         <action
             android:id="@+id/action_wishBookFragment_to_wishBookAddFragment"
-            app:destination="@+id/wishBookAddFragment"/>
+            app:destination="@+id/wishBookAddFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/wishBookAddFragment"
         android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"
-        android:label="@string/wish_add_title"/>
+        android:label="@string/wish_add_title" />
 
-<!--    done-->
+    <!--    done-->
     <fragment
         android:id="@+id/doneBookFragment"
         android:name="com.lee.oneweekonebook.ui.done.DoneBookFragment"
         android:label="@string/done_title">
         <action
             android:id="@+id/action_doneBookFragment_to_doneBookDetailFragment"
-            app:destination="@+id/doneBookDetailFragment"/>
+            app:destination="@+id/doneBookDetailFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/doneBookDetailFragment"
         android:name="com.lee.oneweekonebook.ui.done.DoneBookDetailFragment"
         android:label="@string/done_edit_title">
+
+    </fragment>
+
+    <!--    search-->
+    <fragment
+        android:id="@+id/searchBookFragment"
+        android:name="com.lee.oneweekonebook.ui.search.SearchBookFragment"
+        android:label="@string/search_title">
 
     </fragment>
 
