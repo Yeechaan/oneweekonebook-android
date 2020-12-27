@@ -2,6 +2,14 @@ package com.lee.oneweekonebook.ui.search.model
 
 import com.google.gson.annotations.SerializedName
 
+data class SearchBook(
+        var title: String = "",
+        var writer: String = "",
+        var publisher: String = "",
+        var pubDate: String = "",
+        var coverImage: String = "",
+)
+
 data class SearchBookResponse(
         @SerializedName("display")
         val display: Int,
@@ -31,9 +39,21 @@ data class Item(
         @SerializedName("price")
         val price: String,
         @SerializedName("pubdate")
-        val pubdate: String,
+        val pubDate: String,
         @SerializedName("publisher")
         val publisher: String,
         @SerializedName("title")
         val title: String
 )
+
+fun SearchBookResponse.asBookList() = run { items.map { it.asBook() } }
+
+fun Item.asBook() = run {
+    SearchBook(
+            title = title,
+            writer = author,
+            publisher = publisher,
+            pubDate = pubDate,
+            coverImage = image
+    )
+}

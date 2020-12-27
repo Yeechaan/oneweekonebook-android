@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
@@ -19,9 +20,18 @@ class SearchBookFragment : Fragment() {
 
         val binding = FragmentSearchBookBinding.inflate(inflater, container, false).apply {
 
+            lifecycleOwner = viewLifecycleOwner
+
             buttonSearch.setOnClickListener {
                 viewModel.searchBook("money")
             }
+
+            val searchBookAdapter = SearchBookAdapter()
+            recyclerViewSearchBook.adapter = searchBookAdapter
+
+            viewModel.books.observe(viewLifecycleOwner, {
+                searchBookAdapter.data = it
+            })
         }
 
         return binding.root

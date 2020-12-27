@@ -1,18 +1,22 @@
 package com.lee.oneweekonebook.ui.search.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.lee.oneweekonebook.ui.search.SearchBookApi
+import com.lee.oneweekonebook.ui.search.model.SearchBook
+import com.lee.oneweekonebook.ui.search.model.asBookList
 import kotlinx.coroutines.launch
 
 class SearchBookViewModel : ViewModel() {
 
+    private val _books = MutableLiveData<List<SearchBook>>()
+    val books: LiveData<List<SearchBook>>
+        get() = _books
+
     fun searchBook(query: String) {
         viewModelScope.launch {
             val response = SearchBookApi.searchBookApiService.getSearchBookAsync(query).await()
-            Log.d("TTTT", response.toString())
+            _books.value = response.asBookList()
         }
     }
 }
