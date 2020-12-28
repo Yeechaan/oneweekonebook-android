@@ -1,15 +1,17 @@
 package com.lee.oneweekonebook.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
 import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.databinding.ActivityMainBinding
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Toolbar>(R.id.toolBar_main)
                 .setupWithNavController(navController, appBarConfiguration)
+
+        val formatStrategy = PrettyFormatStrategy.newBuilder()
+                .methodCount(1)
+                .tag(APPLICATION_ID)
+                .build()
+        Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
 
     }
 
