@@ -38,7 +38,7 @@ class WishBookFragment : Fragment() {
                 (recyclerViewWishBook.adapter as WishBookAdapter).submitList(it)
             })
 
-            viewModel.setBooks(listOf(Book(id = 1, title = "코딩은 즐거워", publisher = "찬찬")))
+            viewModel.setBooks(listOf(Book(id = 1, title = "코딩은 즐거워", publisher = "찬찬"), Book(id = 2, title = "배낭여행자", publisher = "찬찬")))
         }
 
         return binding.root
