@@ -18,6 +18,7 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentWishBookAddBinding
 import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.lee.oneweekonebook.utils.takePhotoIntent
+import com.orhanobut.logger.Logger
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -52,10 +53,12 @@ class WishBookAddFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val selectedImage = data?.extras?.get("data") as Bitmap
-            binding.imageViewCover.setImageBitmap(selectedImage)
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
+            Logger.d(data?.data.toString())
+//            val selectedImage = data?.extras?.get("data") as Bitmap
+//            binding.imageViewCover.setImageBitmap(selectedImage)
+//
             galleryAddPic()
         }
 
@@ -89,8 +92,9 @@ class WishBookAddFragment : Fragment() {
 
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            Logger.d(takePictureIntent.resolveActivity(requireContext().packageManager))
             // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
+            takePictureIntent.resolveActivity(activity?.packageManager)?.also {
                 // Create the File where the photo should go
                 val photoFile: File? = try {
                     createImageFile()
@@ -99,7 +103,13 @@ class WishBookAddFragment : Fragment() {
                     null
                 }
                 // Continue only if the File was successfully created
+
+                Logger.d("file success")
+
                 photoFile?.also {
+
+                    Logger.d("photoFile success")
+
                     val photoURI: Uri = FileProvider.getUriForFile(
                             requireContext(),
                             "com.lee.oneweekonebook.fileprovider",
@@ -117,6 +127,9 @@ class WishBookAddFragment : Fragment() {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        Logger.d(storageDir.path)
+
         return File.createTempFile(
                 "JPEG_${timeStamp}_", /* prefix */
                 ".jpg", /* suffix */
@@ -131,7 +144,7 @@ class WishBookAddFragment : Fragment() {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
             val f = File(currentPhotoPath)
             mediaScanIntent.data = Uri.fromFile(f)
-            requireContext().sendBroadcast(mediaScanIntent)
+            activity?.sendBroadcast(mediaScanIntent)
         }
     }
 
