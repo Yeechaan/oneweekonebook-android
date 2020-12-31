@@ -103,13 +103,7 @@ class WishBookAddFragment : Fragment() {
                     null
                 }
                 // Continue only if the File was successfully created
-
-                Logger.d("file success")
-
                 photoFile?.also {
-
-                    Logger.d("photoFile success")
-
                     val photoURI: Uri = FileProvider.getUriForFile(
                             requireContext(),
                             "com.lee.oneweekonebook.fileprovider",
@@ -127,8 +121,6 @@ class WishBookAddFragment : Fragment() {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
-        Logger.d(storageDir.path)
 
         return File.createTempFile(
                 "JPEG_${timeStamp}_", /* prefix */
