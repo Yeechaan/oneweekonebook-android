@@ -11,16 +11,16 @@ interface BookDao {
     @Query("SELECT * FROM book")
     fun getAll(): List<Book>
 
-    @Query("SELECT * FROM book WHERE id IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<Book>
+    @Query("SELECT * FROM book WHERE id IN (:id)")
+    fun loadAllByIds(id: IntArray): List<Book>
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-            "last_name LIKE :last LIMIT 1")
-    fun findByName(first: String, last: String): Book
+    @Query("SELECT * FROM book WHERE title LIKE :first AND " +
+            "title LIKE :last LIMIT 1")
+    fun findByTitle(first: String, last: String): Book
 
     @Insert
-    fun insertAll(vararg users: Book)
+    fun insertAll(vararg books: Book)
 
     @Delete
-    fun delete(user: Book)
+    fun delete(book: Book)
 }
