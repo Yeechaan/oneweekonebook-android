@@ -14,8 +14,16 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.lee.oneweekonebook.R
+import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookAddBinding
+import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModel
+import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModelFactory
+import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
+import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
+import com.lee.oneweekonebook.utils.DateUtils
 import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.lee.oneweekonebook.utils.takePhotoIntent
 import com.orhanobut.logger.Logger
@@ -35,10 +43,22 @@ class WishBookAddFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        val application = requireNotNull(this.activity).application
+        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
+
+        val viewModelFactory = WishBookAddViewModelFactory(bookDao, application)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(WishBookAddViewModel::class.java)
+
         binding = FragmentWishBookAddBinding.inflate(inflater, container, false).apply {
 
             buttonDone.setOnClickListener {
-                // save
+                val title = editTextTitle.text.toString()
+                val writer = editTextWriter.text.toString()
+                val publisher = editTextPublisher.text.toString()
+
+                val startDate = DateUtils().dateToTimestamp(Date())
+                Logger.d(startDate)
+                viewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate))
             }
 
             imageViewCover.setOnClickListener {

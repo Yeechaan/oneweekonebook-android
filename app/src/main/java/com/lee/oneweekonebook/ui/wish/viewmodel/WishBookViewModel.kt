@@ -1,27 +1,34 @@
 package com.lee.oneweekonebook.ui.wish.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.app.Application
+import androidx.lifecycle.*
+import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
 
-class WishBookViewModel : ViewModel() {
+class WishBookViewModel(val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
 
-    private val _books = MutableLiveData<List<Book>>()
-    val books: LiveData<List<Book>>
-        get() = _books
+    val books = bookDao.getAllBooks()
 
-    fun setBooks(books: List<Book>) {
-        _books.value = books
-    }
+
+//    private val _books = MutableLiveData<List<Book>>()
+//    val books: LiveData<List<Book>>
+//        get() = _books
+//
+//    fun setBooks(books: List<Book>) {
+//        _books.value = books
+//    }
+
 }
 
-class WishBookViewModelFactory() : ViewModelProvider.Factory {
+class WishBookViewModelFactory(
+        private val bookDatabaseDao: BookDatabaseDao,
+        private val application: Application
+) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WishBookViewModel::class.java)) {
-            return WishBookViewModel() as T
+            return WishBookViewModel(bookDatabaseDao, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -5,10 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
+@Entity(tableName = "book_history_table")
 data class Book(
-        @PrimaryKey
-        var id: Int = 0,
+        @PrimaryKey(autoGenerate = true)
+        var id: Long = 0L,
         @ColumnInfo(name = "title")
         var title: String = "",
         @ColumnInfo(name = "writer")
@@ -26,7 +26,7 @@ data class Book(
         @ColumnInfo(name = "review")
         var review: String = "",
         @ColumnInfo(name = "startDate")
-        var startDate: Date = Date(),
+        var startDate: Long? = 0L,
         @ColumnInfo(name = "endDate")
-        var endDate: Date = Date(),
+        var endDate: Long? = 0L,
 )
