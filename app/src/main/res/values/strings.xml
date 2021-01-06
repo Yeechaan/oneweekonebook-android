@@ -5,6 +5,8 @@
     <string name="banner_ad_unit_id_book">ca-app-pub-7727150178095243/4231786028</string>
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
 
+    <string name="splash_title">일주일책</string>
+
     <string name="home_title">일주일책</string>
     <string name="wish_title">읽고 싶은 책</string>
     <string name="done_title">다 읽은 책</string>
