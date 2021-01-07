@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
