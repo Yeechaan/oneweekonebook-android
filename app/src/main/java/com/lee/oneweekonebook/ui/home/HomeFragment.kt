@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
@@ -18,7 +20,10 @@ class HomeFragment : Fragment() {
     // PresentFragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val viewModelFactory = HomeViewModelFactory()
+        val application = requireNotNull(this.activity).application
+        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
+
+        val viewModelFactory = HomeViewModelFactory(bookDao)
         val homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         val binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
@@ -37,6 +42,15 @@ class HomeFragment : Fragment() {
             buttonSearch.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
             }
+
+            val adapter = ReadingBookAdapter(ReadingBookListener { book ->
+                Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
+            })
+            recyclerViewReadingBook.adapter = adapter
+
+            homeViewModel.books.observe(viewLifecycleOwner, {
+                (recyclerViewReadingBook.adapter as ReadingBookAdapter).submitList(it)
+            })
         }
         return binding.root
     }
