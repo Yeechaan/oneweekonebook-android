@@ -6,18 +6,17 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
 
-class WishBookViewModel(val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
+class WishBookViewModel(bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
 
-//    val books = bookDao.getAllBooks()
+    val books = bookDao.getAllBooks()
 
-
-    private val _books = MutableLiveData<List<Book>>()
-    val books: LiveData<List<Book>>
-        get() = _books
-
-    fun setBooks(books: List<Book>) {
-        _books.value = books
-    }
+//    private val _books = MutableLiveData<List<Book>>()
+//    val books: LiveData<List<Book>>
+//        get() = _books
+//
+//    fun setBooks(books: List<Book>) {
+//        _books.value = books
+//    }
 
 }
 
