@@ -21,4 +21,7 @@
     <string name="book_list">목록</string>
     <string name="book_list_reading">읽고 있는 책 목록</string>
 
+    <string name="reading_contents">기억에 남는 내용</string>
+    <string name="reading_review">느낀점</string>
+
 </resources>
