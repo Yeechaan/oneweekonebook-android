@@ -10,7 +10,7 @@
         android:label="@string/splash_title">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"/>
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_homeFragment_to_wishBookFragment"
             app:destination="@id/wishBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_readingBookFragment"
+            app:destination="@id/readingBookFragment"/>
         <action
             android:id="@+id/action_homeFragment_to_doneBookFragment"
             app:destination="@id/doneBookFragment" />
@@ -66,6 +69,17 @@
         android:name="com.lee.oneweekonebook.ui.search.SearchBookFragment"
         android:label="@string/search_title">
 
+    </fragment>
+
+    <!--    reading-->
+    <fragment
+        android:id="@+id/readingBookFragment"
+        android:name="com.lee.oneweekonebook.ui.reading.ReadingBookFragment"
+        android:label="@string/reading_title">
+        <argument
+            android:name="bookId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 </navigation>

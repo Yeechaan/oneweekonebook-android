@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,8 +17,8 @@
             android:id="@+id/button_save_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_post_add"
-            app:layout_constraintEnd_toStartOf="@id/button_done_book"
+            android:src="@drawable/ic_baseline_done_outline"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageButton
@@ -24,9 +26,18 @@
             android:id="@+id/button_done_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_done_outline"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_baseline_post_add"
+            app:layout_constraintEnd_toStartOf="@id/button_save_book"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            style="@style/Widget.Custom.Button.Small"
+            android:id="@+id/button_delete_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_done_book" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_title"
@@ -43,7 +54,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_writer"
+            android:id="@+id/layout_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/reading_review"
@@ -51,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/layout_title">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText_writer"
+                android:id="@+id/editText_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>

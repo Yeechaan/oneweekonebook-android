@@ -14,7 +14,7 @@ interface BookDatabaseDao {
     fun update(book: Book)
 
     @Query("SELECT * FROM book_history_table WHERE id = :id")
-    fun get(id: Long): Book?
+    fun get(id: Int): Book?
 
     @Query("SELECT * FROM book_history_table")
     fun getAllBooks(): LiveData<List<Book>>

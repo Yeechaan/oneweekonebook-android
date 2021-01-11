@@ -8,7 +8,7 @@ import java.util.*
 @Entity(tableName = "book_history_table")
 data class Book(
         @PrimaryKey(autoGenerate = true)
-        var id: Long = 0L,
+        var id: Int = 0,
         @ColumnInfo(name = "title")
         var title: String = "",
         @ColumnInfo(name = "writer")
