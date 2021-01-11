@@ -49,6 +49,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_title"
+                android:text="@{viewModel.book.contents}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -63,6 +64,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_review"
+                android:text="@{viewModel.book.review}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>

@@ -22,15 +22,18 @@ class ReadingBookFragment : Fragment() {
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
 
         val viewModelFactory = ReadingBookViewModelFactory(bookDao, args.bookId)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(ReadingBookViewModel::class.java)
+        val readingBookViewModel = ViewModelProvider(this, viewModelFactory).get(ReadingBookViewModel::class.java)
 
         val binding = FragmentReadingBookBinding.inflate(inflater, container, false)
         binding.apply {
+            viewModel = readingBookViewModel
+            lifecycleOwner = viewLifecycleOwner
+
             buttonDoneBook.setOnClickListener {
                 val contents = editTextTitle.text.toString()
                 val review = editTextReview.text.toString()
 
-                viewModel.doneReadingBook(contents = contents, review = review)
+                readingBookViewModel.doneReadingBook(contents = contents, review = review)
             }
         }
 
