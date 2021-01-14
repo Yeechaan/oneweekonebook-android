@@ -12,8 +12,6 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
-import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
-import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModelFactory
 
 class HomeFragment : Fragment() {
 
