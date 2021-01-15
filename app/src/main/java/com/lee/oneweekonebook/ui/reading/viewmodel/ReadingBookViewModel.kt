@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class ReadingBookViewModel(private val bookDao: BookDatabaseDao, private val bookId: Int) : ViewModel() {
 
-    private lateinit var book: LiveData<Book>
+    lateinit var book: LiveData<Book>
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

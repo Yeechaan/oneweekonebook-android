@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class WishBookAddViewModel(val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
+class WishBookAddViewModel(private val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
 
     private var book = MutableLiveData<Book?>()
 

@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchBookFragment"
             app:destination="@id/searchBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addBookFragment"
+            app:destination="@id/addBookFragment" />
     </fragment>
 
     <!--    wish-->
@@ -76,6 +79,17 @@
         android:id="@+id/readingBookFragment"
         android:name="com.lee.oneweekonebook.ui.reading.ReadingBookFragment"
         android:label="@string/reading_title">
+        <argument
+            android:name="bookId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+    <!--    add-->
+    <fragment
+        android:id="@+id/addBookFragment"
+        android:name="com.lee.oneweekonebook.ui.add.AddBookFragment"
+        android:label="@string/add_title">
         <argument
             android:name="bookId"
             app:argType="integer"
