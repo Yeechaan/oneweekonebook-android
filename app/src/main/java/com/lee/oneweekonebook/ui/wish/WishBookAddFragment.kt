@@ -95,7 +95,7 @@ class WishBookAddFragment : Fragment() {
             when (item.itemId) {
                 R.id.m1 -> {
                     // 직접찍기
-                    dispatchTakePictureIntent()
+//                    dispatchTakePictureIntent()
 //                    startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE)
                     Toast.makeText(requireContext(), "직접찍기", Toast.LENGTH_SHORT).show()
                 }
@@ -110,47 +110,47 @@ class WishBookAddFragment : Fragment() {
         popupMenu.show()
     }
 
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            Logger.d(takePictureIntent.resolveActivity(requireContext().packageManager))
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(activity?.packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                            requireContext(),
-                            "com.lee.oneweekonebook.fileprovider",
-                            it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-                }
-            }
-        }
-    }
+//    private fun dispatchTakePictureIntent() {
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            Logger.d(takePictureIntent.resolveActivity(requireContext().packageManager))
+//            // Ensure that there's a camera activity to handle the intent
+//            takePictureIntent.resolveActivity(activity?.packageManager)?.also {
+//                // Create the File where the photo should go
+//                val photoFile: File? = try {
+//                    createImageFile()
+//                } catch (ex: IOException) {
+//                    // Error occurred while creating the File
+//                    null
+//                }
+//                // Continue only if the File was successfully created
+//                photoFile?.also {
+//                    val photoURI: Uri = FileProvider.getUriForFile(
+//                            requireContext(),
+//                            "com.lee.oneweekonebook.fileprovider",
+//                            it
+//                    )
+//                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+//                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+//                }
+//            }
+//        }
+//    }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
-        return File.createTempFile(
-                "JPEG_${timeStamp}_", /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
-        }
-    }
+//    @Throws(IOException::class)
+//    private fun createImageFile(): File {
+//        // Create an image file name
+//        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//        val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//
+//        return File.createTempFile(
+//                "JPEG_${timeStamp}_", /* prefix */
+//                ".jpg", /* suffix */
+//                storageDir /* directory */
+//        ).apply {
+//            // Save a file: path for use with ACTION_VIEW intents
+//            currentPhotoPath = absolutePath
+//        }
+//    }
 
     private fun galleryAddPic() {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
