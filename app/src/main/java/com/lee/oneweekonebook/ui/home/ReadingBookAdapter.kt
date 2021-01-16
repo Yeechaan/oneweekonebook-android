@@ -1,5 +1,6 @@
 package com.lee.oneweekonebook.ui.home
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,21 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemReadBinding
 
-class ReadingBookAdapter(val clickListener: ReadingBookListener) : ListAdapter<Book, ReadingBookAdapter.ViewHolder>(ReadingBookDiffCallback()) {
+class ReadingBookAdapter(val bookClickListener: ReadingBookListener) : ListAdapter<Book, ReadingBookAdapter.ViewHolder>(ReadingBookDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, bookClickListener)
     }
 
     class ViewHolder private constructor(val binding: ItemReadBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Book, clickListener: ReadingBookListener) {
-            binding.book = item
-            binding.clickListener = clickListener
-            binding.executePendingBindings()
+        fun bind(item: Book, bookClickListener: ReadingBookListener) {
+            binding.apply {
+                book = item
+                clickListener = bookClickListener
+                imgPicture.setImageURI(Uri.parse(item.coverImage))
+                executePendingBindings()
+            }
         }
 
         companion object {

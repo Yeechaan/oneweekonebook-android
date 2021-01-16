@@ -5,6 +5,8 @@ import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
@@ -14,9 +16,24 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
+import com.lee.oneweekonebook.R
+import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentAddBookBinding
+import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModel
+import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModelFactory
+import com.lee.oneweekonebook.ui.wish.PICK_IMAGE_GALLERY
+import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModel
+import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModelFactory
+import com.lee.oneweekonebook.utils.DateUtils
+import com.lee.oneweekonebook.utils.PhotoRotateAdapter
+import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.orhanobut.logger.Logger
 import java.io.File
 import java.io.FileOutputStream
@@ -30,44 +47,84 @@ const val REQUEST_TAKE_PHOTO = 1
 class AddBookFragment : Fragment() {
 
     lateinit var binding: FragmentAddBookBinding
+    private val args by navArgs<AddBookFragmentArgs>()
+
     lateinit var currentPhotoPath: String
+    private var savedPhotoPath: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val application = requireNotNull(this.activity).application
+        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
+
+        val viewModelFactory = AddBookViewModelFactory(bookDao)
+        val addBookViewModel = ViewModelProvider(this, viewModelFactory).get(AddBookViewModel::class.java)
+
         binding = FragmentAddBookBinding.inflate(inflater, container, false)
         binding.apply {
             imageViewCover.setOnClickListener {
-//                dispatchTakePictureIntent()
-                ddispatchTakePictureIntent()
+                val popupMenu = PopupMenu(requireContext(), it)
+                setPopupImageSelection(popupMenu)
+            }
+
+            buttonDone.setOnClickListener {
+                val title = editTextTitle.text.toString()
+                val writer = editTextWriter.text.toString()
+                val publisher = editTextPublisher.text.toString()
+
+                val startDate = DateUtils().dateToTimestamp(Date())
+                Logger.d(startDate)
+                addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
             }
         }
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-            }
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-//            val imageBitmap = data?.extras?.get("data") as Bitmap
-//
-//            Logger.d(imageBitmap.toString())
+            // 원본 사진 저장 순서 : 앱 내부 사진 저장 -> Gallery 복사(uri 저장) -> 앱 내부 사진 삭제
+            val rotatedImageBitmap = PhotoRotateAdapter.getRotatedImageBitmap(File(currentPhotoPath), requireContext())
 
-//            binding.imageViewCover.setImageBitmap(imageBitmap)
+            // copy photo from Internal Storage to Gallery
+            savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
+            deleteImageFromSandbox()
 
-//            Logger.d()
-
-//            galleryAddPic()
+            // Todo android version 에 따라 filePath or fileUri 로 처리
+            val imageUri = Uri.parse(savedPhotoPath)
+            binding.imageViewCover.setImageURI(imageUri)
         }
+
+        if (requestCode == PICK_IMAGE_GALLERY && resultCode == RESULT_OK) {
+            savedPhotoPath = data?.data.toString()
+            val imageUri = Uri.parse(savedPhotoPath)
+            binding.imageViewCover.setImageURI(imageUri)
+        }
+    }
+
+    private fun setPopupImageSelection(popupMenu: PopupMenu) {
+        popupMenu.menuInflater.inflate(R.menu.option_image, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+
+            when (item.itemId) {
+                R.id.m1 -> {
+                    // 직접찍기
+                    dispatchTakePictureIntent()
+                    Toast.makeText(requireContext(), "직접찍기", Toast.LENGTH_SHORT).show()
+                }
+                R.id.m2 -> {
+                    // 갤러리에서 가져오기
+                    startActivityForResult(pickPhotoIntent, PICK_IMAGE_GALLERY)
+                    Toast.makeText(requireContext(), "갤러리에서 가져오기", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+        popupMenu.show()
+    }
+
+    private fun deleteImageFromSandbox() {
+        File(currentPhotoPath).delete()
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -75,27 +132,19 @@ class AddBookFragment : Fragment() {
     private fun createImageFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//        val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-//        val storageDir: File = File(requireContext().filesDir, "images")
         val storageDir: File = requireContext().filesDir
 
-        Logger.d(requireContext().filesDir)
-        Logger.d(storageDir.toString())
-
         return File.createTempFile(
-                "JPEG_${timeStamp}_", /* prefix */
-                ".jpg", /* suffix */
-                storageDir /* directory */
+            "${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
-
-            Logger.d(currentPhotoPath)
-
         }
     }
 
-    private fun ddispatchTakePictureIntent() {
+    private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
@@ -104,21 +153,16 @@ class AddBookFragment : Fragment() {
                     createImageFile()
                 } catch (ex: IOException) {
                     // Error occurred while creating the File
-                        Logger.d("photoFile error")
+                    Logger.d("photoFile error")
                     null
                 }
                 // Continue only if the File was successfully created
                 photoFile?.also {
-
-                    Logger.d(photoFile)
-
                     val photoURI: Uri = FileProvider.getUriForFile(
-                            requireContext(),
-                            "com.lee.oneweekonebook.fileprovider",
-                            it
+                        requireContext(),
+                        "com.lee.oneweekonebook.fileprovider",
+                        it
                     )
-
-                    Logger.d(photoURI)
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
@@ -127,33 +171,17 @@ class AddBookFragment : Fragment() {
         }
     }
 
-    private fun galleryAddPic() {
-        val f = File(currentPhotoPath)
-        MediaScannerConnection.scanFile(requireContext(), arrayOf(f.toString()), arrayOf(f.name)) { path, uri ->
-            Logger.d(path)
-            Logger.d(uri)
-        }
-
-//        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-//            val f = File(currentPhotoPath)
-//            mediaScanIntent.data = Uri.fromFile(f)
-//            requireContext().sendBroadcast(mediaScanIntent)
-//        }
-    }
-
-    fun saveMediaToStorage(bitmap: Bitmap) {
-        //Generating a file name
-        val filename = "${System.currentTimeMillis()}.jpg"
-
-        //Output stream
-        var fos: OutputStream? = null
+    private fun saveMediaToStorage(bitmap: Bitmap): String {
+        var savedFilePath = ""
+        val filename: String = "${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.jpg"
+        var fileOutputStream: OutputStream? = null
 
         //For devices running android >= Q
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             //getting the contentResolver
             requireContext().contentResolver?.also { resolver ->
 
-                //Content resolver will process the contentvalues
+                //Content resolver will process the contentValues
                 val contentValues = ContentValues().apply {
 
                     //putting file information in content values
@@ -163,26 +191,30 @@ class AddBookFragment : Fragment() {
                 }
 
                 //Inserting the contentValues to contentResolver and getting the Uri
-                val imageUri: Uri? =
-                        resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                savedFilePath = imageUri.toString()
 
-                //Opening an outputstream with the Uri that we got
-                fos = imageUri?.let { resolver.openOutputStream(it) }
+                //Opening an outputStream with the Uri that we got
+                fileOutputStream = imageUri?.let { resolver.openOutputStream(it) }
             }
         } else {
             //These for devices running on android < Q
             //So I don't think an explanation is needed here
             val imagesDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
             val image = File(imagesDir, filename)
-            fos = FileOutputStream(image)
+            savedFilePath = image.path
+
+            fileOutputStream = FileOutputStream(image)
         }
 
-        fos?.use {
+        fileOutputStream?.use {
             //Finally writing the bitmap to the output stream that we opened
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-//            requireContext().toast("Saved to Photos")
         }
+
+        return savedFilePath
     }
 
 }

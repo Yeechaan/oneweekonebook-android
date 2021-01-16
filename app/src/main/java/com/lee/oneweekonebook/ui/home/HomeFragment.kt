@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
@@ -42,7 +43,7 @@ class HomeFragment : Fragment() {
             }
 
             buttonAddBook.setOnClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment())
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment(bookType = BOOK_TYPE_READING))
             }
 
             val adapter = ReadingBookAdapter(ReadingBookListener { book ->

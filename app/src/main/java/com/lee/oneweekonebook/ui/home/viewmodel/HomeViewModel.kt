@@ -3,10 +3,11 @@ package com.lee.oneweekonebook.ui.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lee.oneweekonebook.database.BookDatabaseDao
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 
 class HomeViewModel(bookDao: BookDatabaseDao) : ViewModel() {
 
-    val books = bookDao.getAllBooks()
+    val books = bookDao.getBooksByType(BOOK_TYPE_READING)
 
 }
 

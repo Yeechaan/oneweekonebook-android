@@ -40,8 +40,11 @@
         android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"
         android:label="@string/wish_title">
         <action
-            android:id="@+id/action_wishBookFragment_to_wishBookAddFragment"
-            app:destination="@+id/wishBookAddFragment" />
+            android:id="@+id/action_wishBookFragment_to_addBookFragment"
+            app:destination="@id/addBookFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_wishBookFragment_to_wishBookAddFragment"-->
+<!--            app:destination="@+id/wishBookAddFragment" />-->
     </fragment>
 
     <fragment
@@ -91,9 +94,9 @@
         android:name="com.lee.oneweekonebook.ui.add.AddBookFragment"
         android:label="@string/add_title">
         <argument
-            android:name="bookId"
+            android:name="bookType"
             app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="-1" />
     </fragment>
 
 </navigation>

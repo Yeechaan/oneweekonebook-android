@@ -3,6 +3,7 @@ package com.lee.oneweekonebook.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.database.model.BookType
 
 @Dao
 interface BookDatabaseDao {
@@ -15,6 +16,9 @@ interface BookDatabaseDao {
 
     @Query("SELECT * FROM book_history_table WHERE id = :id")
     fun get(id: Int): LiveData<Book>
+
+    @Query("SELECT * FROM book_history_table WHERE type = :type")
+    fun getBooksByType(type: Int): LiveData<List<Book>>
 
     @Query("SELECT * FROM book_history_table")
     fun getAllBooks(): LiveData<List<Book>>

@@ -1,5 +1,6 @@
 package com.lee.oneweekonebook.ui.wish
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemWantBinding
 
-class WishBookAdapter(val clickListener: WishBookListener) : ListAdapter<Book, WishBookAdapter.ViewHolder>(WishBookDiffCallback()) {
+class WishBookAdapter(val bookClickListener: WishBookListener) : ListAdapter<Book, WishBookAdapter.ViewHolder>(WishBookDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -16,15 +17,18 @@ class WishBookAdapter(val clickListener: WishBookListener) : ListAdapter<Book, W
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, bookClickListener)
     }
 
     class ViewHolder private constructor(val binding: ItemWantBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Book, clickListener: WishBookListener) {
-            binding.book = item
-            binding.clickListener = clickListener
-            binding.executePendingBindings()
+        fun bind(item: Book, bookClickListener: WishBookListener) {
+            binding.apply {
+                book = item
+                clickListener = bookClickListener
+                imgPicture.setImageURI(Uri.parse(item.coverImage))
+                executePendingBindings()
+            }
         }
 
         companion object {

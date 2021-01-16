@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookBinding
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
@@ -30,7 +31,7 @@ class WishBookFragment : Fragment() {
         val binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
 
             buttonAddBook.setOnClickListener {
-                findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToWishBookAddFragment())
+                findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH))
             }
 
             val adapter = WishBookAdapter(WishBookListener { book ->
