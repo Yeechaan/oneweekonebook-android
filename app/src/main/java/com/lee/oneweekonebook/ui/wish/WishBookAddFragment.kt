@@ -2,17 +2,13 @@ package com.lee.oneweekonebook.ui.wish
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.lee.oneweekonebook.R
@@ -21,15 +17,10 @@ import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookAddBinding
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModel
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModelFactory
-import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
-import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
 import com.lee.oneweekonebook.utils.DateUtils
 import com.lee.oneweekonebook.utils.pickPhotoIntent
-import com.lee.oneweekonebook.utils.takePhotoIntent
 import com.orhanobut.logger.Logger
 import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 
 const val REQUEST_TAKE_PHOTO = 1

@@ -7,14 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookBinding
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModelFactory
-import com.lee.oneweekonebook.ui.home.HomeFragmentDirections
-import com.lee.oneweekonebook.ui.home.ReadingBookAdapter
-import com.lee.oneweekonebook.ui.home.ReadingBookListener
 
 class DoneBookFragment : Fragment() {
 
