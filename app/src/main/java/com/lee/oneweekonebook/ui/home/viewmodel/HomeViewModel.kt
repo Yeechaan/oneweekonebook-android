@@ -12,7 +12,7 @@ class HomeViewModel(bookDao: BookDatabaseDao) : ViewModel() {
 }
 
 class HomeViewModelFactory(
-        private val bookDatabaseDao: BookDatabaseDao,
+    private val bookDatabaseDao: BookDatabaseDao,
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
