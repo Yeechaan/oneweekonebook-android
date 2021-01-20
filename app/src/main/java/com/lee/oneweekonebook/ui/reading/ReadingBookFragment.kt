@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentReadingBookBinding
@@ -34,6 +35,8 @@ class ReadingBookFragment : Fragment() {
                 val review = editTextReview.text.toString()
 
                 readingBookViewModel.doneReadingBook(contents = contents, review = review)
+
+                findNavController().navigate(ReadingBookFragmentDirections.actionReadingBookFragmentToDoneBookFragment())
             }
         }
 
