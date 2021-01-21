@@ -22,6 +22,9 @@
     <string name="book_publisher">출판사</string>
     <string name="book_list">목록</string>
     <string name="book_list_reading">읽고 있는 책 목록</string>
+    <string name="book_list_reading_add">읽고 있는 책 목록에 추가</string>
+    <string name="book_list_delete">목록에서 삭제되었습니다</string>
+
 
     <string name="reading_contents">기억에 남는 내용</string>
     <string name="reading_review">느낀점</string>

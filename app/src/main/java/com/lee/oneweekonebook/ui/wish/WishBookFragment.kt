@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.database.model.Book
@@ -34,8 +35,9 @@ class WishBookFragment : Fragment() {
                 findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH))
             }
 
-            val adapter = WishBookAdapter(WishBookListener { book ->
-                Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
+            val adapter = WishBookAdapter(WishBookListener { book, view ->
+                val popupMenu = PopupMenu(requireContext(), view)
+                setPopupBookSelection(popupMenu, book)
             })
             recyclerViewWishBook.adapter = adapter
 
@@ -43,9 +45,32 @@ class WishBookFragment : Fragment() {
                 (recyclerViewWishBook.adapter as WishBookAdapter).submitList(it)
             })
 
-//            viewModel.setBooks(listOf(Book(id = 1, title = "코딩은 즐거워", publisher = "찬찬"), Book(id = 2, title = "배낭여행자", publisher = "찬찬")))
         }
 
         return binding.root
+    }
+
+    private fun setPopupBookSelection(popupMenu: PopupMenu, book: Book) {
+        popupMenu.menuInflater.inflate(R.menu.option_type, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+
+            when (item.itemId) {
+                R.id.m1 -> {
+                    // 책 읽기 시작
+                    findNavController().navigateUp()
+                    Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
+                }
+                R.id.m2 -> {
+                    // 수정
+                    findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToAddBookFragment(bookType = book.type, bookId = book.id.toString()))
+                }
+                R.id.m3 -> {
+                    // 삭제
+                    Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+        popupMenu.show()
     }
 }

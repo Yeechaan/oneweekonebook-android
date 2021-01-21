@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
@@ -75,7 +76,19 @@ class AddBookFragment : Fragment() {
                 val startDate = DateUtils().dateToTimestamp(Date())
                 Logger.d(startDate)
                 addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
+                findNavController().navigateUp()
             }
+
+            // 수정
+            args.bookId?.let {
+                addBookViewModel.getBook(it.toInt())
+            }
+
+            addBookViewModel.book.observe(viewLifecycleOwner, {
+                editTextTitle.setText(it.title)
+                editTextWriter.setText(it.writer)
+                editTextPublisher.setText(it.publisher)
+            })
         }
 
         return binding.root

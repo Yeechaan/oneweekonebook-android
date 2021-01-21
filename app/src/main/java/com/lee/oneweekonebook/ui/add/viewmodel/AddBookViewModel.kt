@@ -1,21 +1,27 @@
 package com.lee.oneweekonebook.ui.add.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AddBookViewModel(private val bookDao: BookDatabaseDao) : ViewModel() {
 
+//    private val _book = MutableLiveData<Book>()
+//    var book: LiveData<Book>
+//        get() = _book
+
+    fun getBook(bookId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentBook = bookDao.get(bookId)
+//            book = currentBook
+        }
+    }
+
     fun saveBook(book: Book) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
                 bookDao.insert(book)
-            }
         }
     }
 

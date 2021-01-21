@@ -2,6 +2,7 @@ package com.lee.oneweekonebook.ui.wish
 
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -26,7 +27,7 @@ class WishBookAdapter(val bookClickListener: WishBookListener) : ListAdapter<Boo
             binding.apply {
                 book = item
                 clickListener = bookClickListener
-                imgPicture.setImageURI(Uri.parse(item.coverImage))
+//                imgPicture.setImageURI(Uri.parse(item.coverImage))
                 executePendingBindings()
             }
         }
@@ -52,6 +53,6 @@ class WishBookDiffCallback : DiffUtil.ItemCallback<Book>() {
 
 }
 
-class WishBookListener(val clickListener: (book: Book) -> Unit) {
-    fun onClick(book: Book) = clickListener(book)
+class WishBookListener(val clickListener: (book: Book, view: View) -> Unit) {
+    fun onClick(book: Book, view: View) = clickListener(book, view)
 }
