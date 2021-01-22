@@ -8,20 +8,26 @@ import kotlinx.coroutines.launch
 
 class AddBookViewModel(private val bookDao: BookDatabaseDao) : ViewModel() {
 
-//    private val _book = MutableLiveData<Book>()
-//    var book: LiveData<Book>
-//        get() = _book
+    private val _book = MutableLiveData<Book>()
+    val book: LiveData<Book>
+        get() = _book
 
     fun getBook(bookId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val currentBook = bookDao.get(bookId)
-//            book = currentBook
+            val currentBook = bookDao.getBook(bookId)
+            _book.postValue(currentBook)
         }
     }
 
     fun saveBook(book: Book) {
         viewModelScope.launch(Dispatchers.IO) {
                 bookDao.insert(book)
+        }
+    }
+
+    fun updateBook(book: Book) {
+        viewModelScope.launch(Dispatchers.IO) {
+            bookDao.update(book)
         }
     }
 

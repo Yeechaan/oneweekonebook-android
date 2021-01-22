@@ -4,20 +4,27 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.BookDatabaseDao
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.database.model.Book
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class WishBookViewModel(bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
+class WishBookViewModel(private val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
 
     val books = bookDao.getBooksByType(BOOK_TYPE_WISH)
 
-//    private val _books = MutableLiveData<List<Book>>()
-//    val books: LiveData<List<Book>>
-//        get() = _books
-//
-//    fun setBooks(books: List<Book>) {
-//        _books.value = books
-//    }
+    fun addReadingBook(bookId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentBook = bookDao.getBook(bookId)
+
+            currentBook.apply {
+                type = BOOK_TYPE_READING
+            }
+            bookDao.update(currentBook)
+        }
+    }
 
 }
 
