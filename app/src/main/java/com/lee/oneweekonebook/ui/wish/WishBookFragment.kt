@@ -19,7 +19,7 @@ import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
 
 class WishBookFragment : Fragment() {
 
-//    private val viewModel: WishBookViewModel by WishBookViewModel()
+    private lateinit var viewModel: WishBookViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -27,7 +27,7 @@ class WishBookFragment : Fragment() {
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
 
         val viewModelFactory = WishBookViewModelFactory(bookDao, application)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(WishBookViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(WishBookViewModel::class.java)
 
         val binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
 
@@ -57,6 +57,7 @@ class WishBookFragment : Fragment() {
             when (item.itemId) {
                 R.id.m1 -> {
                     // 책 읽기 시작
+                    viewModel.addReadingBook(bookId = book.id)
                     findNavController().navigateUp()
                     Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
                 }

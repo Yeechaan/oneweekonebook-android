@@ -85,6 +85,9 @@ dependencies {
 
     // Material Design
     implementation "com.google.android.material:material:$material_version"
+
+    // 시스템이 권한 요청 코드를 관리하도록 허용
+    implementation "androidx.activity:activity-ktx:$activity_version"
 }
 repositories {
     mavenCentral()

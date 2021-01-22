@@ -15,7 +15,10 @@ interface BookDatabaseDao {
     fun update(book: Book)
 
     @Query("SELECT * FROM book_history_table WHERE id = :id")
-    fun get(id: Int): LiveData<Book>
+    fun getBookAsync(id: Int): LiveData<Book>
+
+    @Query("SELECT * FROM book_history_table WHERE id = :id")
+    fun getBook(id: Int): Book
 
     @Query("SELECT * FROM book_history_table WHERE type = :type")
     fun getBooksByType(type: Int): LiveData<List<Book>>

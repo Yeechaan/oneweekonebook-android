@@ -1,37 +1,39 @@
 package com.lee.oneweekonebook.ui.add
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentAddBookBinding
+import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.PermissionResultListener
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModel
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModelFactory
 import com.lee.oneweekonebook.ui.wish.PICK_IMAGE_GALLERY
-import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModel
-import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModelFactory
 import com.lee.oneweekonebook.utils.DateUtils
 import com.lee.oneweekonebook.utils.PhotoRotateAdapter
 import com.lee.oneweekonebook.utils.pickPhotoIntent
@@ -55,6 +57,8 @@ class AddBookFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        (activity as MainActivity).registerPermissionResultListener(permissionResultListener)
+
         val application = requireNotNull(this.activity).application
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
 
@@ -75,7 +79,12 @@ class AddBookFragment : Fragment() {
 
                 val startDate = DateUtils().dateToTimestamp(Date())
                 Logger.d(startDate)
-                addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
+                if (args.bookId.isNullOrEmpty()) {
+                    addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
+                } else {
+                    addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
+                }
+
                 findNavController().navigateUp()
             }
 
@@ -88,6 +97,7 @@ class AddBookFragment : Fragment() {
                 editTextTitle.setText(it.title)
                 editTextWriter.setText(it.writer)
                 editTextPublisher.setText(it.publisher)
+                savedPhotoPath = it.coverImage
             })
         }
 
@@ -122,7 +132,8 @@ class AddBookFragment : Fragment() {
             when (item.itemId) {
                 R.id.m1 -> {
                     // 직접찍기
-                    dispatchTakePictureIntent()
+//                    dispatchTakePictureIntent()
+                    (activity as MainActivity).requestPermission()
                     Toast.makeText(requireContext(), "직접찍기", Toast.LENGTH_SHORT).show()
                 }
                 R.id.m2 -> {
@@ -228,6 +239,17 @@ class AddBookFragment : Fragment() {
         }
 
         return savedFilePath
+    }
+
+    private val permissionResultListener = object : PermissionResultListener {
+        override fun onGranted() {
+            (activity as MainActivity).unregisterPermissionResultListener()
+            dispatchTakePictureIntent()
+        }
+
+        override fun onDenied(showAgain: Boolean) {
+        }
+
     }
 
 }

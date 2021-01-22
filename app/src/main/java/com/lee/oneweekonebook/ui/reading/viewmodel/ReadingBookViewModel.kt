@@ -16,7 +16,7 @@ class ReadingBookViewModel(private val bookDao: BookDatabaseDao, private val boo
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val currentBook = bookDao.get(bookId)
+            val currentBook = bookDao.getBookAsync(bookId)
             book = currentBook
         }
     }
