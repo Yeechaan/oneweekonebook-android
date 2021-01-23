@@ -29,7 +29,8 @@ class DoneBookFragment : Fragment() {
 
             val adapter = DoneBookAdapter(DoneBookListener { book ->
                 Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
-//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookFragment(bookId = book.id))
+
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookFragment(bookId = book.id))
             })
             recyclerViewDoneBook.adapter = adapter
 
