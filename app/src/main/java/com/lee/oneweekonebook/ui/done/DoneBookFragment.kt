@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookBinding
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModelFactory
+import com.orhanobut.logger.Logger
 
 class DoneBookFragment : Fragment() {
 
@@ -30,7 +32,8 @@ class DoneBookFragment : Fragment() {
             val adapter = DoneBookAdapter(DoneBookListener { book ->
                 Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
 
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookFragment(bookId = book.id))
+                Logger.d(book)
+                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
             })
             recyclerViewDoneBook.adapter = adapter
 
