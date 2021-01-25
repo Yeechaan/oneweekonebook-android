@@ -8,23 +8,24 @@ import kotlinx.coroutines.launch
 
 class DoneBookDetailViewModel(private val bookDao: BookDatabaseDao, private val bookId: Int) : ViewModel() {
 
-//    lateinit var book: LiveData<Book>
-//
-//    init {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val currentBook = bookDao.getBookAsync(bookId)
-//            book = currentBook
-//        }
-//    }
+    lateinit var book: LiveData<Book>
 
-    private val _book = MutableLiveData<Book>()
-    val book: LiveData<Book>
-        get() = _book
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentBook = bookDao.getBookAsync(bookId)
+            book = currentBook
+        }
+    }
+
+//    private val _book = MutableLiveData<Book>()
+//    val book: LiveData<Book>
+//        get() = _book
 
     fun getBook(bookId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val currentBook = bookDao.getBook(bookId)
-            _book.postValue(currentBook)
+//            val currentBook = bookDao.getBook(bookId)
+//            _book.postValue(currentBook)
+            book = bookDao.getBookAsync(bookId)
         }
     }
 

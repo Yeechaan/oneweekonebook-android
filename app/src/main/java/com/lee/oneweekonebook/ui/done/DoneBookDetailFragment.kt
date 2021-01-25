@@ -31,8 +31,6 @@ class DoneBookDetailFragment : Fragment() {
         val binding = FragmentDoneBookDetailBinding.inflate(inflater, container, false).apply {
             viewModel = doneBookDetailViewModel
 
-            Logger.d(args.bookId)
-
             doneBookDetailViewModel.getBook(args.bookId)
 
             doneBookDetailViewModel.book.observe(viewLifecycleOwner, {
