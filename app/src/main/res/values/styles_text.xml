@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Custom.Text" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="backgroundTint">@color/colors_text_background</item>
+        <item name="boxBackgroundColor">@color/colors_text_background</item>
+        <item name="boxStrokeColor">@color/colors_text_border</item>
+        <item name="boxStrokeErrorColor">?attr/colorError</item>
+        <item name="errorTextColor">?attr/colorError</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="errorEnabled">true</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColorHint">@color/gray</item>
+    </style>
+
+    <style name="Widget.Custom.Text.Search.Front" parent="Widget.Custom.Text">
+        <item name="startIconTint">?attr/colorOnSurface</item>
+        <item name="errorEnabled">false</item>
+    </style>
+
+</resources>

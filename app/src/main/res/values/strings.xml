@@ -13,6 +13,8 @@
     <string name="reading_title">읽고 있는 책</string>
     <string name="done_title">다 읽은 책</string>
     <string name="search_title">검색</string>
+    <string name="search_book_title">책 제목 입력</string>
+    <string name="search_book_title_empty">입력된 내용이 없습니다</string>
 
     <string name="wish_add_title">읽고 싶은 책 추가</string>
     <string name="done_edit_title">다 읽은 책 수정</string>

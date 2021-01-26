@@ -3,6 +3,8 @@ package com.lee.oneweekonebook.ui.search
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.ItemSearchBinding
 import com.lee.oneweekonebook.ui.search.model.SearchBook
 
@@ -28,6 +30,13 @@ class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
 
         fun bind(item: SearchBook) {
             binding.searchBook = item
+
+            if (item.coverImage.isNotEmpty()) {
+                Glide.with(binding.root.context).load(item.coverImage).into(binding.imgPicture)
+            } else {
+                Glide.with(binding.root.context).load(R.drawable.ic_baseline_menu_book).into(binding.imgPicture)
+            }
+
             binding.executePendingBindings()
         }
 

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModelFactory
@@ -22,7 +24,11 @@ class SearchBookFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
 
             buttonSearch.setOnClickListener {
-                viewModel.searchBook("money")
+                if (!editTextSearchBook.text.isNullOrEmpty()) {
+                    viewModel.searchBook(editTextSearchBook.text.toString())
+                } else {
+                    Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
+                }
             }
 
             val searchBookAdapter = SearchBookAdapter()

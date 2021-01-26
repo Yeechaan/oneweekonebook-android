@@ -1,5 +1,7 @@
 package com.lee.oneweekonebook.ui.search.model
 
+import android.text.Html
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class SearchBook(
@@ -50,10 +52,10 @@ fun SearchBookResponse.asBookList() = run { items.map { it.asBook() } }
 
 fun Item.asBook() = run {
     SearchBook(
-            title = title,
-            writer = author,
-            publisher = publisher,
-            pubDate = pubDate,
+            title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
+            writer = Html.fromHtml(author, Html.FROM_HTML_MODE_LEGACY).toString(),
+            publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
+            pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString(),
             coverImage = image
     )
 }
