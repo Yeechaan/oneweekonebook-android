@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentReadingBookBinding
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel
@@ -37,6 +39,15 @@ class ReadingBookFragment : Fragment() {
                 readingBookViewModel.doneReadingBook(contents = contents, review = review)
 
                 findNavController().navigate(ReadingBookFragmentDirections.actionReadingBookFragmentToDoneBookFragment())
+            }
+
+            buttonSaveBook.setOnClickListener {
+                val contents = editTextTitle.text.toString()
+                val review = editTextReview.text.toString()
+
+                readingBookViewModel.saveReadingBook(contents = contents, review = review)
+                Toast.makeText(requireContext(), getString(R.string.reading_save), Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
             }
         }
 
