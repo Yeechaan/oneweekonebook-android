@@ -19,10 +19,18 @@
         android:label="@string/home_title">
         <action
             android:id="@+id/action_homeFragment_to_wishBookFragment"
-            app:destination="@id/wishBookFragment" />
+            app:destination="@id/wishBookFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_fade_out"
+            app:popEnterAnim="@anim/anim_fade_in"
+            app:popExitAnim="@anim/anim_slide_out"/>
         <action
             android:id="@+id/action_homeFragment_to_readingBookFragment"
-            app:destination="@id/readingBookFragment"/>
+            app:destination="@id/readingBookFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_slide_out"
+            app:popEnterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_slide_out"/>
         <action
             android:id="@+id/action_homeFragment_to_doneBookFragment"
             app:destination="@id/doneBookFragment" />
@@ -91,7 +99,12 @@
             android:defaultValue="0" />
         <action
             android:id="@+id/action_readingBookFragment_to_doneBookFragment"
-            app:destination="@id/doneBookFragment"/>
+            app:destination="@id/doneBookFragment"
+            app:popUpTo="@id/homeFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_slide_out"
+            app:popEnterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_slide_out"/>
     </fragment>
 
     <!--    add-->

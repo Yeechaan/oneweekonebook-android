@@ -21,6 +21,16 @@ class ReadingBookViewModel(private val bookDao: BookDatabaseDao, private val boo
         }
     }
 
+    fun saveReadingBook(contents: String, review: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            book.value?.let { it ->
+                it.contents = contents
+                it.review = review
+                bookDao.update(it)
+            }
+        }
+    }
+
     fun doneReadingBook(contents: String, review: String) {
         viewModelScope.launch(Dispatchers.IO) {
             book.value?.let { it ->
