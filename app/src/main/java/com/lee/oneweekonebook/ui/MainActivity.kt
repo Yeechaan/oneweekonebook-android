@@ -1,13 +1,19 @@
 package com.lee.oneweekonebook.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,6 +30,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var permissionResultListener: PermissionResultListener? = null
 
+    private var permissionsRequired = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val PERMISSION_CALLBACK_CONSTANT = 100
+    private val REQUEST_PERMISSION_SETTING = 101
+    private var permissionStatus: SharedPreferences? = null
+    private var sentToSettings = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,46 +45,53 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 
         findViewById<Toolbar>(R.id.toolBar_main)
-                .setupWithNavController(navController, appBarConfiguration)
+            .setupWithNavController(navController, appBarConfiguration)
 
         val formatStrategy = PrettyFormatStrategy.newBuilder()
-                .methodCount(1)
-                .tag(APPLICATION_ID)
-                .build()
+            .methodCount(1)
+            .tag(APPLICATION_ID)
+            .build()
         Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
 
+        permissionStatus = getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
     }
 
-    fun requestPermission() {
-        permissionLauncher.launch(Manifest.permission.CAMERA)
+    fun rrequestPermission() {
+        permissionLauncher.launch(permissionsRequired)
     }
 
     private val permissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                when {
-                    // 권한 수락 클릭
-                    it -> {
-                        permissionResultListener?.run {
-                            onGranted()
-                        }
-                    }
-                    // 권한 거절 클릭
-                    shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                        Snackbar.make(
-                                findViewById(android.R.id.content),
-                                "권한이 거절되었습니다",
-                                Snackbar.LENGTH_SHORT
-                        ).show()
-                        finishAffinity()
-                    }
-                    // 권한 거절 - 다시보지 않기
-                    else -> {
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        intent.data = Uri.parse("package:${this.packageName}")
-                        startActivity(intent)
-                    }
-                }
-            }
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            Logger.d(it)
+
+            Logger.d(checkSelfPermission(Manifest.permission.CAMERA))
+            Logger.d(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            Logger.d(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+
+//            when {
+//                // 권한 수락 클릭
+//                it -> {
+//                    permissionResultListener?.run {
+//                        onGranted()
+//                    }
+//                }
+//                // 권한 거절 클릭
+//                shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+//                    Snackbar.make(
+//                        findViewById(android.R.id.content),
+//                        "권한이 거절되었습니다",
+//                        Snackbar.LENGTH_SHORT
+//                    ).show()
+//                    finishAffinity()
+//                }
+//                // 권한 거절 - 다시보지 않기
+//                else -> {
+//                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+//                    intent.data = Uri.parse("package:${this.packageName}")
+//                    startActivity(intent)
+//                }
+//            }
+        }
 
     fun registerPermissionResultListener(listener: PermissionResultListener) {
         permissionResultListener = listener
@@ -80,6 +99,101 @@ class MainActivity : AppCompatActivity() {
 
     fun unregisterPermissionResultListener() {
         permissionResultListener = null
+    }
+
+    fun requestPermission() {
+        if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
+                //Show Information about why you need the permission
+                getAlertDialog()
+            } else if (permissionStatus!!.getBoolean(permissionsRequired[0], false)) {
+                //Previously Permission Request was cancelled with 'Dont Ask Again',
+                // Redirect to Settings after showing Information about why you need the permission
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Need Multiple Permissions")
+                builder.setMessage("This app needs permissions.")
+                builder.setPositiveButton("Grant") { dialog, which ->
+                    dialog.cancel()
+                    sentToSettings = true
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
+                    Toast.makeText(applicationContext, "Go to Permissions to Grant ", Toast.LENGTH_LONG).show()
+                }
+                builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+                builder.show()
+            } else {
+                //just request the permission
+                ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+            }
+
+            //   txtPermissions.setText("Permissions Required")
+
+            val editor = permissionStatus!!.edit()
+            editor.putBoolean(permissionsRequired[0], true)
+            editor.commit()
+        } else {
+            //You already have the permission, just go ahead.
+            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        permissions.map {
+            Logger.d(it)
+        }
+
+        Logger.d(grantResults.toString())
+
+        if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
+            //check if all permissions are granted
+            var allgranted = false
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allgranted = true
+                } else {
+                    allgranted = false
+                    break
+                }
+            }
+
+            if (allgranted) {
+                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
+
+                getAlertDialog()
+            } else {
+                Toast.makeText(applicationContext, "Unable to get Permission", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun getAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Need Multiple Permissions")
+        builder.setMessage("This app needs permissions.")
+        builder.setPositiveButton("Grant") { dialog, which ->
+            dialog.cancel()
+            ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+        }
+        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (sentToSettings) {
+            if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
+                //Got Permission
+                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
 }
