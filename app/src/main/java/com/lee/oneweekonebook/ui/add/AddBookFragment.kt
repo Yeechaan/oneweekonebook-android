@@ -131,9 +131,9 @@ class AddBookFragment : Fragment() {
 
             when (item.itemId) {
                 R.id.m1 -> {
+                    (activity as MainActivity).rrequestPermission()
                     // 직접찍기
 //                    dispatchTakePictureIntent()
-                    (activity as MainActivity).requestPermission()
                     Toast.makeText(requireContext(), "직접찍기", Toast.LENGTH_SHORT).show()
                 }
                 R.id.m2 -> {
