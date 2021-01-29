@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -193,6 +194,24 @@ class MainActivity : AppCompatActivity() {
                 //Got Permission
                 Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    fun requirePermission() {
+        val needPermissions = arrayListOf<String>()
+
+        permissionsRequired.map {
+            if (ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED) {
+                needPermissions.add(it)
+            }
+        }
+        // android 10 에서는 external storage permission 동작 안함
+        // android 8 에서는 external storage permission 동작
+        if (needPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, needPermissions.toTypedArray(), 1)
+        } else {
+            permissionResultListener?.onGranted()
+            Logger.d("requirePermission all")
         }
     }
 
