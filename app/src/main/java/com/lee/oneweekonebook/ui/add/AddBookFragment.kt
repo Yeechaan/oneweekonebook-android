@@ -1,6 +1,5 @@
 package com.lee.oneweekonebook.ui.add
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues
@@ -11,20 +10,16 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.Book
@@ -67,6 +62,8 @@ class AddBookFragment : Fragment() {
 
         binding = FragmentAddBookBinding.inflate(inflater, container, false)
         binding.apply {
+            lifecycleOwner = this@AddBookFragment
+
             imageViewCover.setOnClickListener {
                 val popupMenu = PopupMenu(requireContext(), it)
                 setPopupImageSelection(popupMenu)
@@ -77,12 +74,10 @@ class AddBookFragment : Fragment() {
                 val writer = editTextWriter.text.toString()
                 val publisher = editTextPublisher.text.toString()
 
-                val startDate = DateUtils().dateToTimestamp(Date())
-                Logger.d(startDate)
                 if (args.bookId.isNullOrEmpty()) {
-                    addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
+                    addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
                 } else {
-                    addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, startDate = startDate, coverImage = savedPhotoPath, type = args.bookType))
+                    addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
                 }
 
                 findNavController().navigateUp()

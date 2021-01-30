@@ -1,25 +1,16 @@
 package com.lee.oneweekonebook.ui.reading.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
-import com.lee.oneweekonebook.database.model.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ReadingBookViewModel(private val bookDao: BookDatabaseDao, private val bookId: Int) : ViewModel() {
+class ReadingBookViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
 
-    lateinit var book: LiveData<Book>
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val currentBook = bookDao.getBookAsync(bookId)
-            book = currentBook
-        }
-    }
+    val book = bookDao.getBookAsync(bookId)
 
     fun saveReadingBook(contents: String, review: String) {
         viewModelScope.launch(Dispatchers.IO) {

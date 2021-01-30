@@ -1,6 +1,8 @@
 package com.lee.oneweekonebook.utils
 
+import android.annotation.SuppressLint
 import androidx.room.TypeConverter
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DateUtils {
@@ -15,4 +17,13 @@ class DateUtils {
         return date?.time
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun convertLongToDateString(systemTime: Long): String {
+        return SimpleDateFormat("yyyy-MM-dd w'주차'")
+            .format(systemTime).toString()
+    }
+
+    fun formatBookPeriod(startTime: Long, endTime: Long) = run {
+        "From : ${convertLongToDateString(startTime)} To : ${convertLongToDateString(endTime)}"
+    }
 }

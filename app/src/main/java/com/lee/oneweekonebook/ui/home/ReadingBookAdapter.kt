@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemReadBinding
+import com.lee.oneweekonebook.utils.DateUtils
+import com.orhanobut.logger.Logger
 
 class ReadingBookAdapter(val bookClickListener: ReadingBookListener) : ListAdapter<Book, ReadingBookAdapter.ViewHolder>(ReadingBookDiffCallback()) {
 
@@ -21,10 +23,16 @@ class ReadingBookAdapter(val bookClickListener: ReadingBookListener) : ListAdapt
     class ViewHolder private constructor(val binding: ItemReadBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Book, bookClickListener: ReadingBookListener) {
+            Logger.d(item)
+
             binding.apply {
                 book = item
                 clickListener = bookClickListener
                 imgPicture.setImageURI(Uri.parse(item.coverImage))
+
+                txtStDate.text = DateUtils().convertLongToDateString(item.startDate)
+                Logger.d(DateUtils().convertLongToDateString(item.startDate))
+
                 executePendingBindings()
             }
         }

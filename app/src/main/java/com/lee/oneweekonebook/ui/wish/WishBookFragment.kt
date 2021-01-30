@@ -30,6 +30,7 @@ class WishBookFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(WishBookViewModel::class.java)
 
         val binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@WishBookFragment
 
             buttonAddBook.setOnClickListener {
                 findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH))
@@ -67,6 +68,7 @@ class WishBookFragment : Fragment() {
                 }
                 R.id.m3 -> {
                     // 삭제
+                    viewModel.deleteBook(bookId = book.id)
                     Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
                 }
             }

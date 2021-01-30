@@ -26,6 +26,12 @@ class WishBookViewModel(private val bookDao: BookDatabaseDao, application: Appli
         }
     }
 
+    fun deleteBook(bookId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            bookDao.deleteBook(bookId)
+        }
+    }
+
 }
 
 class WishBookViewModelFactory(

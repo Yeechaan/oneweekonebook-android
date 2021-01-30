@@ -3,30 +3,17 @@ package com.lee.oneweekonebook.ui.done.viewmodel
 import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.utils.DateUtils
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DoneBookDetailViewModel(private val bookDao: BookDatabaseDao, private val bookId: Int) : ViewModel() {
+class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
 
-    lateinit var book: LiveData<Book>
+    val book = bookDao.getBookAsync(bookId)
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val currentBook = bookDao.getBookAsync(bookId)
-            book = currentBook
-        }
-    }
-
-//    private val _book = MutableLiveData<Book>()
-//    val book: LiveData<Book>
-//        get() = _book
-
-    fun getBook(bookId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-//            val currentBook = bookDao.getBook(bookId)
-//            _book.postValue(currentBook)
-            book = bookDao.getBookAsync(bookId)
-        }
+    val bookPeriodFormat = Transformations.map(book) { book ->
+        DateUtils().formatBookPeriod(book.startDate, book.endDate)
     }
 
 }

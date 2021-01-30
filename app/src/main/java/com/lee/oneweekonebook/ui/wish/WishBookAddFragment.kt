@@ -47,9 +47,7 @@ class WishBookAddFragment : Fragment() {
                 val writer = editTextWriter.text.toString()
                 val publisher = editTextPublisher.text.toString()
 
-                val startDate = DateUtils().dateToTimestamp(Date())
-                Logger.d(startDate)
-                viewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, startDate = startDate))
+                viewModel.saveBook(Book(title = title, writer = writer, publisher = publisher))
             }
 
             imageViewCover.setOnClickListener {

@@ -30,7 +30,7 @@ class ReadingBookFragment : Fragment() {
         val binding = FragmentReadingBookBinding.inflate(inflater, container, false)
         binding.apply {
             viewModel = readingBookViewModel
-            lifecycleOwner = viewLifecycleOwner
+            lifecycleOwner = this@ReadingBookFragment
 
             buttonDoneBook.setOnClickListener {
                 val contents = editTextTitle.text.toString()

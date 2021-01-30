@@ -9,6 +9,9 @@
         <variable
             name="clickListener"
             type="com.lee.oneweekonebook.ui.home.ReadingBookListener" />
+        <variable
+            name="dateFormat"
+            type="com.lee.oneweekonebook.utils.DateUtils" />
     </data>
 
     <LinearLayout
@@ -131,7 +134,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:fontFamily="@font/oneprettynight"
-                            android:text="@{book.startDate.toString()}"
                             android:textSize="14sp" />
 
                     </LinearLayout>

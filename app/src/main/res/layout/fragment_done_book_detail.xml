@@ -66,7 +66,7 @@
                     android:id="@+id/textView_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.book.startDate.toString()}"
+                    android:text="@{viewModel.bookPeriodFormat}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@id/textView_title"
                     app:layout_constraintTop_toBottomOf="@+id/textView_publisher"

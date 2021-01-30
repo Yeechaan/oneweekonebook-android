@@ -27,9 +27,9 @@ data class Book(
         @ColumnInfo(name = "review")
         var review: String = "",
         @ColumnInfo(name = "startDate")
-        var startDate: Long? = 0L,
+        var startDate: Long = System.currentTimeMillis(),
         @ColumnInfo(name = "endDate")
-        var endDate: Long? = 0L,
+        var endDate: Long = startDate,
         @ColumnInfo(name = "type")
         var type: Int = BOOK_TYPE_UNKNOWN,
 )

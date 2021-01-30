@@ -26,12 +26,12 @@ interface BookDatabaseDao {
     @Query("SELECT * FROM book_history_table")
     fun getAllBooks(): LiveData<List<Book>>
 
-    @Delete
-    fun delete(book: Book)
-
-    @Query("DELETE FROM book_history_table")
-    fun clear()
+    @Query("DELETE FROM book_history_table where id = :id")
+    fun deleteBook(id: Int)
 
     @Query("SELECT * FROM book_history_table WHERE title LIKE :title LIMIT 1")
     fun getBookWithTitle(title: String): Book
+
+    @Query("DELETE FROM book_history_table")
+    fun clear()
 }
