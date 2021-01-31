@@ -30,8 +30,8 @@ class ReadingBookAdapter(val bookClickListener: ReadingBookListener) : ListAdapt
                 clickListener = bookClickListener
                 imgPicture.setImageURI(Uri.parse(item.coverImage))
 
-                txtStDate.text = DateUtils().convertLongToDateString(item.startDate)
-                Logger.d(DateUtils().convertLongToDateString(item.startDate))
+                txtStDate.text = DateUtils().convertLongToDateWeekString(item.startDate)
+                Logger.d(DateUtils().convertLongToDateWeekString(item.startDate))
 
                 executePendingBindings()
             }

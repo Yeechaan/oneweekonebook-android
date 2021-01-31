@@ -18,8 +18,14 @@ class DateUtils {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun convertLongToDateString(systemTime: Long): String {
+    fun convertLongToDateWeekString(systemTime: Long): String {
         return SimpleDateFormat("yyyy-MM-dd w'주차'")
+            .format(systemTime).toString()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun convertLongToDateString(systemTime: Long): String {
+        return SimpleDateFormat("yyyy-MM-dd")
             .format(systemTime).toString()
     }
 
