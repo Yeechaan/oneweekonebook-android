@@ -17,11 +17,9 @@ import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookAddBinding
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModel
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookAddViewModelFactory
-import com.lee.oneweekonebook.utils.DateUtils
 import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.orhanobut.logger.Logger
 import java.io.File
-import java.util.*
 
 const val REQUEST_TAKE_PHOTO = 1
 const val REQUEST_IMAGE_CAPTURE = 10

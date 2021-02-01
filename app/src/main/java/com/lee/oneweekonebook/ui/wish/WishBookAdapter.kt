@@ -1,6 +1,5 @@
 package com.lee.oneweekonebook.ui.wish
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

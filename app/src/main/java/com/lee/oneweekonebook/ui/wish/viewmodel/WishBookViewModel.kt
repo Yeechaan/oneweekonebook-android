@@ -1,13 +1,13 @@
 package com.lee.oneweekonebook.ui.wish.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.lee.oneweekonebook.database.BookDatabase
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
-import com.lee.oneweekonebook.database.model.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
