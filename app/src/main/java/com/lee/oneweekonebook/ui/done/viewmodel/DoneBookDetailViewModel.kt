@@ -16,6 +16,16 @@ class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : V
         DateUtils().formatBookPeriod(book.startDate, book.endDate)
     }
 
+    fun saveReadingBook(contents: String, review: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            book.value?.let { it ->
+                it.contents = contents
+                it.review = review
+                bookDao.update(it)
+            }
+        }
+    }
+
 }
 
 class DoneBookDetailViewModelFactory(
