@@ -31,6 +31,13 @@ class DoneBookDetailFragment : Fragment() {
         val binding = FragmentDoneBookDetailBinding.inflate(inflater, container, false).apply {
             viewModel = doneBookDetailViewModel
             lifecycleOwner = this@DoneBookDetailFragment
+
+            textViewEditDone.setOnClickListener {
+                val contents = editTextContents.text.toString()
+                val review = editTextReview.text.toString()
+
+                doneBookDetailViewModel.saveReadingBook(contents = contents, review = review)
+            }
         }
 
         return binding.root
