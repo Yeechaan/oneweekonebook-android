@@ -20,10 +20,10 @@
         <action
             android:id="@+id/action_homeFragment_to_wishBookFragment"
             app:destination="@id/wishBookFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_fade_out"
-            app:popEnterAnim="@anim/anim_fade_in"
-            app:popExitAnim="@anim/anim_slide_out"/>
+            app:enterAnim="@anim/anim_fade_in"
+            app:exitAnim="@anim/anim_slide_out"
+            app:popEnterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_fade_out"/>
         <action
             android:id="@+id/action_homeFragment_to_readingBookFragment"
             app:destination="@id/readingBookFragment"

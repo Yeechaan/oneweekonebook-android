@@ -13,11 +13,19 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textColorHint">@color/gray</item>
+        <item name="fontFamily">@font/oneprettynight</item>
     </style>
 
     <style name="Widget.Custom.Text.Search.Front" parent="Widget.Custom.Text">
         <item name="startIconTint">?attr/colorOnSurface</item>
         <item name="errorEnabled">false</item>
+    </style>
+
+
+    <style name="Widget.Custom.Text.Toolbar" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="fontFamily">@font/oneprettynight</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
