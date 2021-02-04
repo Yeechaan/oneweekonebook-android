@@ -46,6 +46,10 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment(bookType = BOOK_TYPE_READING))
             }
 
+            buttonSuggest.setOnClickListener {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
+            }
+
             val adapter = ReadingBookAdapter(ReadingBookListener { book ->
                 Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookFragment(bookId = book.id))
