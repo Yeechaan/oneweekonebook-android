@@ -66,5 +66,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_suggest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="suggest"
+            app:layout_constraintEnd_toStartOf="@id/button_done"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
