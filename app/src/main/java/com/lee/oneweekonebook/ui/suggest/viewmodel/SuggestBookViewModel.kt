@@ -21,14 +21,6 @@ class SuggestBookViewModel : ViewModel() {
         }
 
     }
-
-    fun searchBookImage(query: String) {
-        viewModelScope.launch {
-            val response = SearchBookApi.searchBookApiService.getBookImageAsync(query).await()
-            _books.value = response.asBookList()
-            Logger.d(response)
-        }
-    }
 }
 
 class SuggestBookViewModelFactory() : ViewModelProvider.Factory {
