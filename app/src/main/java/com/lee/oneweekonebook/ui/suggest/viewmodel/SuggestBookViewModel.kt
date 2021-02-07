@@ -19,8 +19,10 @@ class SuggestBookViewModel : ViewModel() {
             _books.value = response.asBookList()
             Logger.d(response)
         }
-
     }
+
+    // TODO 카테고리 별 도서 10개 보여주기 (소설, 인문, 역사, ...) 새로고침 새로운 카테고리의 도서 표시
+
 }
 
 class SuggestBookViewModelFactory() : ViewModelProvider.Factory {

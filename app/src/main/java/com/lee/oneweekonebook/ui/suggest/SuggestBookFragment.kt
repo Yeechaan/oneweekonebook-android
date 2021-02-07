@@ -13,13 +13,14 @@ import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModelFactory
 
 class SuggestBookFragment : Fragment() {
 
+    var binding: FragmentSuggestBookBinding? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val viewModelFactory = SuggestBookViewModelFactory()
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SuggestBookViewModel::class.java)
 
-
-        val binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
+        binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
 
@@ -36,6 +37,12 @@ class SuggestBookFragment : Fragment() {
                 })
             }
 
-        return binding.root
+        return binding?.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
 }
