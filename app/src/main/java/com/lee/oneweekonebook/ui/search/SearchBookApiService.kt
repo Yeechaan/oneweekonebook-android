@@ -11,6 +11,8 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://openapi.naver.com/"
+private const val BASE_URL_INTERPARK = "http://book.interpark.com/api/recommend.api/"
+
 
 private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
