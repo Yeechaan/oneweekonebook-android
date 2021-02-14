@@ -9,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val BASE_URL_INTERPARK = "http://book.interpark.com/api/recommend.api/"
-
+private const val KEY = "8892D72AADCAC82157036D312CA3FCF0F5BA6ED181C8404722D7D4418F1BDD2E"
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
@@ -20,7 +20,7 @@ private val retrofit = Retrofit.Builder()
 interface SuggestBookApiService {
 
     @GET("api/bestSeller.api")
-    fun getSuggestBookAsync(@Query("key") key: String, @Query("category") category: Int, @Query("output") output: String = "json"): Deferred<SuggestBookResponse>
+    fun getSuggestBookAsync(@Query("key") key: String = KEY, @Query("category") category: Int, @Query("output") output: String = "json"): Deferred<SuggestBookResponse>
 
 }
 
