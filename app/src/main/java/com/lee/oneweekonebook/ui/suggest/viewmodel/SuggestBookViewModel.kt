@@ -24,7 +24,11 @@ class SuggestBookViewModel : ViewModel() {
 
             val responseCategory = SuggestBookApi.suggestBookApiService.getSuggestBookAsync(category = 100).await()
 
+            responseCategory.items.map {
+                it.apply {
 
+                }
+            }
         }
     }
 
