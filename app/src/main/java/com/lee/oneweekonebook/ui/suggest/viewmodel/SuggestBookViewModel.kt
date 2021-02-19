@@ -18,17 +18,14 @@ class SuggestBookViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val response = SearchBookApi.searchBookApiService.getBookImageAsync("미움", 10).await()
-            _books.value = response.asBookList()
-            Logger.d(response)
+//            val response = SearchBookApi.searchBookApiService.getBookImageAsync("미움", 10).await()
+//            _books.value = response.asBookList()
+//            Logger.d(response)
+            Logger.d("SuggestBookViewModel")
 
-            val responseCategory = SuggestBookApi.suggestBookApiService.getSuggestBookAsync(category = 100).await()
-
-            responseCategory.items.map {
-                it.apply {
-
-                }
-            }
+            val responseCategory = SuggestBookApi.suggestBookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
+            Logger.d(responseCategory)
+            _books.value = responseCategory.asBookList()
         }
     }
 
