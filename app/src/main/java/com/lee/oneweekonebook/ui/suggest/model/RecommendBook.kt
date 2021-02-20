@@ -1,6 +1,7 @@
 package com.lee.oneweekonebook.ui.suggest.model
 
 
+import android.text.Html
 import com.google.gson.annotations.SerializedName
 
 data class RecommendBook(
@@ -57,7 +58,7 @@ data class ItemRecommend(
     @SerializedName("coverSmallUrl")
     val coverSmallUrl: String,
     @SerializedName("customerReviewRank")
-    val customerReviewRank: Int,
+    val customerReviewRank: Double,
     @SerializedName("description")
     val description: String,
     @SerializedName("discountRate")
@@ -91,6 +92,15 @@ data class ItemRecommend(
     @SerializedName("translator")
     val translator: String
 )
+
+fun RecommendBookResponse.asBookList() = run { item.map { it.asBook() } }
+
+fun ItemRecommend.asBook() = run {
+    SuggestBook(
+        title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
+        link = Html.fromHtml(coverLargeUrl, Html.FROM_HTML_MODE_LEGACY).toString()
+    )
+}
 
 val categoryLocalBook = hashMapOf(
     100 to "국내도서",
@@ -138,4 +148,4 @@ val categoryGlobalBook = hashMapOf(
     217 to "해외주문원서",
 )
 
-fun RecommendBook.getRandomCategory() = (categoryGlobalBook.keys + categoryGlobalBook.keys).random()
+fun RecommendBook.getRandomCategory() = (categoryLocalBook.keys + categoryGlobalBook.keys).random()
