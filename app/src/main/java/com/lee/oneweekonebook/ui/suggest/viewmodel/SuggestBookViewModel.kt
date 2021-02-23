@@ -29,6 +29,13 @@ class SuggestBookViewModel : ViewModel() {
         }
     }
 
+    fun refreshBooks() {
+        viewModelScope.launch {
+            val responseCategory = SuggestBookApi.suggestBookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
+            Logger.d(responseCategory)
+            _books.value = responseCategory.asBookList()
+        }
+    }
 
     // TODO 카테고리 별 도서 10개 보여주기 (소설, 인문, 역사, ...) 새로고침 새로운 카테고리의 도서 표시
     val suggestCategory = RecommendBook().getRandomCategory()

@@ -24,6 +24,13 @@ class SuggestBookFragment : Fragment() {
             .apply {
                 lifecycleOwner = viewLifecycleOwner
 
+                swipeRefreshLayoutContainer.apply {
+                    setOnRefreshListener {
+                        viewModel.refreshBooks()
+                        isRefreshing = false
+                    }
+                }
+
                 val suggestBookAdapter = SuggestBookAdapter()
                 val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
