@@ -43,7 +43,6 @@ class SuggestBookFragment : Fragment() {
                     suggestBookAdapter.data = it
                 })
 
-                val category = viewModel.suggestCategory
             }
 
         return binding?.root
