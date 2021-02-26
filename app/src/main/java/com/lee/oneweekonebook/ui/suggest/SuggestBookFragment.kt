@@ -42,7 +42,6 @@ class SuggestBookFragment : Fragment() {
                 viewModel.books.observe(viewLifecycleOwner, {
                     suggestBookAdapter.data = it
                 })
-
             }
 
         return binding?.root
