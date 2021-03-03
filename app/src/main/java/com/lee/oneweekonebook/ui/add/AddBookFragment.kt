@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,8 +29,6 @@ import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.PermissionResultListener
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModel
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModelFactory
-import com.lee.oneweekonebook.ui.wish.PICK_IMAGE_GALLERY
-import com.lee.oneweekonebook.utils.DateUtils
 import com.lee.oneweekonebook.utils.PhotoRotateAdapter
 import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.orhanobut.logger.Logger
@@ -40,7 +39,6 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val REQUEST_TAKE_PHOTO = 1
 
 class AddBookFragment : Fragment() {
 
@@ -99,27 +97,6 @@ class AddBookFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            // 원본 사진 저장 순서 : 앱 내부 사진 저장 -> Gallery 복사(uri 저장) -> 앱 내부 사진 삭제
-            val rotatedImageBitmap = PhotoRotateAdapter.getRotatedImageBitmap(File(currentPhotoPath), requireContext())
-
-            // copy photo from Internal Storage to Gallery
-            savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
-            deleteImageFromSandbox()
-
-            // Todo android version 에 따라 filePath or fileUri 로 처리
-            val imageUri = Uri.parse(savedPhotoPath)
-            binding.imageViewCover.setImageURI(imageUri)
-        }
-
-        if (requestCode == PICK_IMAGE_GALLERY && resultCode == RESULT_OK) {
-            savedPhotoPath = data?.data.toString()
-            val imageUri = Uri.parse(savedPhotoPath)
-            binding.imageViewCover.setImageURI(imageUri)
-        }
-    }
-
     private fun setPopupImageSelection(popupMenu: PopupMenu) {
         popupMenu.menuInflater.inflate(R.menu.option_image, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
@@ -135,7 +112,8 @@ class AddBookFragment : Fragment() {
                 }
                 R.id.m2 -> {
                     // 갤러리에서 가져오기
-                    startActivityForResult(pickPhotoIntent, PICK_IMAGE_GALLERY)
+                    permissionGalleryLauncher.launch(pickPhotoIntent)
+
                     Toast.makeText(requireContext(), "갤러리에서 가져오기", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -186,7 +164,8 @@ class AddBookFragment : Fragment() {
                     )
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+
+                    permissionCameraLauncher.launch(takePictureIntent)
                 }
             }
         }
@@ -240,13 +219,43 @@ class AddBookFragment : Fragment() {
 
     private val permissionResultListener = object : PermissionResultListener {
         override fun onGranted() {
+            Logger.d("onGranted()")
+
             (activity as MainActivity).unregisterPermissionResultListener()
             dispatchTakePictureIntent()
+
+            Logger.d("permissionResultListener onGranted()")
         }
 
         override fun onDenied(showAgain: Boolean) {
         }
+    }
 
+    private var permissionCameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode) {
+            RESULT_OK -> {
+                // 원본 사진 저장 순서 : 앱 내부 사진 저장 -> Gallery 복사(uri 저장) -> 앱 내부 사진 삭제
+                val rotatedImageBitmap = PhotoRotateAdapter.getRotatedImageBitmap(File(currentPhotoPath), requireContext())
+
+                // copy photo from Internal Storage to Gallery
+                savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
+                deleteImageFromSandbox()
+
+                // Todo android version 에 따라 filePath or fileUri 로 처리
+                val imageUri = Uri.parse(savedPhotoPath)
+                binding.imageViewCover.setImageURI(imageUri)
+            }
+        }
+    }
+
+    private var permissionGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode) {
+            RESULT_OK -> {
+                savedPhotoPath = result.data?.data.toString()
+                val imageUri = Uri.parse(savedPhotoPath)
+                binding.imageViewCover.setImageURI(imageUri)
+            }
+        }
     }
 
 }
