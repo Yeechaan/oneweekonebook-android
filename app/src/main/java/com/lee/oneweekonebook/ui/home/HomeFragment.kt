@@ -8,11 +8,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
+import com.lee.oneweekonebook.utils.CustomSnackBar
 
 class HomeFragment : Fragment() {
 
@@ -40,6 +42,8 @@ class HomeFragment : Fragment() {
 
             buttonSearch.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
+
+//                CustomSnackBar.make(it, "hi").show()
             }
 
             buttonAddBook.setOnClickListener {
