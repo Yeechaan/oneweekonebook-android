@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemDoneBinding
 
@@ -26,7 +28,13 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
             binding.apply {
                 book = item
                 clickListener = bookClickListener
-                imgPicture.setImageURI(Uri.parse(item.coverImage))
+
+                if (item.coverImage.isNotEmpty()) {
+                    Glide.with(binding.root.context).load(item.coverImage).into(binding.imgPicture)
+                } else {
+                    Glide.with(binding.root.context).load(R.drawable.ic_baseline_menu_book).into(binding.imgPicture)
+                }
+
                 executePendingBindings()
             }
         }

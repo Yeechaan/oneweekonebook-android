@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookDetailBinding
 import com.lee.oneweekonebook.ui.add.AddBookFragmentArgs
@@ -31,6 +33,14 @@ class DoneBookDetailFragment : Fragment() {
         val binding = FragmentDoneBookDetailBinding.inflate(inflater, container, false).apply {
             viewModel = doneBookDetailViewModel
             lifecycleOwner = this@DoneBookDetailFragment
+
+            val book = bookDao.getBook(args.bookId)
+            imageViewCover
+            if (book.coverImage.isNotEmpty()) {
+                Glide.with(requireContext()).load(book.coverImage).into(imageViewCover)
+            } else {
+                Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book).into(imageViewCover)
+            }
 
             textViewEditDone.setOnClickListener {
                 val contents = editTextContents.text.toString()
