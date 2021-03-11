@@ -11,12 +11,8 @@ import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookDetailBinding
-import com.lee.oneweekonebook.ui.add.AddBookFragmentArgs
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookDetailViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookDetailViewModelFactory
-import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
-import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModelFactory
-import com.orhanobut.logger.Logger
 
 class DoneBookDetailFragment : Fragment() {
 

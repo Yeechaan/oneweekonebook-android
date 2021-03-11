@@ -36,8 +36,8 @@ class ReadingBookViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : View
 }
 
 class ReadingBookViewModelFactory(
-        private val bookDatabaseDao: BookDatabaseDao,
-        private val bookId: Int
+    private val bookDatabaseDao: BookDatabaseDao,
+    private val bookId: Int
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

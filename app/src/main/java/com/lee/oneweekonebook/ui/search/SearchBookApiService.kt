@@ -15,16 +15,16 @@ private const val BASE_URL_INTERPARK = "http://book.interpark.com/api/recommend.
 
 
 private val retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .baseUrl(BASE_URL)
-        .build()
+    .addConverterFactory(GsonConverterFactory.create())
+    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+    .baseUrl(BASE_URL)
+    .build()
 
 interface SearchBookApiService {
 
     @Headers(
-            "X-Naver-Client-Id: _44pqpd5AW8yjqYMzX52",
-            "X-Naver-Client-Secret: ocLrfBgqLF"
+        "X-Naver-Client-Id: _44pqpd5AW8yjqYMzX52",
+        "X-Naver-Client-Secret: ocLrfBgqLF"
     )
     @GET("v1/search/book.json")
     fun getSearchBookAsync(@Query("query") query: String): Deferred<SearchBookResponse>
