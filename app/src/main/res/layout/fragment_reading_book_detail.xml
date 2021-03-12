@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            style="@style/Widget.Custom.Button.Small"
+            android:id="@+id/button_save_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_done_outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            style="@style/Widget.Custom.Button.Small"
+            android:id="@+id/button_done_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_post_add"
+            app:layout_constraintEnd_toStartOf="@id/button_save_book"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            style="@style/Widget.Custom.Button.Small"
+            android:id="@+id/button_delete_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_done_book" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Custom.Text.Search.Front"
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:hint="@string/reading_contents"
+            android:layout_margin="4dp"
+            app:layout_constraintTop_toBottomOf="@id/button_done_book"
+            app:layout_constraintBottom_toTopOf="@id/layout_review">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.Custom.Text"
+                android:id="@+id/editText_title"
+                android:text="@{viewModel.book.contents}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Custom.Text.Search.Front"
+            android:id="@+id/layout_review"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:hint="@string/reading_review"
+            android:layout_margin="4dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_title"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.Custom.Text"
+                android:id="@+id/editText_review"
+                android:text="@{viewModel.book.review}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

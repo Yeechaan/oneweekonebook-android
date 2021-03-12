@@ -5,44 +5,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ReadingBookViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
+class ReadingBookViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
 
-    val book = bookDao.getBookAsync(bookId)
-
-    fun saveReadingBook(contents: String, review: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            book.value?.let { it ->
-                it.contents = contents
-                it.review = review
-                bookDao.update(it)
-            }
-        }
-    }
-
-    fun doneReadingBook(contents: String, review: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            book.value?.let { it ->
-                it.contents = contents
-                it.review = review
-                it.type = BOOK_TYPE_DONE
-                bookDao.update(it)
-            }
-        }
-    }
+    val books = bookDao.getBooksByType(BOOK_TYPE_READING)
 
 }
 
 class ReadingBookViewModelFactory(
     private val bookDatabaseDao: BookDatabaseDao,
-    private val bookId: Int
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ReadingBookViewModel::class.java)) {
-            return ReadingBookViewModel(bookDatabaseDao, bookId) as T
+            return ReadingBookViewModel(bookDatabaseDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel" />
@@ -47,32 +46,16 @@
             app:layout_constraintTop_toBottomOf="@id/textView_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_wish"
+            app:layout_constraintBottom_toTopOf="@id/button_suggest"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_wish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="wish"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_suggest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="suggest"
-            app:layout_constraintEnd_toStartOf="@id/button_done"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

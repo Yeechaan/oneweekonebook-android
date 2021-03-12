@@ -18,27 +18,6 @@
         android:name="com.lee.oneweekonebook.ui.home.HomeFragment"
         android:label="@string/home_title">
         <action
-            android:id="@+id/action_homeFragment_to_wishBookFragment"
-            app:destination="@id/wishBookFragment"
-            app:enterAnim="@anim/anim_fade_in"
-            app:exitAnim="@anim/anim_slide_out"
-            app:popEnterAnim="@anim/anim_slide_in"
-            app:popExitAnim="@anim/anim_fade_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_readingBookFragment"
-            app:destination="@id/readingBookFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_slide_out"
-            app:popEnterAnim="@anim/anim_slide_in"
-            app:popExitAnim="@anim/anim_slide_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_doneBookFragment"
-            app:destination="@id/doneBookFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_fade_out"
-            app:popEnterAnim="@anim/anim_fade_in"
-            app:popExitAnim="@anim/anim_slide_out"/>
-        <action
             android:id="@+id/action_homeFragment_to_searchBookFragment"
             app:destination="@id/searchBookFragment"
             app:enterAnim="@anim/anim_slide_in"
@@ -108,6 +87,18 @@
         android:id="@+id/readingBookFragment"
         android:name="com.lee.oneweekonebook.ui.reading.ReadingBookFragment"
         android:label="@string/reading_title">
+        <action
+            android:id="@+id/action_readingBookFragment_to_readingBookDetailFragment"
+            app:destination="@id/readingBookDetailFragment"
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_slide_out"
+            app:popEnterAnim="@anim/anim_slide_in"
+            app:popExitAnim="@anim/anim_slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/readingBookDetailFragment"
+        android:name="com.lee.oneweekonebook.ui.reading.ReadingBookDetailFragment"
+        android:label="@string/reading_title">
         <argument
             android:name="bookId"
             app:argType="integer"
@@ -143,6 +134,13 @@
         android:id="@+id/suggestBookFragment"
         android:name="com.lee.oneweekonebook.ui.suggest.SuggestBookFragment"
         android:label="@string/suggest_title">
+    </fragment>
+
+    <!--    history-->
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.lee.oneweekonebook.ui.history.HistoryFragment"
+        android:label="@string/history">
     </fragment>
 
 </navigation>
