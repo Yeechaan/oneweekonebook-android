@@ -30,13 +30,14 @@ class DoneBookDetailFragment : Fragment() {
             viewModel = doneBookDetailViewModel
             lifecycleOwner = this@DoneBookDetailFragment
 
-            val book = bookDao.getBook(args.bookId)
-            imageViewCover
-            if (book.coverImage.isNotEmpty()) {
-                Glide.with(requireContext()).load(book.coverImage).into(imageViewCover)
-            } else {
-                Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book).into(imageViewCover)
-            }
+            doneBookDetailViewModel.book.observe(viewLifecycleOwner, {
+                imageViewCover
+                if (it.coverImage.isNotEmpty()) {
+                    Glide.with(requireContext()).load(it.coverImage).into(imageViewCover)
+                } else {
+                    Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book).into(imageViewCover)
+                }
+            })
 
             textViewEditDone.setOnClickListener {
                 val contents = editTextContents.text.toString()
