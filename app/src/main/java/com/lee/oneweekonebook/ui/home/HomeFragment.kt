@@ -30,18 +30,8 @@ class HomeFragment : Fragment() {
             viewModel = homeViewModel
             lifecycleOwner = this@HomeFragment
 
-            buttonWish.setOnClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWishBookFragment())
-            }
-
-            buttonDone.setOnClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDoneBookFragment())
-            }
-
             buttonSearch.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
-
-//                CustomSnackBar.make(it, "hi").show()
             }
 
             buttonAddBook.setOnClickListener {
@@ -51,16 +41,6 @@ class HomeFragment : Fragment() {
             buttonSuggest.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
             }
-
-            val adapter = ReadingBookAdapter(ReadingBookListener { book ->
-                Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookFragment(bookId = book.id))
-            })
-            recyclerViewReadingBook.adapter = adapter
-
-            homeViewModel.books.observe(viewLifecycleOwner, {
-                (recyclerViewReadingBook.adapter as ReadingBookAdapter).submitList(it)
-            })
         }
         return binding.root
     }

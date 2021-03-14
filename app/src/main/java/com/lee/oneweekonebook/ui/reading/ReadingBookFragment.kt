@@ -11,43 +11,42 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookBinding
+import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
+import com.lee.oneweekonebook.ui.home.HomeFragmentDirections
+import com.lee.oneweekonebook.ui.home.ReadingBookAdapter
+import com.lee.oneweekonebook.ui.home.ReadingBookListener
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModelFactory
 
 class ReadingBookFragment : Fragment() {
-
-    private val args: ReadingBookFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val application = requireNotNull(this.activity).application
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
 
-        val viewModelFactory = ReadingBookViewModelFactory(bookDao, args.bookId)
+        val viewModelFactory = ReadingBookViewModelFactory(bookDao)
         val readingBookViewModel = ViewModelProvider(this, viewModelFactory).get(ReadingBookViewModel::class.java)
 
         val binding = FragmentReadingBookBinding.inflate(inflater, container, false)
         binding.apply {
-            viewModel = readingBookViewModel
             lifecycleOwner = this@ReadingBookFragment
 
-            buttonDoneBook.setOnClickListener {
-                val contents = editTextTitle.text.toString()
-                val review = editTextReview.text.toString()
+            val adapter = ReadingBookAdapter(ReadingBookListener { book ->
+                Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
+//                findNavController().navigate(ReadingBookFragmentDirections.actionReadingBookFragmentToReadingBookDetailFragment(bookId = book.id))
+                findNavController().navigate(HistoryFragmentDirections.actionHistoryReadingFragmentToReadingBookDetailFragment(bookId = book.id))
+            })
+            recyclerViewReadingBook.adapter = adapter
 
-                readingBookViewModel.doneReadingBook(contents = contents, review = review)
+            readingBookViewModel.books.observe(viewLifecycleOwner, {
+                (recyclerViewReadingBook.adapter as ReadingBookAdapter).submitList(it)
+            })
 
-                findNavController().navigate(ReadingBookFragmentDirections.actionReadingBookFragmentToDoneBookFragment())
-            }
-
-            buttonSaveBook.setOnClickListener {
-                val contents = editTextTitle.text.toString()
-                val review = editTextReview.text.toString()
-
-                readingBookViewModel.saveReadingBook(contents = contents, review = review)
-                Toast.makeText(requireContext(), getString(R.string.reading_save), Toast.LENGTH_SHORT).show()
-                findNavController().navigateUp()
+            buttonAddBook.setOnClickListener {
+                 findNavController().navigate(HistoryFragmentDirections.actionHistoryReadingFragmentToAddBookFragment(bookType = BOOK_TYPE_READING))
             }
         }
 

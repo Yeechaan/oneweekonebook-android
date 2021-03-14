@@ -14,6 +14,7 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookBinding
+import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
 
@@ -33,7 +34,7 @@ class WishBookFragment : Fragment() {
             lifecycleOwner = this@WishBookFragment
 
             buttonAddBook.setOnClickListener {
-                findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH))
+                findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH))
             }
 
             val adapter = WishBookAdapter(WishBookListener { book, view ->
@@ -64,7 +65,7 @@ class WishBookFragment : Fragment() {
                 }
                 R.id.m2 -> {
                     // 수정
-                    findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToAddBookFragment(bookType = book.type, bookId = book.id.toString()))
+                    findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH, bookId = book.id.toString()))
                 }
                 R.id.m3 -> {
                     // 삭제

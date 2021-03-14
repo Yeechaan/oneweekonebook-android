@@ -2,32 +2,33 @@ package com.lee.oneweekonebook.ui
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
 import com.lee.oneweekonebook.R
+import com.lee.oneweekonebook.databinding.ActivityMainKotlinBinding
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainKotlinBinding
     private lateinit var navController: NavController
+    private lateinit var bottomNavigationView: BottomNavigationView
+
     private var permissionResultListener: PermissionResultListener? = null
 
     private var permissionsRequired = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -38,13 +39,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main_kotlin)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_kotlin)
+        navController = findNavController(R.id.navigation_fragment)
 
-        val navController = findNavController(R.id.navigation_fragment)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration.Builder(
+            R.id.homeFragment,
+            R.id.searchBookFragment,
+            R.id.historyFragment
+        ).build()
+        binding.toolBarMain.setupWithNavController(navController, appBarConfiguration)
 
-        findViewById<Toolbar>(R.id.toolBar_main)
-            .setupWithNavController(navController, appBarConfiguration)
+        initBottomNavigation()
+
 
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .methodCount(1)
@@ -55,6 +61,26 @@ class MainActivity : AppCompatActivity() {
         permissionStatus = getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
     }
 
+    private fun initBottomNavigation() {
+        bottomNavigationView = binding.bottomNavigation
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_home -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+                R.id.menu_search -> {
+                    navController.navigate(R.id.searchBookFragment)
+                    true
+                }
+                R.id.menu_history -> {
+                    navController.navigate(R.id.historyFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 
     fun registerPermissionResultListener(listener: PermissionResultListener) {
         permissionResultListener = listener

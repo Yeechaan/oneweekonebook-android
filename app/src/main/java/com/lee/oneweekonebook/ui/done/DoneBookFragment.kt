@@ -12,6 +12,7 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookBinding
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModelFactory
+import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.orhanobut.logger.Logger
 
 class DoneBookFragment : Fragment() {
@@ -33,7 +34,8 @@ class DoneBookFragment : Fragment() {
                 Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
 
                 Logger.d(book)
-                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
+//                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
+                findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
             })
             recyclerViewDoneBook.adapter = adapter
 
