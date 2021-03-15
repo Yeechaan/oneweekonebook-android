@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookBinding
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
@@ -38,6 +39,7 @@ class DoneBookFragment : Fragment() {
                 findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
             })
             recyclerViewDoneBook.adapter = adapter
+            recyclerViewDoneBook.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
 
             doneBookViewModel.books.observe(viewLifecycleOwner, {
                 (recyclerViewDoneBook.adapter as DoneBookAdapter).submitList(it)

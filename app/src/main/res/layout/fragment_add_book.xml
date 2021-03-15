@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/book_title"
             android:layout_marginHorizontal="@dimen/spacing_normal"
-            android:layout_marginVertical="@dimen/spacing_vertical_normal"
+            android:layout_marginVertical="@dimen/spacing_item_normal"
             app:layout_constraintTop_toBottomOf="@id/imageView_cover">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/book_writer"
             android:layout_marginHorizontal="@dimen/spacing_normal"
-            android:layout_marginVertical="@dimen/spacing_vertical_normal"
+            android:layout_marginVertical="@dimen/spacing_item_normal"
             app:layout_constraintTop_toBottomOf="@id/layout_title">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/book_publisher"
             android:layout_marginHorizontal="@dimen/spacing_normal"
-            android:layout_marginVertical="@dimen/spacing_vertical_normal"
+            android:layout_marginVertical="@dimen/spacing_item_normal"
             app:layout_constraintTop_toBottomOf="@id/layout_writer">
 
             <com.google.android.material.textfield.TextInputEditText
