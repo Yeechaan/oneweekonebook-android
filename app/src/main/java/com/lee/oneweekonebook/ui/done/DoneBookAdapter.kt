@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.databinding.ItemBookBinding
 import com.lee.oneweekonebook.databinding.ItemDoneBinding
 
 class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Book, DoneBookAdapter.ViewHolder>(DoneBookDiffCallback()) {
@@ -21,7 +22,7 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
         holder.bind(item, bookClickListener)
     }
 
-    class ViewHolder private constructor(val binding: ItemDoneBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: ItemBookBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Book, bookClickListener: DoneBookListener) {
             binding.apply {
@@ -29,9 +30,9 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
                 clickListener = bookClickListener
 
                 if (item.coverImage.isNotEmpty()) {
-                    Glide.with(binding.root.context).load(item.coverImage).into(binding.imgPicture)
+                    Glide.with(binding.root.context).load(item.coverImage).into(imageViewBook)
                 } else {
-                    Glide.with(binding.root.context).load(R.drawable.ic_baseline_menu_book).into(binding.imgPicture)
+                    Glide.with(binding.root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
                 }
 
                 executePendingBindings()
@@ -41,7 +42,8 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemDoneBinding.inflate(layoutInflater, parent, false)
+//                val binding = ItemDoneBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemBookBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }

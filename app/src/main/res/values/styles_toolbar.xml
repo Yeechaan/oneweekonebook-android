@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Widget.Custom.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextAppearance">@style/Widget.Custom.Text.Toolbar</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Custom.Body1.Bold</item>
+        <item name="android:background">@drawable/bottom_border</item>
     </style>
 </resources>
