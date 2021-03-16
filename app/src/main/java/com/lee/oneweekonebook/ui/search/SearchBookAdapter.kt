@@ -8,6 +8,8 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.ItemBookBinding
 import com.lee.oneweekonebook.databinding.ItemSearchBinding
 import com.lee.oneweekonebook.ui.search.model.SearchBook
+import com.lee.oneweekonebook.ui.search.model.asBook
+import com.orhanobut.logger.Logger
 
 class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
     var data = listOf<SearchBook>()
@@ -38,10 +40,7 @@ class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
                     Glide.with(binding.root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
                 }
 
-                textViewTitle.text = item.title
-                textViewWriter.text = item.writer
-                textViewPublisher.text = item.publisher
-                textViewDate.text = item.pubDate
+                book = item.asBook()
 
                 executePendingBindings()
             }
