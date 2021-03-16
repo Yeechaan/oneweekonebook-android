@@ -35,6 +35,7 @@ interface SearchBookApiService {
     )
     @GET("v1/search/image")
     fun getBookImageAsync(@Query("query") query: String, @Query("display") display: Int = 1): Deferred<SuggestBookResponse>
+
 }
 
 object SearchBookApi {

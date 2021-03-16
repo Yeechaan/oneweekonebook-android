@@ -1,6 +1,7 @@
 package com.lee.oneweekonebook.ui.suggest
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.SuggestBookResponse
 import kotlinx.coroutines.Deferred
@@ -19,10 +20,11 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface SuggestBookApiService {
+    @GET("api/search.api")
+    fun searchBookAsync(@Query("key") key: String = INTERPARK_KEY, @Query("query") query: String, @Query("output") output: String = "json"): Deferred<SearchBookResponse>
 
     @GET("api/recommend.api")
     fun getSuggestBookAsync(@Query("key") key: String = INTERPARK_KEY, @Query("categoryId") categoryId: Int, @Query("output") output: String = "json"): Deferred<RecommendBookResponse>
-
 }
 
 object SuggestBookApi {
