@@ -79,5 +79,24 @@
             app:layout_constraintTop_toBottomOf="@id/textView_writer"
             app:layout_constraintStart_toEndOf="@id/imageView_publisher"
             tools:text="Publisher"/>
+        <ImageView
+            android:id="@+id/imageView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_date"
+            app:layout_constraintTop_toTopOf="@id/textView_date"
+            app:layout_constraintBottom_toBottomOf="@id/textView_date"
+            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="date!!"
+            android:textAppearance="@style/TextAppearance.Custom.Body4"
+            android:layout_marginTop="@dimen/spacing_item_small"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            app:layout_constraintTop_toBottomOf="@id/textView_publisher"
+            app:layout_constraintStart_toEndOf="@id/imageView_date"
+            tools:text="Date"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
