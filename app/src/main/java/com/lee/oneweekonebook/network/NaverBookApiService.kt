@@ -1,4 +1,4 @@
-package com.lee.oneweekonebook.ui.search
+package com.lee.oneweekonebook.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
+
 private const val BASE_URL = "https://openapi.naver.com/"
 private const val BASE_URL_INTERPARK = "http://book.interpark.com/api/recommend.api/"
 
@@ -20,7 +21,7 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-interface SearchBookApiService {
+interface NaverBookApiService {
 
     @Headers(
         "X-Naver-Client-Id: _44pqpd5AW8yjqYMzX52",
@@ -38,8 +39,8 @@ interface SearchBookApiService {
 
 }
 
-object SearchBookApi {
-    val searchBookApiService: SearchBookApiService by lazy {
-        retrofit.create(SearchBookApiService::class.java)
+object NaverBookApi {
+    val naverBookApiService: NaverBookApiService by lazy {
+        retrofit.create(NaverBookApiService::class.java)
     }
 }

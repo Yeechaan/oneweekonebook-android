@@ -16,6 +16,8 @@ data class Book(
         var writer: String = "",
         @ColumnInfo(name = "publisher")
         var publisher: String = "",
+        @ColumnInfo(name = "pubDate")
+        var pubDate: String = "",
         @ColumnInfo(name = "coverImage")
         var coverImage: String = "",
         @ColumnInfo(name = "subTitle")

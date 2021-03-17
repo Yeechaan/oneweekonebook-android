@@ -7,149 +7,96 @@
         <variable
             name="searchBook"
             type="com.lee.oneweekonebook.ui.search.model.SearchBook" />
+        <variable
+            name="clickListener"
+            type="com.lee.oneweekonebook.ui.done.DoneBookListener" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginVertical="@dimen/spacing_item_large">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="@dimen/spacing_item_small"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <ImageView
+                android:id="@+id/imageView_book"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"/>
+        </com.google.android.material.card.MaterialCardView>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp">
-
-                <TextView
-                    android:id="@+id/txt_index"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="1"
-                    android:fontFamily="@font/oneprettynight"
-                    android:textSize="20sp" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_item"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="100dp"
-                    android:layout_height="100dp">
-
-                    <ImageView
-                        android:id="@+id/img_picture"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter" />
-                </FrameLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/colorAccent" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txt_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:fontFamily="@font/oneprettynight"
-                        android:text="@{searchBook.title}"
-                        android:textSize="22sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="3dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/oneprettynight"
-                            android:text="저   자 : " />
-
-                        <TextView
-                            android:id="@+id/txt_writer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/oneprettynight"
-                            android:text="@{searchBook.writer}"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="3dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/oneprettynight"
-                            android:text="출판사 : " />
-
-                        <TextView
-                            android:id="@+id/txt_pub"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/oneprettynight"
-                            android:text="@{searchBook.publisher}"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView15"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/oneprettynight"
-                            android:text="출판일 : "
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txt_st_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:fontFamily="@font/oneprettynight"
-                            android:text="@{searchBook.pubDate}"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{searchBook.title}"
+            android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
+            android:layout_marginStart="@dimen/spacing_item_normal"
+            app:layout_constraintTop_toTopOf="@id/cardView_book"
+            app:layout_constraintStart_toEndOf="@id/cardView_book"
+            tools:text="Book Title"/>
+        <ImageView
+            android:id="@+id/imageView_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_writer"
+            app:layout_constraintTop_toTopOf="@id/textView_writer"
+            app:layout_constraintBottom_toBottomOf="@id/textView_writer"
+            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+        <TextView
+            android:id="@+id/textView_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{searchBook.writer}"
+            android:textAppearance="@style/TextAppearance.Custom.Body4"
+            android:layout_marginTop="@dimen/spacing_item_small"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            app:layout_constraintTop_toBottomOf="@id/textView_title"
+            app:layout_constraintStart_toEndOf="@id/imageView_writer"
+            tools:text="Writer"/>
+        <ImageView
+            android:id="@+id/imageView_publisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_publisher"
+            app:layout_constraintTop_toTopOf="@id/textView_publisher"
+            app:layout_constraintBottom_toBottomOf="@id/textView_publisher"
+            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+        <TextView
+            android:id="@+id/textView_publisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{searchBook.publisher}"
+            android:textAppearance="@style/TextAppearance.Custom.Body4"
+            android:layout_marginTop="@dimen/spacing_item_small"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            app:layout_constraintTop_toBottomOf="@id/textView_writer"
+            app:layout_constraintStart_toEndOf="@id/imageView_publisher"
+            tools:text="Publisher"/>
+        <ImageView
+            android:id="@+id/imageView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_date"
+            app:layout_constraintTop_toTopOf="@id/textView_date"
+            app:layout_constraintBottom_toBottomOf="@id/textView_date"
+            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{searchBook.pubDate}"
+            android:textAppearance="@style/TextAppearance.Custom.Body4"
+            android:layout_marginTop="@dimen/spacing_item_small"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            app:layout_constraintTop_toBottomOf="@id/textView_publisher"
+            app:layout_constraintStart_toEndOf="@id/imageView_date"
+            tools:text="Date"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

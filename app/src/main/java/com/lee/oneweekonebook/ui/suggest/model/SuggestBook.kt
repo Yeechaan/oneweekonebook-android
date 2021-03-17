@@ -1,10 +1,7 @@
 package com.lee.oneweekonebook.ui.suggest.model
 
-import android.provider.Contacts.SettingsColumns.KEY
 import android.text.Html
 import com.google.gson.annotations.SerializedName
-import com.lee.oneweekonebook.ui.suggest.INTERPARK_KEY
-import retrofit2.http.Query
 
 data class SuggestBook(
     var title: String = "",
