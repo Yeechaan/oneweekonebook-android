@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
@@ -32,7 +33,10 @@ class SearchBookFragment : Fragment() {
             }
 
             val searchBookAdapter = SearchBookAdapter()
-            recyclerViewSearchBook.adapter = searchBookAdapter
+            recyclerViewSearchBook.apply {
+                adapter = searchBookAdapter
+                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            }
 
             viewModel.books.observe(viewLifecycleOwner, {
                 searchBookAdapter.data = it

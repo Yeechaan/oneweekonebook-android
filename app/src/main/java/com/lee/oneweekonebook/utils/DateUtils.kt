@@ -33,3 +33,13 @@ class DateUtils {
         "From : ${convertLongToDateString(startTime)} To : ${convertLongToDateString(endTime)}"
     }
 }
+
+fun Date.convertDateToString(pattern: String): String = run {
+    val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+    sdf.format(this)
+}
+
+fun String.convertStringToDate(pattern: String): Date = run {
+    val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+    sdf.parse(this)!!
+}

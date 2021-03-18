@@ -31,15 +31,17 @@ class DoneBookFragment : Fragment() {
             viewModel = doneBookViewModel
             lifecycleOwner = this@DoneBookFragment
 
-            val adapter = DoneBookAdapter(DoneBookListener { book ->
+            val doneBookAdapter = DoneBookAdapter(DoneBookListener { book ->
                 Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
 
                 Logger.d(book)
 //                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
                 findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
             })
-            recyclerViewDoneBook.adapter = adapter
-            recyclerViewDoneBook.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            recyclerViewDoneBook.apply {
+                adapter = doneBookAdapter
+                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            }
 
             doneBookViewModel.books.observe(viewLifecycleOwner, {
                 (recyclerViewDoneBook.adapter as DoneBookAdapter).submitList(it)

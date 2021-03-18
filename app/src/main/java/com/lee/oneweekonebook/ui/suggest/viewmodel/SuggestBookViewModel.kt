@@ -1,7 +1,7 @@
 package com.lee.oneweekonebook.ui.suggest.viewmodel
 
 import androidx.lifecycle.*
-import com.lee.oneweekonebook.ui.suggest.SuggestBookApi
+import com.lee.oneweekonebook.network.BookApi
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBook
 import com.lee.oneweekonebook.ui.suggest.model.SuggestBook
 import com.lee.oneweekonebook.ui.suggest.model.asBookList
@@ -19,7 +19,7 @@ class SuggestBookViewModel : ViewModel() {
         viewModelScope.launch {
             Logger.d("SuggestBookViewModel")
 
-            val responseCategory = SuggestBookApi.suggestBookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
+            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
             Logger.d(responseCategory)
             _books.value = responseCategory.asBookList()
         }
@@ -27,7 +27,7 @@ class SuggestBookViewModel : ViewModel() {
 
     fun refreshBooks() {
         viewModelScope.launch {
-            val responseCategory = SuggestBookApi.suggestBookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
+            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
             Logger.d(responseCategory)
             _books.value = responseCategory.asBookList()
         }

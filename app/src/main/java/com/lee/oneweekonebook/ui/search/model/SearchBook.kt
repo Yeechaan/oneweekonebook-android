@@ -3,6 +3,8 @@ package com.lee.oneweekonebook.ui.search.model
 import android.text.Html
 import com.google.gson.annotations.SerializedName
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.utils.convertDateToString
+import com.lee.oneweekonebook.utils.convertStringToDate
 
 data class SearchBook(
     var title: String = "",
@@ -55,10 +57,11 @@ fun Item.asBook() = run {
         title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
         writer = Html.fromHtml(author, Html.FROM_HTML_MODE_LEGACY).toString(),
         publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
-        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString(),
+        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd").convertDateToString("yyyy-MM-dd"),
         coverImage = coverLargeUrl
     )
 }
+
 
 fun SearchBook.asBook() = run {
     Book(
