@@ -8,7 +8,7 @@
             type="com.lee.oneweekonebook.database.model.Book" />
         <variable
             name="clickListener"
-            type="com.lee.oneweekonebook.ui.home.ReadingBookListener" />
+            type="com.lee.oneweekonebook.ui.reading.ReadingBookListener" />
         <variable
             name="dateFormat"
             type="com.lee.oneweekonebook.utils.DateUtils" />

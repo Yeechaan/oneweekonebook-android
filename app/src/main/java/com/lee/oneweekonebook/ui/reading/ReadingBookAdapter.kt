@@ -1,4 +1,4 @@
-package com.lee.oneweekonebook.ui.home
+package com.lee.oneweekonebook.ui.reading
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.lee.oneweekonebook.databinding.ItemReadBinding
 import com.lee.oneweekonebook.utils.DateUtils
 import com.orhanobut.logger.Logger
 
-class ReadingBookAdapter(val bookClickListener: ReadingBookListener) : ListAdapter<Book, ReadingBookAdapter.ViewHolder>(ReadingBookDiffCallback()) {
+class ReadingBookAdapter(private val bookClickListener: ReadingBookListener) : ListAdapter<Book, ReadingBookAdapter.ViewHolder>(ReadingBookDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
 
