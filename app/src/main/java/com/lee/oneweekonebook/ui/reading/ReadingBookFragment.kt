@@ -40,9 +40,6 @@ class ReadingBookFragment : Fragment() {
                 (recyclerViewReadingBook.adapter as ReadingBookAdapter).submitList(it)
             })
 
-            buttonAddBook.setOnClickListener {
-                 findNavController().navigate(HistoryFragmentDirections.actionHistoryReadingFragmentToAddBookFragment(bookType = BOOK_TYPE_READING))
-            }
         }
 
         return binding.root

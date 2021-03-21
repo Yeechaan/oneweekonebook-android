@@ -33,10 +33,6 @@ class WishBookFragment : Fragment() {
         val binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@WishBookFragment
 
-            buttonAddBook.setOnClickListener {
-                findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH))
-            }
-
             val adapter = WishBookAdapter(WishBookListener { book, view ->
                 val popupMenu = PopupMenu(requireContext(), view)
                 setPopupBookSelection(popupMenu, book)
@@ -65,7 +61,7 @@ class WishBookFragment : Fragment() {
                 }
                 R.id.m2 -> {
                     // 수정
-                    findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH, bookId = book.id.toString()))
+//                    findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH, bookId = book.id.toString()))
                 }
                 R.id.m3 -> {
                     // 삭제

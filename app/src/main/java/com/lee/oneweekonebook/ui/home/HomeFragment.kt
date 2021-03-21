@@ -38,10 +38,6 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
                 }
 
-                buttonAddBook.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment(bookType = BOOK_TYPE_READING))
-                }
-
                 buttonSuggest.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
                 }
