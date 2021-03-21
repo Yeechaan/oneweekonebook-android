@@ -18,15 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_search"
-            app:layout_constraintEnd_toStartOf="@id/button_add_book"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageButton
-            style="@style/Widget.Custom.Button.Small"
-            android:id="@+id/button_add_book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_add_box"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

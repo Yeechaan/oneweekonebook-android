@@ -48,6 +48,19 @@ class MainActivity : AppCompatActivity() {
             R.id.historyFragment
         ).build()
         binding.toolBarMain.setupWithNavController(navController, appBarConfiguration)
+        binding.toolBarMain.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.toolBar_add_book -> {
+                    // TODO 책 추가 상세페이지 구현
+                    Toast.makeText(this, "add book", Toast.LENGTH_SHORT).show()
+                }
+                R.id.toolBar_settings -> {
+                    // TODO 관리
+                    Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
 
         initBottomNavigation()
 
