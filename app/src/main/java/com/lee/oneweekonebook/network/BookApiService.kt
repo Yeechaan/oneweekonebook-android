@@ -24,17 +24,19 @@ private val retrofit = Retrofit.Builder()
 interface BookApiService {
 
     @GET("api/search.api")
-    fun searchBookAsync(@Query("key") key: String = INTERPARK_KEY,
-                        @Query("query") query: String,
-                        @Query("output") output: String = OUTPUT_TYPE,
-                        @Query("maxResults") maxResults: Int = MAX_RESULT,
+    fun searchBookAsync(
+        @Query("key") key: String = INTERPARK_KEY,
+        @Query("query") query: String,
+        @Query("output") output: String = OUTPUT_TYPE,
+        @Query("maxResults") maxResults: Int = MAX_RESULT,
     ): Deferred<SearchBookResponse>
 
 
     @GET("api/recommend.api")
-    fun getSuggestBookAsync(@Query("key") key: String = INTERPARK_KEY,
-                            @Query("categoryId") categoryId: Int,
-                            @Query("output") output: String = OUTPUT_TYPE,
+    fun getSuggestBookAsync(
+        @Query("key") key: String = INTERPARK_KEY,
+        @Query("categoryId") categoryId: Int,
+        @Query("output") output: String = OUTPUT_TYPE,
     ): Deferred<RecommendBookResponse>
 
 }
