@@ -35,19 +35,19 @@
             android:id="@id/textView_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/book_list_reading"
+            android:text="@string/home_category"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_search"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_reading_book"
+            android:id="@+id/recyclerView_category_book"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/spacing_item_small"
             app:layout_constraintTop_toBottomOf="@id/textView_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_suggest"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layout_constraintBottom_toTopOf="@id/button_suggest" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_suggest"

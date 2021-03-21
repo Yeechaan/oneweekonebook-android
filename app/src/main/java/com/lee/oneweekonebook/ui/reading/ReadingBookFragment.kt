@@ -8,15 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookBinding
 import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
-import com.lee.oneweekonebook.ui.home.HomeFragmentDirections
-import com.lee.oneweekonebook.ui.home.ReadingBookAdapter
-import com.lee.oneweekonebook.ui.home.ReadingBookListener
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModelFactory
 

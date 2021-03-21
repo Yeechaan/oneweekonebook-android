@@ -22,7 +22,7 @@ class SuggestBookFragment : Fragment() {
 
         binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
             .apply {
-                lifecycleOwner = viewLifecycleOwner
+                lifecycleOwner = this@SuggestBookFragment
 
                 swipeRefreshLayoutContainer.apply {
                     setOnRefreshListener {
