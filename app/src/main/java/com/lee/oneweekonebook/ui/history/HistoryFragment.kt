@@ -19,8 +19,10 @@ const val BOOK_DONE = 2
 
 class HistoryFragment : Fragment() {
 
+    var binding: FragmentHistoryBinding? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
             .apply {
                 viewPagerHistory.adapter = HistoryAdapter(this@HistoryFragment)
 
@@ -29,7 +31,7 @@ class HistoryFragment : Fragment() {
                 }.attach()
             }
 
-        return binding.root
+        return binding?.root
     }
 
     private fun getTabTitle(position: Int): String? {
@@ -54,5 +56,10 @@ class HistoryFragment : Fragment() {
 
         override fun createFragment(position: Int) = pageList[position]?.invoke()
             ?: throw IndexOutOfBoundsException()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

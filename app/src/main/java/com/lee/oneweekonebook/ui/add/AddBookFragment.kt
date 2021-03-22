@@ -42,11 +42,16 @@ import java.util.*
 
 class AddBookFragment : Fragment() {
 
-    lateinit var binding: FragmentAddBookBinding
+    var binding: FragmentAddBookBinding? = null
     private val args by navArgs<AddBookFragmentArgs>()
 
     lateinit var currentPhotoPath: String
     private var savedPhotoPath: String = ""
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -59,42 +64,42 @@ class AddBookFragment : Fragment() {
         val addBookViewModel = ViewModelProvider(this, viewModelFactory).get(AddBookViewModel::class.java)
 
         binding = FragmentAddBookBinding.inflate(inflater, container, false)
-        binding.apply {
-            lifecycleOwner = this@AddBookFragment
+            .apply {
+                lifecycleOwner = this@AddBookFragment
 
-            imageViewCover.setOnClickListener {
-                val popupMenu = PopupMenu(requireContext(), it)
-                setPopupImageSelection(popupMenu)
-            }
-
-            buttonDone.setOnClickListener {
-                val title = editTextTitle.text.toString()
-                val writer = editTextWriter.text.toString()
-                val publisher = editTextPublisher.text.toString()
-
-                if (args.bookId.isNullOrEmpty()) {
-                    addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
-                } else {
-                    addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
+                imageViewCover.setOnClickListener {
+                    val popupMenu = PopupMenu(requireContext(), it)
+                    setPopupImageSelection(popupMenu)
                 }
 
-                findNavController().navigateUp()
+                buttonDone.setOnClickListener {
+                    val title = editTextTitle.text.toString()
+                    val writer = editTextWriter.text.toString()
+                    val publisher = editTextPublisher.text.toString()
+
+                    if (args.bookId.isNullOrEmpty()) {
+                        addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
+                    } else {
+                        addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
+                    }
+
+                    findNavController().navigateUp()
+                }
+
+                // 수정
+                args.bookId?.let {
+                    addBookViewModel.getBook(it.toInt())
+                }
+
+                addBookViewModel.book.observe(viewLifecycleOwner, {
+                    editTextTitle.setText(it.title)
+                    editTextWriter.setText(it.writer)
+                    editTextPublisher.setText(it.publisher)
+                    savedPhotoPath = it.coverImage
+                })
             }
 
-            // 수정
-            args.bookId?.let {
-                addBookViewModel.getBook(it.toInt())
-            }
-
-            addBookViewModel.book.observe(viewLifecycleOwner, {
-                editTextTitle.setText(it.title)
-                editTextWriter.setText(it.writer)
-                editTextPublisher.setText(it.publisher)
-                savedPhotoPath = it.coverImage
-            })
-        }
-
-        return binding.root
+        return binding?.root
     }
 
     private fun setPopupImageSelection(popupMenu: PopupMenu) {
@@ -243,7 +248,7 @@ class AddBookFragment : Fragment() {
 
                 // Todo android version 에 따라 filePath or fileUri 로 처리
                 val imageUri = Uri.parse(savedPhotoPath)
-                binding.imageViewCover.setImageURI(imageUri)
+                binding?.imageViewCover?.setImageURI(imageUri)
             }
         }
     }
@@ -253,7 +258,7 @@ class AddBookFragment : Fragment() {
             RESULT_OK -> {
                 savedPhotoPath = result.data?.data.toString()
                 val imageUri = Uri.parse(savedPhotoPath)
-                binding.imageViewCover.setImageURI(imageUri)
+                binding?.imageViewCover?.setImageURI(imageUri)
             }
         }
     }

@@ -18,6 +18,13 @@ import com.orhanobut.logger.Logger
 
 class DoneBookFragment : Fragment() {
 
+    var binding: FragmentDoneBookBinding? = null
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val application = requireNotNull(this.activity).application
@@ -26,28 +33,29 @@ class DoneBookFragment : Fragment() {
         val viewModelFactory = DoneBookViewModelFactory(bookDao)
         val doneBookViewModel = ViewModelProvider(this, viewModelFactory).get(DoneBookViewModel::class.java)
 
-        val binding = FragmentDoneBookBinding.inflate(inflater, container, false)
-        binding.apply {
-            viewModel = doneBookViewModel
-            lifecycleOwner = this@DoneBookFragment
+        binding = FragmentDoneBookBinding.inflate(inflater, container, false)
+            .apply {
+                viewModel = doneBookViewModel
+                lifecycleOwner = this@DoneBookFragment
 
-            val doneBookAdapter = DoneBookAdapter(DoneBookListener { book ->
-                Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
+                val doneBookAdapter = DoneBookAdapter(DoneBookListener { book ->
+                    Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
 
-                Logger.d(book)
+                    Logger.d(book)
 //                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
-                findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
-            })
-            recyclerViewDoneBook.apply {
-                adapter = doneBookAdapter
-                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                    findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
+                })
+                recyclerViewDoneBook.apply {
+                    adapter = doneBookAdapter
+                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                }
+
+                doneBookViewModel.books.observe(viewLifecycleOwner, {
+                    (recyclerViewDoneBook.adapter as DoneBookAdapter).submitList(it)
+                })
             }
 
-            doneBookViewModel.books.observe(viewLifecycleOwner, {
-                (recyclerViewDoneBook.adapter as DoneBookAdapter).submitList(it)
-            })
-        }
-
-        return binding.root
+        return binding?.root
     }
+
 }

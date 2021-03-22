@@ -20,6 +20,11 @@ class HomeFragment : Fragment() {
 
     var binding: FragmentHomeBinding? = null
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     // PresentFragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -57,8 +62,4 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-    }
 }

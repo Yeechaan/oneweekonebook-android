@@ -17,7 +17,13 @@ import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModelFac
 
 class ReadingBookDetailFragment : Fragment() {
 
+    var binding: FragmentReadingBookDetailBinding? = null
     private val args: ReadingBookDetailFragmentArgs by navArgs()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -27,7 +33,7 @@ class ReadingBookDetailFragment : Fragment() {
         val viewModelFactory = ReadingBookDetailViewModelFactory(bookDao, args.bookId)
         val readingBookDetailViewModel = ViewModelProvider(this, viewModelFactory).get(ReadingBookDetailViewModel::class.java)
 
-        val binding = FragmentReadingBookDetailBinding.inflate(inflater, container, false)
+        binding = FragmentReadingBookDetailBinding.inflate(inflater, container, false)
             .apply {
 
                 viewModel = readingBookDetailViewModel
@@ -52,6 +58,6 @@ class ReadingBookDetailFragment : Fragment() {
                 }
             }
 
-        return binding.root
+        return binding?.root
     }
 }
