@@ -16,31 +16,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/spacing_item_large">
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
             android:layout_margin="@dimen/spacing_item_small"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:id="@+id/imageView_book"
                 android:layout_width="80dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitCenter" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/textView_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_normal"
             android:text="@{searchBook.title}"
             android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
-            android:layout_marginStart="@dimen/spacing_item_normal"
-            app:layout_constraintTop_toTopOf="@id/cardView_book"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/cardView_book"
-            tools:text="Book Title"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Book Title" />
+
         <ImageView
             android:id="@+id/imageView_writer"
             android:layout_width="wrap_content"
@@ -49,17 +55,21 @@
             app:layout_constraintTop_toTopOf="@id/textView_writer"
             app:layout_constraintBottom_toBottomOf="@id/textView_writer"
             app:layout_constraintStart_toStartOf="@id/textView_title"/>
+
         <TextView
             android:id="@+id/textView_writer"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{searchBook.writer}"
-            android:textAppearance="@style/TextAppearance.Custom.Body4"
-            android:layout_marginTop="@dimen/spacing_item_small"
             android:layout_marginStart="@dimen/spacing_item_small"
-            app:layout_constraintTop_toBottomOf="@id/textView_title"
+            android:layout_marginTop="@dimen/spacing_item_small"
+            android:text="@{searchBook.writer}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_writer"
-            tools:text="Writer"/>
+            app:layout_constraintTop_toBottomOf="@id/textView_title"
+            tools:text="Writer" />
+
         <ImageView
             android:id="@+id/imageView_publisher"
             android:layout_width="wrap_content"
@@ -68,17 +78,21 @@
             app:layout_constraintTop_toTopOf="@id/textView_publisher"
             app:layout_constraintBottom_toBottomOf="@id/textView_publisher"
             app:layout_constraintStart_toStartOf="@id/textView_title"/>
+
         <TextView
             android:id="@+id/textView_publisher"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{searchBook.publisher}"
-            android:textAppearance="@style/TextAppearance.Custom.Body4"
-            android:layout_marginTop="@dimen/spacing_item_small"
             android:layout_marginStart="@dimen/spacing_item_small"
-            app:layout_constraintTop_toBottomOf="@id/textView_writer"
+            android:layout_marginTop="@dimen/spacing_item_very_small"
+            android:text="@{searchBook.publisher}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_publisher"
-            tools:text="Publisher"/>
+            app:layout_constraintTop_toBottomOf="@id/textView_writer"
+            tools:text="Publisher" />
+
         <ImageView
             android:id="@+id/imageView_date"
             android:layout_width="wrap_content"
@@ -87,16 +101,55 @@
             app:layout_constraintTop_toTopOf="@id/textView_date"
             app:layout_constraintBottom_toBottomOf="@id/textView_date"
             app:layout_constraintStart_toStartOf="@id/textView_title"/>
+
         <TextView
             android:id="@+id/textView_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{searchBook.pubDate}"
-            android:textAppearance="@style/TextAppearance.Custom.Body4"
-            android:layout_marginTop="@dimen/spacing_item_small"
             android:layout_marginStart="@dimen/spacing_item_small"
-            app:layout_constraintTop_toBottomOf="@id/textView_publisher"
+            android:layout_marginTop="@dimen/spacing_item_very_small"
+            android:text="@{searchBook.pubDate}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_date"
-            tools:text="Date"/>
+            app:layout_constraintTop_toBottomOf="@id/textView_rate"
+            tools:text="Date" />
+
+        <ImageView
+            android:id="@+id/imageView_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star"
+            app:layout_constraintTop_toTopOf="@id/textView_rate"
+            app:layout_constraintBottom_toBottomOf="@id/textView_rate"
+            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+
+        <TextView
+            android:id="@+id/textView_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:layout_marginTop="@dimen/spacing_item_very_small"
+            android:text="@{String.valueOf(searchBook.reviewRank)}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/imageView_rate"
+            app:layout_constraintTop_toBottomOf="@id/textView_publisher"
+            tools:text="10.0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:text="@{@string/book_review_count(searchBook.reviewCount)}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            app:layout_constraintTop_toTopOf="@id/textView_rate"
+            app:layout_constraintBottom_toBottomOf="@id/textView_rate"
+            app:layout_constraintStart_toEndOf="@id/textView_rate"
+            tools:text="(10+)"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
