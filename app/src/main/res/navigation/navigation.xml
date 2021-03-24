@@ -69,7 +69,18 @@
         android:id="@+id/searchBookFragment"
         android:name="com.lee.oneweekonebook.ui.search.SearchBookFragment"
         android:label="@string/search_title">
+        <action
+            android:id="@+id/action_searchBookFragment_to_bookDetailFragment"
+            app:destination="@+id/bookDetailFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.lee.oneweekonebook.ui.search.BookDetailFragment"
+        android:label="@string/book_about">
+<!--        <argument-->
+<!--            android:name="book"-->
+<!--            app:argType="com.lee.oneweekonebook.ui.search.model.SearchBook"/>-->
     </fragment>
 
     <!--    reading-->

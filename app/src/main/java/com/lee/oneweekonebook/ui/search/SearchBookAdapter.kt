@@ -8,7 +8,7 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.ItemSearchBinding
 import com.lee.oneweekonebook.ui.search.model.SearchBook
 
-class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
+class SearchBookAdapter(private val searchBookListener: SearchBookListener) : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
     var data = listOf<SearchBook>()
         set(value) {
             field = value
@@ -19,7 +19,7 @@ class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item, searchBookListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,10 +28,10 @@ class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
 
     class ViewHolder private constructor(val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: SearchBook) {
+        fun bind(item: SearchBook, searchBookListener: SearchBookListener) {
             binding.apply {
-
                 searchBook = item
+                clickListener = searchBookListener
 
                 if (item.coverImage.isNotEmpty()) {
                     Glide.with(binding.root.context).load(item.coverImage).into(imageViewBook)
@@ -51,4 +51,8 @@ class SearchBookAdapter : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
             }
         }
     }
+}
+
+class SearchBookListener(val clickListener: (book: SearchBook) -> Unit) {
+    fun onClick(book: SearchBook) = clickListener(book)
 }

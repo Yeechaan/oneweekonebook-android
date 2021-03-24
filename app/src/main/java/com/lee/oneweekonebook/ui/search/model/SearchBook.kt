@@ -14,6 +14,10 @@ data class SearchBook(
     var coverImage: String = "",
     var reviewRank: Double = 0.0,
     var reviewCount: Int = 0,
+    var categoryId: Int = 0,
+    var description: String = "",
+    var link: String = "",
+    var price: Int = 0,
 )
 
 //data class SearchBookResponse(
@@ -62,7 +66,11 @@ fun Item.asBook() = run {
         pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd").convertDateToString("yyyy-MM-dd"),
         coverImage = coverLargeUrl,
         reviewRank = customerReviewRank,
-        reviewCount = reviewCount
+        reviewCount = reviewCount,
+        categoryId = categoryId.toInt(),
+        description = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString(),
+        link = link,
+        price = priceStandard,
     )
 }
 

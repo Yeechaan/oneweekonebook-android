@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
@@ -40,7 +42,9 @@ class SearchBookFragment : Fragment() {
                     }
                 }
 
-                val searchBookAdapter = SearchBookAdapter()
+                val searchBookAdapter = SearchBookAdapter(SearchBookListener { book ->
+//                    findNavController().navigate(SearchBookFragmentDirections.actionSearchBookFragmentToBookDetailFragment(book = book))
+                })
                 recyclerViewSearchBook.apply {
                     adapter = searchBookAdapter
                     addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
