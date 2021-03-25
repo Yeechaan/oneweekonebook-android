@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/imageView_book"
             android:layout_width="0dp"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_item_small"
             android:layout_marginTop="@dimen/spacing_item_very_small"
-            android:text="@{searchBook.price}"
+            android:text="@{String.valueOf(searchBook.price)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

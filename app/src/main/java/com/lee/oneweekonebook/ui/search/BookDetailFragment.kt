@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentBookDetailBinding
 
 class BookDetailFragment: Fragment() {
 
     var binding: FragmentBookDetailBinding? = null
-//    private val args: BookDetailFragmentArgs by navArgs()
+    private val args by navArgs<BookDetailFragmentArgs>()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -21,7 +23,17 @@ class BookDetailFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentBookDetailBinding.inflate(inflater, container, false)
             .apply {
-//                searchBook = args.book
+
+                args.book?.let {
+                    searchBook = it
+
+                    if (it.coverImage.isNotEmpty()) {
+                        Glide.with(requireContext()).load(it.coverImage).into(imageViewBook)
+                    } else {
+                        Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
+                    }
+                }
+
             }
 
         return binding?.root

@@ -46,7 +46,7 @@ data class Item(
     @SerializedName("author")
     val author: String,
     @SerializedName("categoryId")
-    val categoryId: String,
+    val categoryId: String?,
     @SerializedName("categoryName")
     val categoryName: String,
     @SerializedName("coverLargeUrl")
