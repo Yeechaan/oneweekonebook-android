@@ -7,33 +7,19 @@
         <variable
             name="searchBook"
             type="com.lee.oneweekonebook.ui.search.model.SearchBook" />
-        <variable
-            name="clickListener"
-            type="com.lee.oneweekonebook.ui.search.SearchBookListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(searchBook)}"
-        android:layout_marginVertical="@dimen/spacing_item_large">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView_book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_item_small"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/imageView_book"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageView_book"
-                android:layout_width="80dp"
-                android:layout_height="100dp"
-                android:scaleType="fitCenter" />
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_title"
@@ -43,9 +29,9 @@
             android:text="@{searchBook.title}"
             android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/cardView_book"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageView_book"
             tools:text="Book Title" />
 
         <ImageView
@@ -118,6 +104,29 @@
             tools:text="Date" />
 
         <ImageView
+            android:id="@+id/imageView_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_price"
+            app:layout_constraintTop_toTopOf="@id/textView_price"
+            app:layout_constraintBottom_toBottomOf="@id/textView_price"
+            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+
+        <TextView
+            android:id="@+id/textView_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:layout_marginTop="@dimen/spacing_item_very_small"
+            android:text="@{searchBook.price}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/imageView_price"
+            app:layout_constraintTop_toBottomOf="@id/textView_date"
+            tools:text="22000" />
+
+        <ImageView
             android:id="@+id/imageView_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -151,6 +160,37 @@
             app:layout_constraintStart_toEndOf="@id/textView_rate"
             tools:text="(10+)"/>
 
+        <TextView
+            android:id="@+id/textView_book_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:text="@string/book_about"
+            android:textAppearance="@style/TextAppearance.Custom.Body4.Bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_price" />
 
+        <ImageView
+            android:id="@+id/imageView_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_link"
+            android:layout_marginStart="@dimen/spacing_item_normal"
+            app:layout_constraintTop_toTopOf="@id/textView_book_about"
+            app:layout_constraintBottom_toBottomOf="@id/textView_book_about"
+            app:layout_constraintStart_toEndOf="@id/textView_book_about"/>
+
+        <TextView
+            android:id="@+id/textView_book_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/spacing_item_small"
+            android:text="@{searchBook.description}"
+            android:textAppearance="@style/TextAppearance.Custom.Body4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_book_about"
+            tools:text="Just Do It, 승리를 상징하는 로고 스우시(Swoosh)로 전 세계인의 마음을 사로잡은 브랜드 나이키를 모르는 사람은 없다. 하지만 단돈 50달러에서 시작된 나이키의 창업 스토리, 그리고 그 뒤에 가려진 은둔의 경영자 필 나이트에 대해 알려진 바는 거의 없다. ‘신발 연구에 미친 사람’이란 은어인 [슈독Shoe Dog]은 가진 것이라곤 무모한 열정과 끈기밖에 없었던 24살 청년, 필 나이트가 일본 운동화를 수입해 팔던 보따리 장사를  세계적 브랜드 나이키로 일궈내기까지의 과정을 다룬, 최초의 자서전이자 나이키의 역사서이다. 그는 이 책에서 아디다스, 퓨마가 주도하고 있던 스포츠 용품 업계의 후발주자,  나이키가 어떻게 업계의 1인자가 되었는지, 그 창업과 혁신의 과정은 물론 그와 함께 지금의 나이..."/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

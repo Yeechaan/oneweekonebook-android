@@ -11,10 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookBinding
-import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
 
