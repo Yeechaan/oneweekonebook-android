@@ -43,7 +43,7 @@ class SearchBookFragment : Fragment() {
                 }
 
                 val searchBookAdapter = SearchBookAdapter(SearchBookListener { book ->
-//                    findNavController().navigate(SearchBookFragmentDirections.actionSearchBookFragmentToBookDetailFragment(book = book))
+                    findNavController().navigate(SearchBookFragmentDirections.actionSearchBookFragmentToBookDetailFragment(book = book))
                 })
                 recyclerViewSearchBook.apply {
                     adapter = searchBookAdapter
