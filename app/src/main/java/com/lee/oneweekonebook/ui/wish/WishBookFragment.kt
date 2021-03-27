@@ -18,7 +18,13 @@ import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
 
 class WishBookFragment : Fragment() {
 
+    var binding: FragmentWishBookBinding? = null
     private lateinit var viewModel: WishBookViewModel
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -28,7 +34,7 @@ class WishBookFragment : Fragment() {
         val viewModelFactory = WishBookViewModelFactory(bookDao, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WishBookViewModel::class.java)
 
-        val binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
+        binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@WishBookFragment
 
             val adapter = WishBookAdapter(WishBookListener { book, view ->
@@ -43,7 +49,7 @@ class WishBookFragment : Fragment() {
 
         }
 
-        return binding.root
+        return binding?.root
     }
 
     private fun setPopupBookSelection(popupMenu: PopupMenu, book: Book) {

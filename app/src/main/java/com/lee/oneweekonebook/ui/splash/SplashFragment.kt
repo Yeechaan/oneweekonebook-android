@@ -9,14 +9,20 @@ import com.lee.oneweekonebook.databinding.FragmentSplashBinding
 
 class SplashFragment : Fragment() {
 
+    var binding: FragmentSplashBinding? = null
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding = FragmentSplashBinding.inflate(inflater, container, false)
+        binding = FragmentSplashBinding.inflate(inflater, container, false)
+            .apply {
 
-        binding.apply {
+            }
 
-        }
-
-        return binding.root
+        return binding?.root
     }
 }
