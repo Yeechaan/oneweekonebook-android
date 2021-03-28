@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
@@ -49,6 +48,8 @@ class HomeFragment : Fragment() {
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
                     // TODO 카테고리 클릭되면 상세페이지로 이동 (TabLayout 으로 구현)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(categoryId = categoryBook.type))
+
                     Toast.makeText(requireContext(), categoryBook.type.toString(), Toast.LENGTH_SHORT).show()
                 })
                 val gridLayoutManager = GridLayoutManager(requireContext(), 5)

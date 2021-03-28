@@ -3,6 +3,9 @@ package com.lee.oneweekonebook.ui.suggest.model
 
 import android.text.Html
 import com.google.gson.annotations.SerializedName
+import com.lee.oneweekonebook.ui.search.model.BookInfo
+import com.lee.oneweekonebook.utils.convertDateToString
+import com.lee.oneweekonebook.utils.convertStringToDate
 
 data class RecommendBook(
     var title: String = "",
@@ -50,7 +53,7 @@ data class ItemRecommend(
     @SerializedName("author")
     val author: String,
     @SerializedName("categoryId")
-    val categoryId: String,
+    val categoryId: String?,
     @SerializedName("categoryName")
     val categoryName: String,
     @SerializedName("coverLargeUrl")
@@ -96,9 +99,18 @@ data class ItemRecommend(
 fun RecommendBookResponse.asBookList() = run { item.map { it.asBook() } }
 
 fun ItemRecommend.asBook() = run {
-    SuggestBook(
+    BookInfo(
         title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
-        link = Html.fromHtml(coverLargeUrl, Html.FROM_HTML_MODE_LEGACY).toString()
+        writer = Html.fromHtml(author, Html.FROM_HTML_MODE_LEGACY).toString(),
+        publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
+        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd").convertDateToString("yyyy-MM-dd"),
+        coverImage = coverLargeUrl,
+        reviewRank = customerReviewRank,
+        reviewCount = reviewCount,
+        categoryId = categoryId?.toInt() ?: 0,
+        description = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString(),
+        link = link,
+        price = priceStandard,
     )
 }
 

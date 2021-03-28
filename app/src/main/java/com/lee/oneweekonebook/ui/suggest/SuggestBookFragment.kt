@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.databinding.FragmentSuggestBookBinding
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModel
@@ -14,10 +16,11 @@ import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModelFactory
 class SuggestBookFragment : Fragment() {
 
     var binding: FragmentSuggestBookBinding? = null
+    private val args by navArgs<SuggestBookFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val viewModelFactory = SuggestBookViewModelFactory()
+        val viewModelFactory = SuggestBookViewModelFactory(args.categoryId)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SuggestBookViewModel::class.java)
 
         binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
@@ -26,12 +29,14 @@ class SuggestBookFragment : Fragment() {
 
                 swipeRefreshLayoutContainer.apply {
                     setOnRefreshListener {
-                        viewModel.refreshBooks()
+//                        viewModel.refreshBooks()
                         isRefreshing = false
                     }
                 }
 
-                val suggestBookAdapter = SuggestBookAdapter()
+                val suggestBookAdapter = SuggestBookAdapter(SuggestBookListener { book ->
+                    findNavController().navigate(SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(book = book))
+                })
                 val gridLayoutManager = GridLayoutManager(requireContext(), 3)
 
                 recyclerViewSuggestBook.apply {
