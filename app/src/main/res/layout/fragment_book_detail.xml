@@ -6,12 +6,23 @@
     <data>
         <variable
             name="searchBook"
-            type="com.lee.oneweekonebook.ui.search.model.SearchBook" />
+            type="com.lee.oneweekonebook.ui.search.model.BookInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ToggleButton
+            android:id="@+id/button_favorite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_favorite"
+            android:text=""
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/imageView_book"
@@ -19,7 +30,7 @@
             android:layout_height="250dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/button_favorite" />
 
         <TextView
             android:id="@+id/textView_title"
@@ -189,8 +200,17 @@
             android:textAppearance="@style/TextAppearance.Custom.Body4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_add_book"
             app:layout_constraintTop_toBottomOf="@+id/textView_book_about"
             tools:text="Just Do It, 승리를 상징하는 로고 스우시(Swoosh)로 전 세계인의 마음을 사로잡은 브랜드 나이키를 모르는 사람은 없다. 하지만 단돈 50달러에서 시작된 나이키의 창업 스토리, 그리고 그 뒤에 가려진 은둔의 경영자 필 나이트에 대해 알려진 바는 거의 없다. ‘신발 연구에 미친 사람’이란 은어인 [슈독Shoe Dog]은 가진 것이라곤 무모한 열정과 끈기밖에 없었던 24살 청년, 필 나이트가 일본 운동화를 수입해 팔던 보따리 장사를  세계적 브랜드 나이키로 일궈내기까지의 과정을 다룬, 최초의 자서전이자 나이키의 역사서이다. 그는 이 책에서 아디다스, 퓨마가 주도하고 있던 스포츠 용품 업계의 후발주자,  나이키가 어떻게 업계의 1인자가 되었는지, 그 창업과 혁신의 과정은 물론 그와 함께 지금의 나이..."/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_book"
+            android:layout_marginBottom="@dimen/spacing_item_normal"
+            app:layout_constraintTop_toBottomOf="@id/textView_book_description"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepnames class com.lee.oneweekonebook.ui.search.model.SearchBook
+-keepnames class com.lee.oneweekonebook.ui.search.model.BookInfo

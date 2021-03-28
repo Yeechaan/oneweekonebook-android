@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.ItemSearchBinding
-import com.lee.oneweekonebook.ui.search.model.SearchBook
+import com.lee.oneweekonebook.ui.search.model.BookInfo
 
 class SearchBookAdapter(private val searchBookListener: SearchBookListener) : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
-    var data = listOf<SearchBook>()
+    var data = listOf<BookInfo>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -28,7 +28,7 @@ class SearchBookAdapter(private val searchBookListener: SearchBookListener) : Re
 
     class ViewHolder private constructor(val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: SearchBook, searchBookListener: SearchBookListener) {
+        fun bind(item: BookInfo, searchBookListener: SearchBookListener) {
             binding.apply {
                 searchBook = item
                 clickListener = searchBookListener
@@ -53,6 +53,6 @@ class SearchBookAdapter(private val searchBookListener: SearchBookListener) : Re
     }
 }
 
-class SearchBookListener(val clickListener: (book: SearchBook) -> Unit) {
-    fun onClick(book: SearchBook) = clickListener(book)
+class SearchBookListener(val clickListener: (book: BookInfo) -> Unit) {
+    fun onClick(book: BookInfo) = clickListener(book)
 }

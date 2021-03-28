@@ -21,6 +21,11 @@ class HistoryFragment : Fragment() {
 
     var binding: FragmentHistoryBinding? = null
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
             .apply {
@@ -58,8 +63,4 @@ class HistoryFragment : Fragment() {
             ?: throw IndexOutOfBoundsException()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-    }
 }

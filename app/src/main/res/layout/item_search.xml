@@ -6,7 +6,7 @@
     <data>
         <variable
             name="searchBook"
-            type="com.lee.oneweekonebook.ui.search.model.SearchBook" />
+            type="com.lee.oneweekonebook.ui.search.model.BookInfo" />
         <variable
             name="clickListener"
             type="com.lee.oneweekonebook.ui.search.SearchBookListener" />

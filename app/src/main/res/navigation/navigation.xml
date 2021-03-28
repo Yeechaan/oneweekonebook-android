@@ -81,8 +81,8 @@
         <argument
             android:name="book"
             android:defaultValue="@null"
-            app:argType="com.lee.oneweekonebook.ui.search.model.SearchBook"
-            app:nullable="true"/>
+            app:argType="com.lee.oneweekonebook.ui.search.model.BookInfo"
+            app:nullable="true" />
     </fragment>
 
     <!--    reading-->
@@ -120,7 +120,7 @@
     <fragment
         android:id="@+id/addBookFragment"
         android:name="com.lee.oneweekonebook.ui.add.AddBookFragment"
-        android:label="@string/add_title">
+        android:label="@string/add_book">
         <argument
             android:name="bookType"
             android:defaultValue="-1"
@@ -136,18 +136,26 @@
     <fragment
         android:id="@+id/suggestBookFragment"
         android:name="com.lee.oneweekonebook.ui.suggest.SuggestBookFragment"
-        android:label="@string/suggest_title"></fragment>
+        android:label="@string/suggest_title">
+        <argument
+            android:name="categoryId"
+            android:defaultValue="101"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_suggestBookFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
 
     <!--    history-->
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.lee.oneweekonebook.ui.history.HistoryFragment"
         android:label="@string/history">
-<!--        wish-->
+        <!--        wish-->
         <action
             android:id="@+id/action_historyWishFragment_to_readingBookFragment"
             app:destination="@id/readingBookFragment" />
-<!--        reading-->
+        <!--        reading-->
         <action
             android:id="@+id/action_historyReadingFragment_to_readingBookDetailFragment"
             app:destination="@id/readingBookDetailFragment"
@@ -155,7 +163,7 @@
             app:exitAnim="@anim/anim_slide_out"
             app:popEnterAnim="@anim/anim_slide_in"
             app:popExitAnim="@anim/anim_slide_out" />
-<!--        done-->
+        <!--        done-->
         <action
             android:id="@+id/action_historyDoneFragment_to_doneBookDetailFragment"
             app:destination="@+id/doneBookDetailFragment" />

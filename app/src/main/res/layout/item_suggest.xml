@@ -5,7 +5,10 @@
     <data>
         <variable
             name="book"
-            type="com.lee.oneweekonebook.ui.suggest.model.SuggestBook" />
+            type="com.lee.oneweekonebook.ui.search.model.BookInfo" />
+        <variable
+            name="clickListener"
+            type="com.lee.oneweekonebook.ui.suggest.SuggestBookListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +19,7 @@
             android:id="@+id/imageView_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onClick(book)}"
             android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
