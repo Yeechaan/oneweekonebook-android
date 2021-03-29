@@ -83,6 +83,9 @@
             android:defaultValue="@null"
             app:argType="com.lee.oneweekonebook.ui.search.model.BookInfo"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
 
     <!--    reading-->
@@ -151,6 +154,10 @@
         android:id="@+id/historyFragment"
         android:name="com.lee.oneweekonebook.ui.history.HistoryFragment"
         android:label="@string/history">
+        <argument
+            android:name="bookType"
+            android:defaultValue="0"
+            app:argType="integer" />
         <!--        wish-->
         <action
             android:id="@+id/action_historyWishFragment_to_readingBookFragment"

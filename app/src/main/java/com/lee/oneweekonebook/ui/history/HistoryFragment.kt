@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.oneweekonebook.R
@@ -20,6 +21,7 @@ const val BOOK_DONE = 2
 class HistoryFragment : Fragment() {
 
     var binding: FragmentHistoryBinding? = null
+    private val args by navArgs<HistoryFragmentArgs>()
 
     override fun onDestroy() {
         super.onDestroy()
@@ -34,6 +36,8 @@ class HistoryFragment : Fragment() {
                 TabLayoutMediator(tabLayoutHistory, viewPagerHistory) { tab, position ->
                     tab.text = getTabTitle(position)
                 }.attach()
+
+                viewPagerHistory.setCurrentItem(args.bookType, false)
             }
 
         return binding?.root
