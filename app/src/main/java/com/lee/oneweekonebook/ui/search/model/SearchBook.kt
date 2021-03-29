@@ -5,7 +5,6 @@ import androidx.annotation.Keep
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.utils.convertDateToString
 import com.lee.oneweekonebook.utils.convertStringToDate
-import com.lee.oneweekonebook.utils.ifEmptyReturnNull
 import java.io.Serializable
 
 @Keep
@@ -48,7 +47,7 @@ fun BookInfo.asBook() = run {
         title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
         writer = Html.fromHtml(writer, Html.FROM_HTML_MODE_LEGACY).toString(),
         publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
-        subTitle = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString(),
-        coverImage = coverImage
+        coverImage = coverImage,
+        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString(),
     )
 }
