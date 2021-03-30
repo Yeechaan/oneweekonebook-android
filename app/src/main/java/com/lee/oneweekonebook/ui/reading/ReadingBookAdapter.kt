@@ -1,6 +1,5 @@
 package com.lee.oneweekonebook.ui.reading
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

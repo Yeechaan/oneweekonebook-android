@@ -1,11 +1,14 @@
 package com.lee.oneweekonebook.ui.book
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
@@ -46,12 +49,19 @@ class BookDetailFragment: Fragment() {
                         Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
                     }
 
+                    imageViewLink.setOnClickListener {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.link))
+                        startActivity(browserIntent)
+                    }
+
                     buttonAddBook.setOnClickListener {
                         bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
+                        findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
                     }
 
                     buttonFavorite.setOnClickListener {
                         bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
+                        findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
                     }
                 }
 
