@@ -13,6 +13,7 @@ import com.lee.oneweekonebook.databinding.FragmentHistoryBinding
 import com.lee.oneweekonebook.ui.done.DoneBookFragment
 import com.lee.oneweekonebook.ui.reading.ReadingBookFragment
 import com.lee.oneweekonebook.ui.wish.WishBookFragment
+import com.lee.oneweekonebook.utils.ViewPagerTransformer
 
 const val BOOK_WISH = 0
 const val BOOK_READING = 1
@@ -31,13 +32,17 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
             .apply {
-                viewPagerHistory.adapter = HistoryAdapter(this@HistoryFragment)
+                viewPagerHistory.apply {
+                    adapter = HistoryAdapter(this@HistoryFragment)
+                    setPageTransformer(ViewPagerTransformer())
+
+                    setCurrentItem(args.bookType, false)
+                }
 
                 TabLayoutMediator(tabLayoutHistory, viewPagerHistory) { tab, position ->
                     tab.text = getTabTitle(position)
                 }.attach()
 
-                viewPagerHistory.setCurrentItem(args.bookType, false)
             }
 
         return binding?.root
