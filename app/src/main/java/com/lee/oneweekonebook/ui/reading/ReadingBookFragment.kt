@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookBinding
 import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel

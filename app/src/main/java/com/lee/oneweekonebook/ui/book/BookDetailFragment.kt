@@ -19,7 +19,7 @@ import com.lee.oneweekonebook.databinding.FragmentBookDetailBinding
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
 
-class BookDetailFragment: Fragment() {
+class BookDetailFragment : Fragment() {
 
     var binding: FragmentBookDetailBinding? = null
     private val args by navArgs<BookDetailFragmentArgs>()
