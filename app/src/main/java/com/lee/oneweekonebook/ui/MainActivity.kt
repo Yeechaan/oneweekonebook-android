@@ -23,6 +23,10 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 
+const val BOTTOM_MENU_HOME = 0
+const val BOTTOM_MENU_SEARCH = 1
+const val BOTTOM_MENU_HISTORY = 2
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainKotlinBinding
@@ -50,10 +54,6 @@ class MainActivity : AppCompatActivity() {
         binding.toolBarMain.setupWithNavController(navController, appBarConfiguration)
         binding.toolBarMain.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.toolBar_add_book -> {
-                    // TODO 책 추가 상세페이지 구현
-                    Toast.makeText(this, "add book", Toast.LENGTH_SHORT).show()
-                }
                 R.id.toolBar_settings -> {
                     // TODO 관리
                     Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show()
@@ -92,6 +92,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+    }
+
+    fun setBottomNavigationStatus(index: Int) {
+        if (::bottomNavigationView.isInitialized) {
+            bottomNavigationView.menu.getItem(index).isChecked = true
         }
     }
 

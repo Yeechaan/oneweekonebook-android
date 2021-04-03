@@ -13,6 +13,7 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModelFactory
+import com.lee.oneweekonebook.utils.isNetworkConnected
 
 class SearchBookFragment : Fragment() {
 
@@ -34,10 +35,19 @@ class SearchBookFragment : Fragment() {
                 lifecycleOwner = viewLifecycleOwner
 
                 buttonSearch.setOnClickListener {
-                    if (!editTextSearchBook.text.isNullOrEmpty()) {
-                        viewModel.searchBook(editTextSearchBook.text.toString())
-                    } else {
-                        Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
+                    val isTitleEmpty = editTextSearchBook.text.isNullOrEmpty()
+                    val isNetworkConnected = isNetworkConnected(requireContext())
+
+                    when {
+                        isNetworkConnected && !isTitleEmpty -> {
+                            viewModel.searchBook(editTextSearchBook.text.toString())
+                        }
+                        isTitleEmpty -> {
+                            Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
+                        }
+                        !isNetworkConnected -> {
+                            Toast.makeText(requireContext(), getString(R.string.error_network_not_connected), Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 
