@@ -18,6 +18,11 @@ class SuggestBookFragment : Fragment() {
     var binding: FragmentSuggestBookBinding? = null
     private val args by navArgs<SuggestBookFragmentArgs>()
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val viewModelFactory = SuggestBookViewModelFactory(args.categoryId)
@@ -50,11 +55,6 @@ class SuggestBookFragment : Fragment() {
             }
 
         return binding?.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
 }

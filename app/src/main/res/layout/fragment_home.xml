@@ -12,15 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            style="@style/Widget.Custom.Button.Small"
-            android:id="@+id/button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
         <TextView
             style="@style/Widget.Custom.Text"
             android:id="@id/textView_list"
@@ -28,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_category"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_search"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_category_book"
@@ -45,8 +36,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="suggest"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.nambimobile.widgets.efab.ExpandableFabLayout
+            android:id="@+id/expandable_fab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.nambimobile.widgets.efab.Overlay
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:overlay_color="#000000"
+                app:overlay_alpha="0.75"
+                app:overlay_openingAnimationDurationMs="1000"/>
+
+            <com.nambimobile.widgets.efab.ExpandableFab
+                android:id="@+id/expandable_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="@dimen/spacing_item_normal"
+                android:layout_marginEnd="@dimen/spacing_item_normal"
+                app:efab_color="@color/shamrock"
+                app:efab_icon="@drawable/ic_baseline_add"
+                app:efab_iconAnimationRotationDeg="-225"
+                app:efab_closingAnticipateTension="0" />
+
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/fab_add_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_color="@color/olive"
+                app:fab_icon="@drawable/ic_baseline_search"
+                app:label_text="검색하여 추가"
+                app:label_backgroundColor="#808080" />
+            <com.nambimobile.widgets.efab.FabOption
+                android:id="@+id/fab_add_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_color="@color/olive"
+                app:fab_icon="@drawable/ic_baseline_camera"
+                app:label_text="직접 추가"
+                app:label_backgroundColor="#808080" />
+
+        </com.nambimobile.widgets.efab.ExpandableFabLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

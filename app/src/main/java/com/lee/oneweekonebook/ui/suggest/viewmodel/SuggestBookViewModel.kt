@@ -20,9 +20,13 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
 //            Logger.d(responseCategory)
 //            _books.value = responseCategory.asBookList()
 
-            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
-            Logger.d(responseCategory)
-            _books.value = responseCategory.asBookList()
+            try {
+                val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
+                Logger.d(responseCategory)
+                _books.value = responseCategory.asBookList()
+            } catch (e: Exception) {
+                Logger.d(e.message)
+            }
         }
     }
 
@@ -33,9 +37,9 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
 //            Logger.d(responseCategory)
 //            _books.value = responseCategory.asBookList()
 
-            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
-            Logger.d(responseCategory)
-            _books.value = responseCategory.asBookList()
+//            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
+//            Logger.d(responseCategory)
+//            _books.value = responseCategory.asBookList()
         }
     }
 

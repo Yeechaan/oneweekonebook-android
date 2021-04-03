@@ -46,4 +46,8 @@
     <string name="tool_bar_add_book_description">책을 추가 하시겠습니까?</string>
     <string name="tool_bar_setting">관리</string>
     <string name="tool_bar_setting_description">관리 페이지로 이동</string>
+
+    <string name="error_network_not_connected">네트워크 상태를 확인해주세요</string>
+
+
 </resources>

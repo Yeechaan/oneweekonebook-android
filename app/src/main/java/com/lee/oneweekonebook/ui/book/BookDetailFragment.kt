@@ -16,6 +16,8 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.databinding.FragmentBookDetailBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
+import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
 
@@ -57,11 +59,13 @@ class BookDetailFragment : Fragment() {
                     buttonAddBook.setOnClickListener {
                         bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
                         findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
+                        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                     }
 
                     buttonFavorite.setOnClickListener {
                         bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
                         findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
+                        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                     }
                 }
 

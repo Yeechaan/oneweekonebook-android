@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toolBar_add_book"
-        android:icon="@drawable/ic_baseline_add_box"
-        android:title="@string/tool_bar_add_book"
-        android:contentDescription="@string/tool_bar_add_book_description"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/toolBar_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/tool_bar_setting"

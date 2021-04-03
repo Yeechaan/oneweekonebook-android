@@ -15,12 +15,16 @@ class SearchBookViewModel : ViewModel() {
 
     fun searchBook(query: String) {
         viewModelScope.launch {
-            val response = BookApi.bookApiService.searchBookAsync(query = query).await()
-
-            _books.value = response.asBookList()
-            Logger.d(response)
+            try {
+                val response = BookApi.bookApiService.searchBookAsync(query = query).await()
+                _books.value = response.asBookList()
+                Logger.d(response)
+            } catch (e: Exception) {
+                Logger.d(e.message)
+            }
         }
     }
+
 }
 
 class SearchBookViewModelFactory() : ViewModelProvider.Factory {

@@ -1,5 +1,8 @@
 package com.lee.oneweekonebook.ui.home
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
+import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
+import com.lee.oneweekonebook.utils.isNetworkConnected
 
 class HomeFragment : Fragment() {
 
@@ -38,19 +45,26 @@ class HomeFragment : Fragment() {
                 viewModel = homeViewModel
                 lifecycleOwner = this@HomeFragment
 
-                buttonSearch.setOnClickListener {
+//                buttonSuggest.setOnClickListener {
+//                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
+//                }
+
+                fabAddSearch.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
+                    (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
                 }
 
-                buttonSuggest.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
+                fabAddCamera.setOnClickListener {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment())
                 }
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
                     // TODO 카테고리 클릭되면 상세페이지로 이동 (TabLayout 으로 구현)
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(categoryId = categoryBook.type))
-
-                    Toast.makeText(requireContext(), categoryBook.type.toString(), Toast.LENGTH_SHORT).show()
+                    if (isNetworkConnected(requireContext())) {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(categoryId = categoryBook.type))
+                    } else {
+                        Toast.makeText(requireContext(), getString(R.string.error_network_not_connected), Toast.LENGTH_SHORT).show()
+                    }
                 })
                 val gridLayoutManager = GridLayoutManager(requireContext(), 5)
                 recyclerViewCategoryBook.apply {

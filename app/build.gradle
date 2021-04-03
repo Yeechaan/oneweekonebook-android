@@ -89,6 +89,9 @@ dependencies {
 
     // 시스템이 권한 요청 코드를 관리하도록 허용
     implementation "androidx.activity:activity-ktx:$activity_version"
+
+    // Floating Button Animation
+    implementation 'com.nambimobile.widgets:expandable-fab:1.0.2'
 }
 repositories {
     mavenCentral()
