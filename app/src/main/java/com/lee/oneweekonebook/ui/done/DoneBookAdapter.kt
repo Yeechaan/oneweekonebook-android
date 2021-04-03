@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemBookBinding
-import com.lee.oneweekonebook.databinding.ItemDoneBinding
 
 class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Book, DoneBookAdapter.ViewHolder>(DoneBookDiffCallback()) {
 
