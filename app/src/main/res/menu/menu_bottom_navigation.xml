@@ -10,6 +10,6 @@
         android:title="@string/search" />
     <item
         android:id="@+id/menu_history"
-        android:icon="@drawable/ic_history"
+        android:icon="@drawable/ic_baseline_history"
         android:title="@string/history" />
 </menu>
