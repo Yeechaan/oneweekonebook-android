@@ -1,9 +1,11 @@
 package com.lee.oneweekonebook.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
+import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModelFactory
 import com.lee.oneweekonebook.utils.isNetworkConnected
@@ -25,6 +30,7 @@ class SearchBookFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
 
         val viewModelFactory = SearchBookViewModelFactory()
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SearchBookViewModel::class.java)
@@ -33,6 +39,11 @@ class SearchBookFragment : Fragment() {
             .apply {
 
                 lifecycleOwner = viewLifecycleOwner
+
+                // show keyboard
+                editTextSearchBook.requestFocus()
+                val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY)
 
                 buttonSearch.setOnClickListener {
                     val isTitleEmpty = editTextSearchBook.text.isNullOrEmpty()

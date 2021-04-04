@@ -14,12 +14,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
+import com.lee.oneweekonebook.ui.reading.ReadingBookAdapter
 import com.lee.oneweekonebook.utils.isNetworkConnected
 
 class HomeFragment : Fragment() {
@@ -33,6 +36,7 @@ class HomeFragment : Fragment() {
 
     // PresentFragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HOME)
 
         val application = requireNotNull(this.activity).application
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
@@ -51,12 +55,22 @@ class HomeFragment : Fragment() {
 
                 fabAddSearch.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
-                    (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
+//                    (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
                 }
 
                 fabAddCamera.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment())
                 }
+
+                val readingBookAdapter = HomeReadingAdapter(HomeReadingListener { book ->
+                    Toast.makeText(requireContext(), book.title, Toast.LENGTH_SHORT).show()
+                })
+                recyclerViewReadingBook.apply {
+                    adapter = readingBookAdapter
+                }
+                homeViewModel.books.observe(viewLifecycleOwner, {
+                    readingBookAdapter.data = it
+                })
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
                     // TODO 카테고리 클릭되면 상세페이지로 이동 (TabLayout 으로 구현)

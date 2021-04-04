@@ -10,7 +10,6 @@
         tools:context=".ui.MainActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
-            style="?toolbarStyle"
             android:id="@+id/toolBar_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

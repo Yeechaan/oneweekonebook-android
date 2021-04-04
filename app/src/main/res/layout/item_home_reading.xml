@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="book"
+            type="com.lee.oneweekonebook.database.model.Book" />
+
+        <variable
+            name="clickListener"
+            type="com.lee.oneweekonebook.ui.home.HomeReadingListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_item_large"
+        android:onClick="@{() -> clickListener.onClick(book)}">
+
+        <ImageView
+            android:id="@+id/imageView_book"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toTopOf="@id/textView_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_art" />
+
+        <TextView
+            android:textAppearance="@style/TextAppearance.Custom.Body3"
+            android:id="@+id/textView_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_item_normal"
+            android:text="@{book.title}"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/imageView_book"
+            app:layout_constraintEnd_toEndOf="@id/imageView_book"
+            app:layout_constraintTop_toBottomOf="@id/imageView_book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

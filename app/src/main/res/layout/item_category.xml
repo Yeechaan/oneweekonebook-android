@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="@id/textView_title"
             app:layout_constraintStart_toStartOf="@id/textView_title"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_search" />
+            tools:src="@drawable/ic_art" />
 
         <TextView
             android:id="@+id/textView_title"

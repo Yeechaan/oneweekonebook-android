@@ -10,6 +10,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentHistoryBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
+import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.done.DoneBookFragment
 import com.lee.oneweekonebook.ui.reading.ReadingBookFragment
 import com.lee.oneweekonebook.ui.wish.WishBookFragment
@@ -30,6 +33,8 @@ class HistoryFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
             .apply {
                 viewPagerHistory.apply {
