@@ -23,6 +23,7 @@ import com.lee.oneweekonebook.utils.isNetworkConnected
 class SearchBookFragment : Fragment() {
 
     var binding: FragmentSearchBookBinding? = null
+    lateinit var inputMethodManager: InputMethodManager
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -42,10 +43,12 @@ class SearchBookFragment : Fragment() {
 
                 // show keyboard
                 editTextSearchBook.requestFocus()
-                val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY)
+                inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
 
                 buttonSearch.setOnClickListener {
+                    inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
+
                     val isTitleEmpty = editTextSearchBook.text.isNullOrEmpty()
                     val isNetworkConnected = isNetworkConnected(requireContext())
 

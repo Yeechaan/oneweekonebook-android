@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/imageView_book"
             android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:adjustViewBounds="true"
             app:layout_constraintBottom_toTopOf="@id/textView_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_item_normal"
             android:text="@{book.title}"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintStart_toStartOf="@id/imageView_book"
             app:layout_constraintEnd_toEndOf="@id/imageView_book"
             app:layout_constraintTop_toBottomOf="@id/imageView_book"
