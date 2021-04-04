@@ -8,8 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentReadingBookBinding
+import com.lee.oneweekonebook.ui.book.BookAdapter
+import com.lee.oneweekonebook.ui.book.BookListener
+import com.lee.oneweekonebook.ui.book.BookMoreListener
 import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModelFactory
@@ -35,15 +39,21 @@ class ReadingBookFragment : Fragment() {
             .apply {
                 lifecycleOwner = this@ReadingBookFragment
 
-                val adapter = ReadingBookAdapter(ReadingBookListener { book ->
-                    Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
-//                findNavController().navigate(ReadingBookFragmentDirections.actionReadingBookFragmentToReadingBookDetailFragment(bookId = book.id))
-                    findNavController().navigate(HistoryFragmentDirections.actionHistoryReadingFragmentToReadingBookDetailFragment(bookId = book.id))
-                })
-                recyclerViewReadingBook.adapter = adapter
+                val bookAdapter = BookAdapter(
+                    BookListener { book ->
+                        Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(HistoryFragmentDirections.actionHistoryReadingFragmentToReadingBookDetailFragment(bookId = book.id))
+                    },
+                    BookMoreListener { view, bookId ->
+                        Toast.makeText(requireContext(), "book.id.toString()", Toast.LENGTH_SHORT).show()
+                    })
+                recyclerViewReadingBook.apply {
+                    adapter = bookAdapter
+                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                }
 
                 readingBookViewModel.books.observe(viewLifecycleOwner, {
-                    (recyclerViewReadingBook.adapter as ReadingBookAdapter).submitList(it)
+                    (recyclerViewReadingBook.adapter as BookAdapter).submitList(it)
                 })
 
             }

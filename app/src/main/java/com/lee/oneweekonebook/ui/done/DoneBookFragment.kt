@@ -11,6 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookBinding
+import com.lee.oneweekonebook.ui.book.BookAdapter
+import com.lee.oneweekonebook.ui.book.BookListener
+import com.lee.oneweekonebook.ui.book.BookMoreListener
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModelFactory
 import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
@@ -38,20 +41,25 @@ class DoneBookFragment : Fragment() {
                 viewModel = doneBookViewModel
                 lifecycleOwner = this@DoneBookFragment
 
-                val doneBookAdapter = DoneBookAdapter(DoneBookListener { book ->
-                    Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
+                val bookAdapter = BookAdapter(
+                    BookListener { book ->
+                        Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
 
-                    Logger.d(book)
+                        Logger.d(book)
 //                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
-                    findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
-                })
+                        findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
+                    },
+                    BookMoreListener { view, bookId ->
+
+                    }
+                )
                 recyclerViewDoneBook.apply {
-                    adapter = doneBookAdapter
+                    adapter = bookAdapter
                     addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 }
 
                 doneBookViewModel.books.observe(viewLifecycleOwner, {
-                    (recyclerViewDoneBook.adapter as DoneBookAdapter).submitList(it)
+                    (recyclerViewDoneBook.adapter as BookAdapter).submitList(it)
                 })
             }
 

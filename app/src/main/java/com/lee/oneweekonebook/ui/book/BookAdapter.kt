@@ -1,7 +1,9 @@
-package com.lee.oneweekonebook.ui.done
+package com.lee.oneweekonebook.ui.book
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,8 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemBookBinding
 
-class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Book, DoneBookAdapter.ViewHolder>(DoneBookDiffCallback()) {
+
+class BookAdapter(private val bookClickListener: BookListener, private val bookMoreClickListener: BookMoreListener) : ListAdapter<Book, BookAdapter.ViewHolder>(BookDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -18,20 +21,24 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, bookClickListener)
+        holder.bind(item, bookClickListener, bookMoreClickListener)
     }
 
     class ViewHolder private constructor(val binding: ItemBookBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Book, bookClickListener: DoneBookListener) {
+        fun bind(item: Book, bookClickListener: BookListener, moreClickListener: BookMoreListener) {
             binding.apply {
                 book = item
-//                clickListener = bookClickListener
+                clickListener = bookClickListener
 
                 if (item.coverImage.isNotEmpty()) {
-                    Glide.with(binding.root.context).load(item.coverImage).into(imageViewBook)
+                    Glide.with(root.context).load(item.coverImage).into(imageViewBook)
                 } else {
-                    Glide.with(binding.root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
+                    Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
+                }
+
+                imageViewMore.setOnClickListener {
+                    moreClickListener.onClick(it, item.id)
                 }
 
                 executePendingBindings()
@@ -41,7 +48,6 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-//                val binding = ItemDoneBinding.inflate(layoutInflater, parent, false)
                 val binding = ItemBookBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
@@ -50,7 +56,7 @@ class DoneBookAdapter(val bookClickListener: DoneBookListener) : ListAdapter<Boo
 }
 
 
-class DoneBookDiffCallback : DiffUtil.ItemCallback<Book>() {
+class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
     override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
         return oldItem.id == newItem.id
     }
@@ -61,6 +67,10 @@ class DoneBookDiffCallback : DiffUtil.ItemCallback<Book>() {
 
 }
 
-class DoneBookListener(val clickListener: (book: Book) -> Unit) {
+class BookListener(val clickListener: (book: Book) -> Unit) {
     fun onClick(book: Book) = clickListener(book)
+}
+
+class BookMoreListener(val clickListener: (view: View, bookId: Int) -> Unit) {
+    fun onClick(view: View, bookId: Int) = clickListener(view, bookId)
 }

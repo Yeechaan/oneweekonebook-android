@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -76,21 +77,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation() {
         bottomNavigationView = binding.bottomNavigation
+
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.homeFragment, false)
+            .build()
+
+        val args = Bundle().apply {
+//            putSerializable("dataMap", dataMap)
+        }
+
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {
-                    navController.navigate(R.id.homeFragment)
+                    navController.navigate(R.id.homeFragment, args, navOptions)
                     true
                 }
                 R.id.menu_search -> {
-                    navController.navigate(R.id.searchBookFragment)
+                    navController.navigate(R.id.searchBookFragment, args, navOptions)
                     true
                 }
                 R.id.menu_history -> {
-                    navController.navigate(R.id.historyFragment)
+                    navController.navigate(R.id.historyFragment, args, navOptions)
                     true
                 }
-                else -> false
+                else -> {
+                    navController.navigate(R.id.homeFragment, args, navOptions)
+                    false
+                }
             }
         }
     }
