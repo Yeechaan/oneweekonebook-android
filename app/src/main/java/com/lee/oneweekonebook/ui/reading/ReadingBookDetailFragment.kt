@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookDetailBinding
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModelFactory
@@ -44,8 +46,7 @@ class ReadingBookDetailFragment : Fragment() {
                     val review = editTextReview.text.toString()
 
                     readingBookDetailViewModel.doneReadingBook(contents = contents, review = review)
-
-//                findNavController().navigate(ReadingBookFragmentDirections.actionReadingBookFragmentToDoneBookFragment())
+                    findNavController().navigate(ReadingBookDetailFragmentDirections.actionReadingBookFragmentToHistoryBookFragment(bookType = BOOK_TYPE_DONE))
                 }
 
                 buttonSaveBook.setOnClickListener {
