@@ -43,11 +43,11 @@ class WishBookFragment : Fragment() {
 
             val bookAdapter = BookAdapter(
                 BookListener { book ->
-//                    val popupMenu = PopupMenu(requireContext(), view)
-//                    setPopupBookSelection(popupMenu, book)
+                    // 책 읽기 시작 TODO dialog 창으로 한번 더 확인
+                    viewModel.addReadingBook(bookId = book.id)
+                    Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
                 },
                 BookMoreListener { view, bookId ->
-                    Toast.makeText(requireContext(), "book.id.toString()", Toast.LENGTH_SHORT).show()
                     val popupMenu = PopupMenu(requireContext(), view)
                     setPopupBookSelection(popupMenu, bookId)
                 }
@@ -69,19 +69,13 @@ class WishBookFragment : Fragment() {
     private fun setPopupBookSelection(popupMenu: PopupMenu, bookId: Int) {
         popupMenu.menuInflater.inflate(R.menu.option_type, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
-
             when (item.itemId) {
-                R.id.m1 -> {
-                    // 책 읽기 시작
-                    viewModel.addReadingBook(bookId = bookId)
-                    findNavController().navigateUp()
-                    Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
-                }
-                R.id.m2 -> {
+                R.id.menu_edit -> {
                     // 수정
 //                    findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH, bookId = book.id.toString()))
+//                    findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToEditBookFragment(bookId = bookId))
                 }
-                R.id.m3 -> {
+                R.id.menu_delete -> {
                     // 삭제
                     viewModel.deleteBook(bookId = bookId)
                     Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()

@@ -13,6 +13,11 @@ class ReadingBookViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
 
     val books = bookDao.getBooksByType(BOOK_TYPE_READING)
 
+    fun deleteBook(bookId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            bookDao.deleteBook(bookId)
+        }
+    }
 }
 
 class ReadingBookViewModelFactory(

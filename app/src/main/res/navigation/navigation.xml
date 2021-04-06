@@ -37,19 +37,19 @@
     </fragment>
 
     <!--    wish-->
-    <!--    <fragment-->
-    <!--        android:id="@+id/wishBookFragment"-->
-    <!--        android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"-->
-    <!--        android:label="@string/wish_title">-->
-    <!--        <action-->
-    <!--            android:id="@+id/action_wishBookFragment_to_addBookFragment"-->
-    <!--            app:destination="@id/addBookFragment" />-->
-    <!--    </fragment>-->
+        <fragment
+            android:id="@+id/wishBookFragment"
+            android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"
+            android:label="@string/wish_title">
+            <action
+                android:id="@+id/action_wishBookFragment_to_editBookFragment"
+                app:destination="@id/editBookFragment" />
+        </fragment>
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/wishBookAddFragment"-->
-    <!--        android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"-->
-    <!--        android:label="@string/wish_add_title" />-->
+<!--        <fragment-->
+<!--            android:id="@+id/wishBookAddFragment"-->
+<!--            android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"-->
+<!--            android:label="@string/wish_add_title" />-->
 
     <!--    done-->
     <fragment
@@ -118,13 +118,9 @@
             android:defaultValue="0"
             app:argType="integer" />
         <action
-            android:id="@+id/action_readingBookFragment_to_doneBookFragment"
-            app:destination="@id/doneBookFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_slide_out"
-            app:popEnterAnim="@anim/anim_slide_in"
-            app:popExitAnim="@anim/anim_slide_out"
-            app:popUpTo="@id/homeFragment" />
+            android:id="@+id/action_readingBookFragment_to_historyBookFragment"
+            app:destination="@id/historyFragment"
+            app:popUpTo="@id/historyFragment" />
     </fragment>
 
     <!--    add-->
@@ -182,6 +178,17 @@
         <action
             android:id="@+id/action_historyDoneFragment_to_doneBookDetailFragment"
             app:destination="@+id/doneBookDetailFragment" />
+    </fragment>
+
+    <!--    edit-->
+    <fragment
+        android:id="@+id/editBookFragment"
+        android:name="com.lee.oneweekonebook.ui.edit.EditBookFragment"
+        android:label="@string/edit">
+        <argument
+            android:name="bookId"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
 </navigation>
