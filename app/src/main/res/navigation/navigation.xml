@@ -76,6 +76,10 @@
         android:id="@+id/searchBookFragment"
         android:name="com.lee.oneweekonebook.ui.search.SearchBookFragment"
         android:label="@string/search_title">
+        <argument
+            android:name="previous"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_searchBookFragment_to_bookDetailFragment"
             app:destination="@id/bookDetailFragment" />
@@ -178,6 +182,9 @@
         <action
             android:id="@+id/action_historyDoneFragment_to_doneBookDetailFragment"
             app:destination="@+id/doneBookDetailFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_editBookFragment"
+            app:destination="@id/editBookFragment" />
     </fragment>
 
     <!--    edit-->

@@ -10,18 +10,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
-import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
 import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.home.PREVIOUS_ADD
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModelFactory
 import com.lee.oneweekonebook.utils.isNetworkConnected
 
 class SearchBookFragment : Fragment() {
 
+    private val args: SearchBookFragmentArgs by navArgs()
     var binding: FragmentSearchBookBinding? = null
     lateinit var inputMethodManager: InputMethodManager
 
@@ -42,9 +44,12 @@ class SearchBookFragment : Fragment() {
                 lifecycleOwner = viewLifecycleOwner
 
                 // show keyboard
-                editTextSearchBook.requestFocus()
-                inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+                if (args.previous == PREVIOUS_ADD) {
+
+                    editTextSearchBook.requestFocus()
+                    inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+                }
 
                 buttonSearch.setOnClickListener {
                     inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)

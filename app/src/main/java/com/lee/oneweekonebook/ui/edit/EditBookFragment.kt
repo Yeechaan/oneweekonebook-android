@@ -15,6 +15,7 @@ import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentEditBookBinding
 import com.lee.oneweekonebook.ui.edit.viewmodel.EditBookViewModel
 import com.lee.oneweekonebook.ui.edit.viewmodel.EditBookViewModelFactory
+import com.orhanobut.logger.Logger
 
 class EditBookFragment : Fragment() {
 
@@ -32,11 +33,13 @@ class EditBookFragment : Fragment() {
                 lifecycleOwner = this@EditBookFragment
                 viewModel = editBookViewModel
 
-                if (editBookViewModel.book.coverImage.isNotEmpty()) {
-                    Glide.with(root.context).load(editBookViewModel.book.coverImage).into(imageViewBook)
-                } else {
-                    Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
-                }
+                editBookViewModel.book.observe(viewLifecycleOwner, {
+                    if (it.coverImage.isNotEmpty()) {
+                        Glide.with(root.context).load(it.coverImage).into(imageViewBook)
+                    } else {
+                        Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
+                    }
+                })
 
                 buttonDone.setOnClickListener {
                     val editedBook = Book(

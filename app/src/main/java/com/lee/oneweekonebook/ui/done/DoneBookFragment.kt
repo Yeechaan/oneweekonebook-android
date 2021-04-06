@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookBinding
 import com.lee.oneweekonebook.ui.book.BookAdapter
@@ -21,6 +23,7 @@ import com.orhanobut.logger.Logger
 
 class DoneBookFragment : Fragment() {
 
+    lateinit var doneBookViewModel: DoneBookViewModel
     var binding: FragmentDoneBookBinding? = null
 
     override fun onDestroyView() {
@@ -34,7 +37,7 @@ class DoneBookFragment : Fragment() {
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
 
         val viewModelFactory = DoneBookViewModelFactory(bookDao)
-        val doneBookViewModel = ViewModelProvider(this, viewModelFactory).get(DoneBookViewModel::class.java)
+        doneBookViewModel = ViewModelProvider(this, viewModelFactory).get(DoneBookViewModel::class.java)
 
         binding = FragmentDoneBookBinding.inflate(inflater, container, false)
             .apply {
@@ -50,7 +53,8 @@ class DoneBookFragment : Fragment() {
                         findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
                     },
                     BookMoreListener { view, bookId ->
-
+                        val popupMenu = PopupMenu(requireContext(), view)
+                        setPopupBookSelection(popupMenu, bookId)
                     }
                 )
                 recyclerViewDoneBook.apply {
@@ -64,6 +68,26 @@ class DoneBookFragment : Fragment() {
             }
 
         return binding?.root
+    }
+
+
+    private fun setPopupBookSelection(popupMenu: PopupMenu, bookId: Int) {
+        popupMenu.menuInflater.inflate(R.menu.option_type, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.menu_edit -> {
+                    // 수정
+                    findNavController().navigate(HistoryFragmentDirections.actionHistoryFragmentToEditBookFragment(bookId = bookId))
+                }
+                R.id.menu_delete -> {
+                    // 삭제
+                    doneBookViewModel.deleteBook(bookId = bookId)
+                    Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+        popupMenu.show()
     }
 
 }
