@@ -17,6 +17,7 @@ import com.lee.oneweekonebook.databinding.FragmentWishBookBinding
 import com.lee.oneweekonebook.ui.book.BookAdapter
 import com.lee.oneweekonebook.ui.book.BookListener
 import com.lee.oneweekonebook.ui.book.BookMoreListener
+import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModelFactory
 
@@ -72,8 +73,7 @@ class WishBookFragment : Fragment() {
             when (item.itemId) {
                 R.id.menu_edit -> {
                     // 수정
-//                    findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToAddBookFragment(bookType = BOOK_TYPE_WISH, bookId = book.id.toString()))
-//                    findNavController().navigate(WishBookFragmentDirections.actionWishBookFragmentToEditBookFragment(bookId = bookId))
+                    findNavController().navigate(HistoryFragmentDirections.actionHistoryFragmentToEditBookFragment(bookId = bookId))
                 }
                 R.id.menu_delete -> {
                     // 삭제

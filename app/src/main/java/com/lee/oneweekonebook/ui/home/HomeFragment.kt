@@ -1,8 +1,5 @@
 package com.lee.oneweekonebook.ui.home
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +11,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
-import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
-import com.lee.oneweekonebook.ui.reading.ReadingBookAdapter
 import com.lee.oneweekonebook.utils.isNetworkConnected
+
+const val PREVIOUS_ADD = 1
 
 class HomeFragment : Fragment() {
 
@@ -54,7 +50,7 @@ class HomeFragment : Fragment() {
 //                }
 
                 fabAddSearch.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment(previous = PREVIOUS_ADD))
 //                    (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
                 }
 
