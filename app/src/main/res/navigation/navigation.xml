@@ -19,18 +19,10 @@
         android:label="@string/home_title">
         <action
             android:id="@+id/action_homeFragment_to_searchBookFragment"
-            app:destination="@id/searchBookFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_fade_out"
-            app:popEnterAnim="@anim/anim_fade_in"
-            app:popExitAnim="@anim/anim_slide_out" />
+            app:destination="@id/searchBookFragment" />
         <action
             android:id="@+id/action_homeFragment_to_addBookFragment"
-            app:destination="@id/addBookFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_fade_out"
-            app:popEnterAnim="@anim/anim_fade_in"
-            app:popExitAnim="@anim/anim_slide_out" />
+            app:destination="@id/addBookFragment" />
         <action
             android:id="@+id/action_homeFragment_to_suggestBookFragment"
             app:destination="@id/suggestBookFragment" />
@@ -107,11 +99,7 @@
         android:label="@string/reading_title">
         <action
             android:id="@+id/action_readingBookFragment_to_readingBookDetailFragment"
-            app:destination="@id/readingBookDetailFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_slide_out"
-            app:popEnterAnim="@anim/anim_slide_in"
-            app:popExitAnim="@anim/anim_slide_out" />
+            app:destination="@id/readingBookDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/readingBookDetailFragment"
@@ -173,15 +161,12 @@
         <!--        reading-->
         <action
             android:id="@+id/action_historyReadingFragment_to_readingBookDetailFragment"
-            app:destination="@id/readingBookDetailFragment"
-            app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_slide_out"
-            app:popEnterAnim="@anim/anim_slide_in"
-            app:popExitAnim="@anim/anim_slide_out" />
+            app:destination="@id/readingBookDetailFragment" />
         <!--        done-->
         <action
             android:id="@+id/action_historyDoneFragment_to_doneBookDetailFragment"
             app:destination="@+id/doneBookDetailFragment" />
+        <!--    edit-->
         <action
             android:id="@+id/action_historyFragment_to_editBookFragment"
             app:destination="@id/editBookFragment" />

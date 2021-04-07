@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemBookBinding
 
@@ -39,6 +41,19 @@ class BookAdapter(private val bookClickListener: BookListener, private val bookM
 
                 imageViewMore.setOnClickListener {
                     moreClickListener.onClick(it, item.id)
+                }
+
+                when (item.type) {
+                    BOOK_TYPE_READING -> {
+                        imageViewFrom.visibility = View.VISIBLE
+                        textViewFrom.visibility = View.VISIBLE
+                    }
+                    BOOK_TYPE_DONE -> {
+                        imageViewFrom.visibility = View.VISIBLE
+                        textViewFrom.visibility = View.VISIBLE
+                        imageViewTo.visibility = View.VISIBLE
+                        textViewTo.visibility = View.VISIBLE
+                    }
                 }
 
                 executePendingBindings()

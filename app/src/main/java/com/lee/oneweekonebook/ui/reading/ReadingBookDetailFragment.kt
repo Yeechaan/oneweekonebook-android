@@ -14,6 +14,8 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookDetailBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
+import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModelFactory
 
@@ -28,6 +30,7 @@ class ReadingBookDetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HOME)
 
         val application = requireNotNull(this.activity).application
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
@@ -37,7 +40,6 @@ class ReadingBookDetailFragment : Fragment() {
 
         binding = FragmentReadingBookDetailBinding.inflate(inflater, container, false)
             .apply {
-
                 viewModel = readingBookDetailViewModel
                 lifecycleOwner = this@ReadingBookDetailFragment
 
@@ -57,6 +59,10 @@ class ReadingBookDetailFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(R.string.reading_save), Toast.LENGTH_SHORT).show()
                     findNavController().navigateUp()
                 }
+
+                readingBookDetailViewModel.book.observe(viewLifecycleOwner, {
+                    (activity as MainActivity).setToolbarTitle(it.title)
+                })
             }
 
         return binding?.root

@@ -28,6 +28,7 @@ class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) 
                 it.contents = contents
                 it.review = review
                 it.type = BOOK_TYPE_DONE
+                it.endDate = System.currentTimeMillis()
                 bookDao.update(it)
             }
         }

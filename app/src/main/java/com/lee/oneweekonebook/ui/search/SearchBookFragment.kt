@@ -40,14 +40,12 @@ class SearchBookFragment : Fragment() {
 
         binding = FragmentSearchBookBinding.inflate(inflater, container, false)
             .apply {
-
+                inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 lifecycleOwner = viewLifecycleOwner
 
                 // show keyboard
                 if (args.previous == PREVIOUS_ADD) {
-
                     editTextSearchBook.requestFocus()
-                    inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
                 }
 

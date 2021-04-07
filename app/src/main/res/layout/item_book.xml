@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="book"
             type="com.lee.oneweekonebook.database.model.Book" />
@@ -11,6 +12,8 @@
         <variable
             name="clickListener"
             type="com.lee.oneweekonebook.ui.book.BookListener" />
+
+        <import type="com.lee.oneweekonebook.utils.DateUtilsKt" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,9 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_writer"
-            app:layout_constraintTop_toTopOf="@id/textView_writer"
             app:layout_constraintBottom_toBottomOf="@id/textView_writer"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_writer" />
 
         <TextView
             android:id="@+id/textView_writer"
@@ -76,9 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_publisher"
-            app:layout_constraintTop_toTopOf="@id/textView_publisher"
             app:layout_constraintBottom_toBottomOf="@id/textView_publisher"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_publisher" />
 
         <TextView
             android:id="@+id/textView_publisher"
@@ -99,9 +102,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_date"
-            app:layout_constraintTop_toTopOf="@id/textView_date"
             app:layout_constraintBottom_toBottomOf="@id/textView_date"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_date" />
 
         <TextView
             android:id="@+id/textView_date"
@@ -112,94 +115,71 @@
             android:text="@{book.pubDate}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageView_more"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_date"
             app:layout_constraintTop_toBottomOf="@id/textView_publisher"
-            app:layout_constraintEnd_toStartOf="@id/imageView_more"
             tools:text="Date" />
 
         <ImageView
             android:id="@+id/imageView_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_more"
             android:layout_marginEnd="@dimen/spacing_item_normal"
+            android:src="@drawable/ic_baseline_more"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_publisher" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView_title"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/spacing_item_normal"-->
-<!--            android:text="@{book.title}"-->
-<!--            android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/cardView_book"-->
-<!--            app:layout_constraintTop_toTopOf="@id/cardView_book"-->
-<!--            tools:text="Book Title" />-->
+        <ImageView
+            android:id="@+id/imageView_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_start_line"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/textView_from"
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_from" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView_writer"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_writer"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/textView_writer"-->
-<!--            app:layout_constraintStart_toStartOf="@id/textView_title"-->
-<!--            app:layout_constraintTop_toTopOf="@id/textView_writer" />-->
+        <TextView
+            android:id="@+id/textView_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:layout_marginTop="@dimen/spacing_item_very_small"
+            android:text="@{DateUtilsKt.convertLongToDateString(book.startDate)}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/imageView_from"
+            app:layout_constraintTop_toBottomOf="@id/textView_date"
+            tools:text="Date" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView_writer"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/spacing_item_small"-->
-<!--            android:layout_marginTop="@dimen/spacing_item_small"-->
-<!--            android:text="@{book.writer}"-->
-<!--            android:textAppearance="@style/TextAppearance.Custom.Body4"-->
-<!--            app:layout_constraintStart_toEndOf="@id/imageView_writer"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/textView_title"-->
-<!--            tools:text="Writer" />-->
+        <ImageView
+            android:id="@+id/imageView_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:src="@drawable/ic_finish_line"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/textView_from"
+            app:layout_constraintStart_toEndOf="@id/textView_from"
+            app:layout_constraintTop_toTopOf="@id/textView_from" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView_publisher"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_publisher"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/textView_publisher"-->
-<!--            app:layout_constraintStart_toStartOf="@id/textView_title"-->
-<!--            app:layout_constraintTop_toTopOf="@id/textView_publisher" />-->
+        <TextView
+            android:id="@+id/textView_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:layout_marginTop="@dimen/spacing_item_very_small"
+            android:text="@{DateUtilsKt.convertLongToDateString(book.endDate)}"
+            android:textAppearance="@style/TextAppearance.Custom.Body5"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/imageView_to"
+            app:layout_constraintTop_toBottomOf="@id/textView_date"
+            tools:text="Date" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView_publisher"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/spacing_item_small"-->
-<!--            android:layout_marginTop="@dimen/spacing_item_small"-->
-<!--            android:text="@{book.publisher}"-->
-<!--            android:textAppearance="@style/TextAppearance.Custom.Body4"-->
-<!--            app:layout_constraintStart_toEndOf="@id/imageView_publisher"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/textView_writer"-->
-<!--            tools:text="Publisher" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView_date"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_date"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/textView_date"-->
-<!--            app:layout_constraintStart_toStartOf="@id/textView_title"-->
-<!--            app:layout_constraintTop_toTopOf="@id/textView_date" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView_date"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/spacing_item_small"-->
-<!--            android:layout_marginTop="@dimen/spacing_item_small"-->
-<!--            android:text="date!!"-->
-<!--            android:textAppearance="@style/TextAppearance.Custom.Body4"-->
-<!--            app:layout_constraintStart_toEndOf="@id/imageView_date"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/textView_publisher"-->
-<!--            tools:text="Date" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

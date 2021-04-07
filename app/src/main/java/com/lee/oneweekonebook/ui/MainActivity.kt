@@ -114,6 +114,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setToolbarTitle(title: String) {
+        binding.toolBarMain.title = title
+    }
+
     fun registerPermissionResultListener(listener: PermissionResultListener) {
         permissionResultListener = listener
     }

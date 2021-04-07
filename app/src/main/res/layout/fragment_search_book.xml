@@ -16,7 +16,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_book_title"
-            android:layout_margin="4dp"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_search">
@@ -33,9 +34,11 @@
             android:id="@+id/button_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:layout_marginStart="@dimen/spacing_item_small"
+            android:layout_marginEnd="@dimen/spacing_item_very_small"
+            android:text="@string/search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_search_book"
+            app:layout_constraintStart_toEndOf="@id/layout_search_book"
             app:layout_constraintBottom_toBottomOf="@id/layout_search_book"/>
 
         <androidx.recyclerview.widget.RecyclerView
