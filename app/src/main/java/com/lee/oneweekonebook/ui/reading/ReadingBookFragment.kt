@@ -44,7 +44,6 @@ class ReadingBookFragment : Fragment() {
 
                 val bookAdapter = BookAdapter(
                     BookListener { book ->
-                        Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
                         findNavController().navigate(HistoryFragmentDirections.actionHistoryReadingFragmentToReadingBookDetailFragment(bookId = book.id))
                     },
                     BookMoreListener { view, bookId ->

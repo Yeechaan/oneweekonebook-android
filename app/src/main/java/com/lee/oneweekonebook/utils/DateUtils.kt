@@ -43,3 +43,8 @@ fun String.convertStringToDate(pattern: String): Date = run {
     val sdf = SimpleDateFormat(pattern, Locale.getDefault())
     sdf.parse(this)!!
 }
+
+@SuppressLint("SimpleDateFormat")
+fun Long.convertLongToDateString(): String = run {
+    SimpleDateFormat("yyyy-MM-dd").format(this).toString()
+}
