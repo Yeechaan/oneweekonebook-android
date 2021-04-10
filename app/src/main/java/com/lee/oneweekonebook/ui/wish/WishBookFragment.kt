@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
-import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentWishBookBinding
 import com.lee.oneweekonebook.ui.book.BookAdapter
 import com.lee.oneweekonebook.ui.book.BookListener
@@ -47,11 +46,14 @@ class WishBookFragment : Fragment() {
             val bookAdapter = BookAdapter(
                 BookListener { book ->
                     // 책 읽기 시작
-                    ConfirmDialog(onConfirm = {
-                        viewModel.addReadingBook(bookId = book.id)
-                        findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToHistoryReadingBookFragment(bookType = BOOK_TYPE_READING))
-                        Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
-                    }).show(childFragmentManager, "Dialog")
+                    ConfirmDialog(
+                        description = getString(R.string.dialog_book_add_description),
+                        positiveMessage = getString(R.string.dialog_book_confirm),
+                        onConfirm = {
+                            viewModel.addReadingBook(bookId = book.id)
+                            findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToHistoryReadingBookFragment(bookType = BOOK_TYPE_READING))
+                            Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
+                        }).show(childFragmentManager, ConfirmDialog.TAG)
                 },
                 BookMoreListener { view, bookId ->
                     val popupMenu = PopupMenu(requireContext(), view)

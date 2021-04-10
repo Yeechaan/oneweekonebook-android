@@ -20,6 +20,7 @@ import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
+import com.lee.oneweekonebook.utils.ConfirmDialog
 
 class BookDetailFragment : Fragment() {
 
@@ -57,15 +58,27 @@ class BookDetailFragment : Fragment() {
                     }
 
                     buttonAddBook.setOnClickListener {
-                        bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
-                        findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
-                        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                        ConfirmDialog(
+                            description = getString(R.string.dialog_book_add_description),
+                            positiveMessage = getString(R.string.dialog_book_confirm),
+                            onConfirm = {
+                                bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
+                                findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
+                                (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                            }
+                        ).show(childFragmentManager, ConfirmDialog.TAG)
                     }
 
                     buttonFavorite.setOnClickListener {
-                        bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
-                        findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
-                        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                        ConfirmDialog(
+                            description = getString(R.string.dialog_book_wish_description),
+                            positiveMessage = getString(R.string.dialog_book_confirm),
+                            onConfirm = {
+                                bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
+                                findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
+                                (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                            }
+                        ).show(childFragmentManager, ConfirmDialog.TAG)
                     }
                 }
 

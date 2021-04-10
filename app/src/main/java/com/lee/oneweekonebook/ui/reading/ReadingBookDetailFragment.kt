@@ -18,6 +18,7 @@ import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModelFactory
+import com.lee.oneweekonebook.utils.ConfirmDialog
 
 class ReadingBookDetailFragment : Fragment() {
 
@@ -30,7 +31,7 @@ class ReadingBookDetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HOME)
+//        (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HOME)
 
         val application = requireNotNull(this.activity).application
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
@@ -44,11 +45,17 @@ class ReadingBookDetailFragment : Fragment() {
                 lifecycleOwner = this@ReadingBookDetailFragment
 
                 buttonDoneBook.setOnClickListener {
-                    val contents = editTextTitle.text.toString()
-                    val review = editTextReview.text.toString()
-
-                    readingBookDetailViewModel.doneReadingBook(contents = contents, review = review)
-                    findNavController().navigate(ReadingBookDetailFragmentDirections.actionReadingBookFragmentToHistoryBookFragment(bookType = BOOK_TYPE_DONE))
+                    ConfirmDialog(
+                        description = getString(R.string.dialog_book_done_description),
+                        positiveMessage = getString(R.string.dialog_book_positive),
+                        negativeMessage = getString(R.string.dialog_book_negative),
+                        onConfirm = {
+                            val contents = editTextTitle.text.toString()
+                            val review = editTextReview.text.toString()
+                            readingBookDetailViewModel.doneReadingBook(contents = contents, review = review)
+                            findNavController().navigate(ReadingBookDetailFragmentDirections.actionReadingBookFragmentToHistoryBookFragment(bookType = BOOK_TYPE_DONE))
+                        }
+                    ).show(childFragmentManager, ConfirmDialog.TAG)
                 }
 
                 buttonSaveBook.setOnClickListener {

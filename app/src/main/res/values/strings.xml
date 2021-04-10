@@ -51,8 +51,12 @@
 
     <string name="error_network_not_connected">네트워크 상태를 확인해주세요</string>
 
-    <string name="dialog_book_add">독서를 시작하시겠습니까?</string>
+    <string name="dialog_book_add_description">독서를 시작하시겠습니까?</string>
+    <string name="dialog_book_done_description">독서를 완료하시겠습니까?</string>
+    <string name="dialog_book_wish_description">읽고 싶은 책 목록에 추가하시겠습니까?</string>
     <string name="dialog_book_confirm">시작하기</string>
     <string name="dialog_book_cancel">취소</string>
+    <string name="dialog_book_positive">네!!</string>
+    <string name="dialog_book_negative">다음에 할게요~</string>
 
 </resources>
