@@ -27,4 +27,9 @@
         <item name="colorOnPrimary">?attr/colorOnSurface</item>
     </style>
 
+    <style name="Widget.Custom.TabButton" parent="Widget.Custom.Button">
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/white</item>
+    </style>
+
 </resources>

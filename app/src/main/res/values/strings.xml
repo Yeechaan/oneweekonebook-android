@@ -40,6 +40,7 @@
     <string name="reading_review">느낀점</string>
 
     <string name="book_save">저장</string>
+    <string name="book_save_contents">내용 저장하기</string>
     <string name="book_review_count">(%d)</string>
 
     <string name="home_category">카테고리</string>
@@ -57,6 +58,6 @@
     <string name="dialog_book_confirm">시작하기</string>
     <string name="dialog_book_cancel">취소</string>
     <string name="dialog_book_positive">네!!</string>
-    <string name="dialog_book_negative">다음에 할게요~</string>
+    <string name="dialog_book_negative">다음에요~</string>
 
 </resources>

@@ -48,7 +48,7 @@ class WishBookFragment : Fragment() {
                     // 책 읽기 시작
                     ConfirmDialog(
                         description = getString(R.string.dialog_book_add_description),
-                        positiveMessage = getString(R.string.dialog_book_confirm),
+                        positiveMessage = getString(R.string.dialog_book_positive),
                         onConfirm = {
                             viewModel.addReadingBook(bookId = book.id)
                             findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToHistoryReadingBookFragment(bookType = BOOK_TYPE_READING))

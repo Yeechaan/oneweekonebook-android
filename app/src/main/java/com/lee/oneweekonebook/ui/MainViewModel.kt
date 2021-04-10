@@ -1,46 +1,54 @@
-package com.lee.oneweekonebook.ui.reading.viewmodel
+package com.lee.oneweekonebook.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.database.model.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
+class MainViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
 
-    val book = bookDao.getBookAsync(bookId)
+    private var currentBookId: Int = 0
+    private lateinit var book: Book
 
-    fun saveReadingBook(contents: String, review: String) {
+    fun saveBook(book: Book) {
         viewModelScope.launch(Dispatchers.IO) {
-            book.value?.let { it ->
-                it.contents = contents
-                it.review = review
-                bookDao.update(it)
-            }
+            bookDao.update(book)
         }
     }
 
+    fun setBookId(bookId: Int) {
+        currentBookId = bookId
+
+        viewModelScope.launch(Dispatchers.IO) {
+            book = bookDao.getBook(bookId)
+        }
+    }
+
+    fun getCurrentBook() = book
+
     fun doneReadingBook() {
         viewModelScope.launch(Dispatchers.IO) {
-            book.value?.let { it ->
+            book.let {
                 it.type = BOOK_TYPE_DONE
                 it.endDate = System.currentTimeMillis()
                 bookDao.update(it)
             }
         }
     }
+
 }
 
-class ReadingBookDetailViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-    private val bookId: Int
+class MainViewModelFactory(
+    private val bookDao: BookDatabaseDao,
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ReadingBookDetailViewModel::class.java)) {
-            return ReadingBookDetailViewModel(bookDatabaseDao, bookId) as T
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(bookDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

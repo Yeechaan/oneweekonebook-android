@@ -16,7 +16,7 @@ open class ConfirmDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val negativeMessage = negativeMessage.ifEmptyReturnNull() ?: getString(R.string.dialog_book_cancel)
+            val negativeMessage = negativeMessage.ifEmptyReturnNull() ?: getString(R.string.dialog_book_negative)
 
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)

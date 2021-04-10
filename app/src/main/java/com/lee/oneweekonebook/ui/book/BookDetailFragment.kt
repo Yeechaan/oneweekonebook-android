@@ -60,7 +60,7 @@ class BookDetailFragment : Fragment() {
                     buttonAddBook.setOnClickListener {
                         ConfirmDialog(
                             description = getString(R.string.dialog_book_add_description),
-                            positiveMessage = getString(R.string.dialog_book_confirm),
+                            positiveMessage = getString(R.string.dialog_book_positive),
                             onConfirm = {
                                 bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
                                 findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
@@ -72,7 +72,7 @@ class BookDetailFragment : Fragment() {
                     buttonFavorite.setOnClickListener {
                         ConfirmDialog(
                             description = getString(R.string.dialog_book_wish_description),
-                            positiveMessage = getString(R.string.dialog_book_confirm),
+                            positiveMessage = getString(R.string.dialog_book_positive),
                             onConfirm = {
                                 bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
                                 findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
@@ -81,7 +81,6 @@ class BookDetailFragment : Fragment() {
                         ).show(childFragmentManager, ConfirmDialog.TAG)
                     }
                 }
-
 
             }
 
