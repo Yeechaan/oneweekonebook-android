@@ -156,8 +156,8 @@
             app:argType="integer" />
         <!--        wish-->
         <action
-            android:id="@+id/action_historyWishFragment_to_readingBookFragment"
-            app:destination="@id/readingBookFragment" />
+            android:id="@+id/action_historyWishFragment_to_historyReadingBookFragment"
+            app:destination="@id/historyFragment" />
         <!--        reading-->
         <action
             android:id="@+id/action_historyReadingFragment_to_readingBookDetailFragment"

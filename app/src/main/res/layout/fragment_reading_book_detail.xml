@@ -17,7 +17,7 @@
             android:id="@+id/button_save_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_done_outline"
+            android:src="@drawable/ic_pencil"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -26,18 +26,9 @@
             android:id="@+id/button_done_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_post_add"
+            android:src="@drawable/ic_library"
             app:layout_constraintEnd_toStartOf="@id/button_save_book"
             app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageButton
-            style="@style/Widget.Custom.Button.Small"
-            android:id="@+id/button_delete_book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_delete"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/button_done_book" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Custom.Text.Search.Front"

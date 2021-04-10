@@ -14,12 +14,12 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
+            android:textAppearance="@style/TextAppearance.Custom.Body3.Bold"
             android:id="@+id/textView_reading_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/reading_title"
-            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_large"
             android:layout_marginHorizontal="@dimen/spacing_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_small"
             android:text="@string/home_category"
-            android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
+            android:textAppearance="@style/TextAppearance.Custom.Body3.Bold"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView_category_book"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recyclerView_reading_book"
@@ -68,26 +68,28 @@
         <com.nambimobile.widgets.efab.ExpandableFabLayout
             android:id="@+id/expandable_fab_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
             <com.nambimobile.widgets.efab.Overlay
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:overlay_color="#000000"
                 app:overlay_alpha="0.75"
-                app:overlay_openingAnimationDurationMs="1000"/>
+                app:overlay_color="#000000"
+                app:overlay_openingAnimationDurationMs="1000" />
 
             <com.nambimobile.widgets.efab.ExpandableFab
                 android:id="@+id/expandable_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="@dimen/spacing_item_normal"
                 android:layout_marginEnd="@dimen/spacing_item_normal"
+                android:layout_marginBottom="@dimen/spacing_item_normal"
+                app:efab_closingAnticipateTension="0"
                 app:efab_color="@color/shamrock"
                 app:efab_icon="@drawable/ic_baseline_add"
-                app:efab_iconAnimationRotationDeg="-225"
-                app:efab_closingAnticipateTension="0" />
+                app:efab_iconAnimationRotationDeg="-225" />
 
             <com.nambimobile.widgets.efab.FabOption
                 android:id="@+id/fab_add_search"
@@ -95,16 +97,17 @@
                 android:layout_height="wrap_content"
                 app:fab_color="@color/olive"
                 app:fab_icon="@drawable/ic_baseline_search"
-                app:label_text="검색하여 추가"
-                app:label_backgroundColor="#808080" />
+                app:label_backgroundColor="#808080"
+                app:label_text="검색하여 추가" />
+
             <com.nambimobile.widgets.efab.FabOption
                 android:id="@+id/fab_add_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fab_color="@color/olive"
                 app:fab_icon="@drawable/ic_baseline_camera"
-                app:label_text="직접 추가"
-                app:label_backgroundColor="#808080" />
+                app:label_backgroundColor="#808080"
+                app:label_text="직접 추가" />
 
         </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

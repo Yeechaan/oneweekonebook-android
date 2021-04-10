@@ -13,33 +13,25 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Custom.Text.Search.Front"
             android:id="@+id/layout_search_book"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_search_book"
             android:hint="@string/search_book_title"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/button_search">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.Custom.Text"
                 android:id="@+id/editText_search_book"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
+                android:imeOptions="actionSearch"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/button_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_item_small"
-            android:layout_marginEnd="@dimen/spacing_item_very_small"
-            android:text="@string/search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/layout_search_book"
-            app:layout_constraintBottom_toBottomOf="@id/layout_search_book"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_search_book"

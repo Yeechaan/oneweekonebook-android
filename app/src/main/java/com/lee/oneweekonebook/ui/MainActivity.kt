@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNavigation()
 
-
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .methodCount(1)
             .tag(APPLICATION_ID)
@@ -101,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    navController.navigate(R.id.homeFragment, args, navOptions)
                     false
                 }
             }

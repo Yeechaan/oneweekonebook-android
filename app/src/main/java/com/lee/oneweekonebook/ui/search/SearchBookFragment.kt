@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -49,22 +50,28 @@ class SearchBookFragment : Fragment() {
                     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
                 }
 
-                buttonSearch.setOnClickListener {
-                    inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
+                editTextSearchBook.setOnEditorActionListener { textView, action, _ ->
+                    when (action) {
+                        EditorInfo.IME_ACTION_SEARCH -> {
+//                            inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-                    val isTitleEmpty = editTextSearchBook.text.isNullOrEmpty()
-                    val isNetworkConnected = isNetworkConnected(requireContext())
+                            val isTitleEmpty = textView.text.isNullOrEmpty()
+                            val isNetworkConnected = isNetworkConnected(requireContext())
 
-                    when {
-                        isNetworkConnected && !isTitleEmpty -> {
-                            viewModel.searchBook(editTextSearchBook.text.toString())
+                            when {
+                                isNetworkConnected && !isTitleEmpty -> {
+                                    viewModel.searchBook(editTextSearchBook.text.toString())
+                                }
+                                isTitleEmpty -> {
+                                    Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
+                                }
+                                !isNetworkConnected -> {
+                                    Toast.makeText(requireContext(), getString(R.string.error_network_not_connected), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            true
                         }
-                        isTitleEmpty -> {
-                            Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
-                        }
-                        !isNetworkConnected -> {
-                            Toast.makeText(requireContext(), getString(R.string.error_network_not_connected), Toast.LENGTH_SHORT).show()
-                        }
+                        else -> false
                     }
                 }
 
