@@ -62,13 +62,11 @@ class MainActivity : AppCompatActivity() {
             R.id.searchBookFragment,
             R.id.historyFragment
         ).build()
+
         binding.toolBarMain.setupWithNavController(navController, appBarConfiguration)
         binding.toolBarMain.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.toolBar_settings -> {
-                    // TODO 관리
-                    Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show()
-                }
+                R.id.toolBar_settings -> navController.navigate(R.id.navigation_setting)
             }
             true
         }

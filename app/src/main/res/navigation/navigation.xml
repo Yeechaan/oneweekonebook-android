@@ -4,6 +4,8 @@
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
 
+    <include app:graph="@navigation/navigation_setting" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.lee.oneweekonebook.ui.splash.SplashFragment"
@@ -29,19 +31,19 @@
     </fragment>
 
     <!--    wish-->
-        <fragment
-            android:id="@+id/wishBookFragment"
-            android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"
-            android:label="@string/wish_title">
-            <action
-                android:id="@+id/action_wishBookFragment_to_editBookFragment"
-                app:destination="@id/editBookFragment" />
-        </fragment>
+    <fragment
+        android:id="@+id/wishBookFragment"
+        android:name="com.lee.oneweekonebook.ui.wish.WishBookFragment"
+        android:label="@string/wish_title">
+        <action
+            android:id="@+id/action_wishBookFragment_to_editBookFragment"
+            app:destination="@id/editBookFragment" />
+    </fragment>
 
-<!--        <fragment-->
-<!--            android:id="@+id/wishBookAddFragment"-->
-<!--            android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"-->
-<!--            android:label="@string/wish_add_title" />-->
+    <!--        <fragment-->
+    <!--            android:id="@+id/wishBookAddFragment"-->
+    <!--            android:name="com.lee.oneweekonebook.ui.wish.WishBookAddFragment"-->
+    <!--            android:label="@string/wish_add_title" />-->
 
     <!--    done-->
     <fragment
