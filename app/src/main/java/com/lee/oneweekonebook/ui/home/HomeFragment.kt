@@ -11,13 +11,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
+import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
+import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
 import com.lee.oneweekonebook.utils.isNetworkConnected
+import com.orhanobut.logger.Logger
 
 const val PREVIOUS_ADD = 1
 
@@ -51,7 +56,6 @@ class HomeFragment : Fragment() {
 
                 fabAddSearch.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment(previous = PREVIOUS_ADD))
-//                    (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
                 }
 
                 fabAddCamera.setOnClickListener {
@@ -59,13 +63,25 @@ class HomeFragment : Fragment() {
                 }
 
                 val readingBookAdapter = HomeReadingAdapter(HomeReadingListener { book ->
-                    Toast.makeText(requireContext(), book.title, Toast.LENGTH_SHORT).show()
+                    when (book.type) {
+                        BOOK_TYPE_UNKNOWN -> {
+                            expandableFab.performClick()
+                        }
+                        BOOK_TYPE_READING -> {
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookDetailFragment(bookId = book.id))
+                            (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                        }
+                    }
                 })
                 recyclerViewReadingBook.apply {
                     adapter = readingBookAdapter
                 }
                 homeViewModel.books.observe(viewLifecycleOwner, {
-                    readingBookAdapter.data = it
+                    if (it.isEmpty()) {
+                        readingBookAdapter.data = listOf(Book(type = BOOK_TYPE_UNKNOWN))
+                    } else {
+                        readingBookAdapter.data = it
+                    }
                 })
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->

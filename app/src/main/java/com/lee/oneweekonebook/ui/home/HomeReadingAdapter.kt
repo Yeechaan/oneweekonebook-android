@@ -2,6 +2,8 @@ package com.lee.oneweekonebook.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.marginLeft
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
@@ -37,7 +39,9 @@ class HomeReadingAdapter(private val homeReadingListener: HomeReadingListener) :
                 if (item.coverImage.isNotEmpty()) {
                     Glide.with(root.context).load(item.coverImage).into(imageViewBook)
                 } else {
-                    Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
+//                    Glide.with(root.context).load(R.drawable.ic_book_add).into(imageViewBook)
+                    imageViewBook.setImageResource(R.drawable.ic_book_add)
+                    imageViewBook.setPadding(120)
                 }
 
                 executePendingBindings()
