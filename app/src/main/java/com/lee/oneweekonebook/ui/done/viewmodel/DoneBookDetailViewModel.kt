@@ -12,6 +12,10 @@ class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : V
 
     val book = bookDao.getBookAsync(bookId)
 
+    private val _isContentsPage = MutableLiveData(true)
+    val isContentsPage: LiveData<Boolean>
+        get() = _isContentsPage
+
     val bookPeriodFormat = Transformations.map(book) { book ->
         DateUtils().formatBookPeriod(book.startDate, book.endDate)
     }
@@ -24,6 +28,10 @@ class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : V
                 bookDao.update(it)
             }
         }
+    }
+
+    fun setCurrentPage(isContentsPage: Boolean) = run {
+        _isContentsPage.value = isContentsPage
     }
 
 }

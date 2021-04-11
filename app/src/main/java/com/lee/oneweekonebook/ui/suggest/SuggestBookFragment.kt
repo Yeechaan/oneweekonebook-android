@@ -9,7 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSuggestBookBinding
+import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.home.model.categoryBook
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModel
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModelFactory
 
@@ -24,6 +27,7 @@ class SuggestBookFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).setToolbarTitle(categoryBook[args.categoryId] ?: getString(R.string.suggest_title))
 
         val viewModelFactory = SuggestBookViewModelFactory(args.categoryId)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(SuggestBookViewModel::class.java)

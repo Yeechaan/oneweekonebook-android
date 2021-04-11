@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
+        <ImageView
             style="@style/Widget.Custom.Button.Small"
             android:id="@+id/button_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/ic_baseline_done_outline"
+            android:src="@drawable/ic_book_save"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

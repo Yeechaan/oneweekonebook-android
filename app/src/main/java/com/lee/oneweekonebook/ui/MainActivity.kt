@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
@@ -19,7 +20,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
 import com.lee.oneweekonebook.R
+import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.ActivityMainKotlinBinding
+import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
+import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -29,6 +33,8 @@ const val BOTTOM_MENU_SEARCH = 1
 const val BOTTOM_MENU_HISTORY = 2
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var mainViewModel: MainViewModel
 
     private lateinit var binding: ActivityMainKotlinBinding
     private lateinit var navController: NavController
@@ -43,6 +49,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
+        val viewModelFactory = MainViewModelFactory(bookDao)
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_kotlin)
         navController = findNavController(R.id.navigation_fragment)

@@ -48,7 +48,6 @@ class WishBookFragment : Fragment() {
                     // 책 읽기 시작
                     ConfirmDialog(
                         description = getString(R.string.dialog_book_add_description),
-                        positiveMessage = getString(R.string.dialog_book_confirm),
                         onConfirm = {
                             viewModel.addReadingBook(bookId = book.id)
                             findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToHistoryReadingBookFragment(bookType = BOOK_TYPE_READING))
@@ -79,13 +78,16 @@ class WishBookFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_edit -> {
-                    // 수정
                     findNavController().navigate(HistoryFragmentDirections.actionHistoryFragmentToEditBookFragment(bookId = bookId))
                 }
                 R.id.menu_delete -> {
-                    // 삭제
-                    viewModel.deleteBook(bookId = bookId)
-                    Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                    ConfirmDialog(
+                        description = getString(R.string.dialog_book_delete_description),
+                        onConfirm = {
+                            viewModel.deleteBook(bookId = bookId)
+                            Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                        }
+                    ).show(childFragmentManager, ConfirmDialog.TAG)
                 }
             }
             true

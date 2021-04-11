@@ -1,10 +1,10 @@
 package com.lee.oneweekonebook.ui.reading.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
+import com.lee.oneweekonebook.database.model.BookType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -12,28 +12,36 @@ class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) 
 
     val book = bookDao.getBookAsync(bookId)
 
-    fun saveReadingBook(contents: String, review: String) {
+    private val _isContentsPage = MutableLiveData(true)
+    val isContentsPage: LiveData<Boolean>
+        get() = _isContentsPage
+
+    fun saveBook(type: @BookType Int, contents: String, review: String) {
         viewModelScope.launch(Dispatchers.IO) {
             book.value?.let { it ->
                 it.contents = contents
                 it.review = review
+
+                when (type) {
+                    BOOK_TYPE_READING -> {
+                        // TODO 독서시간 저장
+                    }
+                    BOOK_TYPE_DONE -> {
+                        it.type = BOOK_TYPE_DONE
+                        it.endDate = System.currentTimeMillis()
+                    }
+                }
                 bookDao.update(it)
             }
         }
     }
 
-    fun doneReadingBook(contents: String, review: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            book.value?.let { it ->
-                it.contents = contents
-                it.review = review
-                it.type = BOOK_TYPE_DONE
-                it.endDate = System.currentTimeMillis()
-                bookDao.update(it)
-            }
-        }
+    fun setCurrentPage(isContentsPage: Boolean) = run {
+        _isContentsPage.value = isContentsPage
     }
+
 }
+
 
 class ReadingBookDetailViewModelFactory(
     private val bookDatabaseDao: BookDatabaseDao,

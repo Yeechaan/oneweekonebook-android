@@ -38,8 +38,11 @@
     <string name="reading_save">내용이 저장되었습니다</string>
     <string name="reading_contents">기억에 남는 내용</string>
     <string name="reading_review">느낀점</string>
+    <string name="eng_reading_contents">memorable contents</string>
+    <string name="eng_reading_review">reviews</string>
 
     <string name="book_save">저장</string>
+    <string name="book_save_contents">내용 저장하기</string>
     <string name="book_review_count">(%d)</string>
 
     <string name="home_category">카테고리</string>
@@ -54,9 +57,10 @@
     <string name="dialog_book_add_description">독서를 시작하시겠습니까?</string>
     <string name="dialog_book_done_description">독서를 완료하시겠습니까?</string>
     <string name="dialog_book_wish_description">읽고 싶은 책 목록에 추가하시겠습니까?</string>
+    <string name="dialog_book_delete_description">목록에서 삭제하시겠습니까?</string>
     <string name="dialog_book_confirm">시작하기</string>
     <string name="dialog_book_cancel">취소</string>
     <string name="dialog_book_positive">네!!</string>
-    <string name="dialog_book_negative">다음에 할게요~</string>
+    <string name="dialog_book_negative">다음에요~</string>
 
 </resources>
