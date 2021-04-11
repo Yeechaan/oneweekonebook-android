@@ -9,6 +9,7 @@
 
     <string name="home">홈</string>
     <string name="search">검색</string>
+    <string name="setting">설정</string>
     <string name="history">독서내역</string>
     <string name="edit">수정하기</string>
     <string name="delete">삭제하기</string>
@@ -62,5 +63,8 @@
     <string name="dialog_book_cancel">취소</string>
     <string name="dialog_book_positive">네!!</string>
     <string name="dialog_book_negative">다음에요~</string>
+
+    <string name="setting_open_source">오픈소스 라이선스 확인하기</string>
+    <string name="setting_app_version">현재 버전 %s</string>
 
 </resources>
