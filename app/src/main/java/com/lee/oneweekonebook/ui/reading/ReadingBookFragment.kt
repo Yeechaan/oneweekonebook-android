@@ -19,6 +19,7 @@ import com.lee.oneweekonebook.ui.book.BookMoreListener
 import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModelFactory
+import com.lee.oneweekonebook.utils.ConfirmDialog
 
 class ReadingBookFragment : Fragment() {
 
@@ -70,13 +71,16 @@ class ReadingBookFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_edit -> {
-                    // 수정
                     findNavController().navigate(HistoryFragmentDirections.actionHistoryFragmentToEditBookFragment(bookId = bookId))
                 }
                 R.id.menu_delete -> {
-                    // 삭제
-                    readingBookViewModel.deleteBook(bookId = bookId)
-                    Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                    ConfirmDialog(
+                        description = getString(R.string.dialog_book_delete_description),
+                        onConfirm = {
+                            readingBookViewModel.deleteBook(bookId = bookId)
+                            Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                        }
+                    ).show(childFragmentManager, ConfirmDialog.TAG)
                 }
             }
             true

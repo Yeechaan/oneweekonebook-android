@@ -9,16 +9,16 @@ import com.lee.oneweekonebook.R
 
 open class ConfirmDialog(
     private val description: String,
-    private val positiveMessage: String,
+    private val positiveMessage: String = "",
     private val negativeMessage: String = "",
     private val onConfirm: () -> Unit,
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
+            val positiveMessage = positiveMessage.ifEmptyReturnNull() ?: getString(R.string.dialog_book_positive)
             val negativeMessage = negativeMessage.ifEmptyReturnNull() ?: getString(R.string.dialog_book_negative)
 
-            // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
             builder.setMessage(description)
                 .setPositiveButton(positiveMessage,

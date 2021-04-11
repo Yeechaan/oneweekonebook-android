@@ -19,6 +19,7 @@ import com.lee.oneweekonebook.ui.book.BookMoreListener
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookViewModelFactory
 import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
+import com.lee.oneweekonebook.utils.ConfirmDialog
 import com.orhanobut.logger.Logger
 
 class DoneBookFragment : Fragment() {
@@ -46,10 +47,6 @@ class DoneBookFragment : Fragment() {
 
                 val bookAdapter = BookAdapter(
                     BookListener { book ->
-                        Toast.makeText(requireContext(), book.id.toString(), Toast.LENGTH_SHORT).show()
-
-                        Logger.d(book)
-//                findNavController().navigate(DoneBookFragmentDirections.actionDoneBookFragmentToDoneBookDetailFragment(bookId = book.id))
                         findNavController().navigate(HistoryFragmentDirections.actionHistoryDoneFragmentToDoneBookDetailFragment(bookId = book.id))
                     },
                     BookMoreListener { view, bookId ->
@@ -76,13 +73,16 @@ class DoneBookFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_edit -> {
-                    // 수정
                     findNavController().navigate(HistoryFragmentDirections.actionHistoryFragmentToEditBookFragment(bookId = bookId))
                 }
                 R.id.menu_delete -> {
-                    // 삭제
-                    doneBookViewModel.deleteBook(bookId = bookId)
-                    Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                    ConfirmDialog(
+                        description = getString(R.string.dialog_book_delete_description),
+                        onConfirm = {
+                            doneBookViewModel.deleteBook(bookId = bookId)
+                            Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
+                        }
+                    ).show(childFragmentManager, ConfirmDialog.TAG)
                 }
             }
             true

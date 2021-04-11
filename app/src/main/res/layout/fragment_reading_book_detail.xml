@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -18,7 +21,7 @@
             style="@style/Widget.Custom.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_pencil"
+            android:src="@drawable/ic_book_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,29 +30,49 @@
             style="@style/Widget.Custom.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_library"
+            android:src="@drawable/ic_book_done"
             app:layout_constraintEnd_toStartOf="@id/button_save_book"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <include
+            android:id="@+id/layout_book"
+            layout="@layout/layout_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:book="@{viewModel.book}"
+            app:layout_constraintTop_toBottomOf="@id/button_save_book"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_contents"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_item_large"
             android:background="@android:color/transparent"
             android:text="@string/reading_contents"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@{viewModel.isContentsPage() ? @color/colorPrimary : @color/colorAccent}"
             app:layout_constraintEnd_toStartOf="@+id/button_review"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_save_book" />
+            app:layout_constraintTop_toBottomOf="@id/layout_book"
+            tools:textColor="@color/colorPrimary" />
+
+        <View
+            android:id="@+id/view_contents"
+            style="@style/Divider.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"
+            android:visibility="@{viewModel.isContentsPage() ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/button_contents"
+            app:layout_constraintStart_toStartOf="@id/button_contents"
+            app:layout_constraintTop_toBottomOf="@id/button_contents" />
 
         <View
             style="@style/Divider.Vertical"
             android:layout_height="0dp"
             android:layout_marginVertical="@dimen/spacing_item_normal"
+            app:layout_constraintBottom_toBottomOf="@id/button_contents"
             app:layout_constraintStart_toEndOf="@id/button_contents"
-            app:layout_constraintTop_toTopOf="@id/button_contents"
-            app:layout_constraintBottom_toBottomOf="@id/button_contents"/>
+            app:layout_constraintTop_toTopOf="@id/button_contents" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_review"
@@ -57,15 +80,29 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="@string/reading_review"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@{viewModel.isContentsPage() ? @color/colorAccent : @color/colorPrimary}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_contents"
-            app:layout_constraintTop_toBottomOf="@id/button_save_book" />
+            app:layout_constraintTop_toTopOf="@id/button_contents"
+            tools:textColor="@color/colorAccent" />
+
+        <View
+            android:id="@+id/view_review"
+            style="@style/Divider.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"
+            android:visibility="@{viewModel.isContentsPage() ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/button_review"
+            app:layout_constraintStart_toStartOf="@id/button_review"
+            app:layout_constraintTop_toBottomOf="@id/button_review"
+            tools:visibility="invisible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_contents"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="@{viewModel.isContentsPage() ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_contents">
 
@@ -75,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
+                android:hint="@string/eng_reading_contents"
                 android:paddingHorizontal="@dimen/spacing_item_normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -83,7 +121,8 @@
                     android:id="@+id/editText_contents"
                     style="@style/Widget.Custom.Text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.book.contents}" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,9 +130,10 @@
             android:id="@+id/layout_review"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="gone"
+            android:visibility="@{viewModel.isContentsPage() ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_contents">
+            app:layout_constraintTop_toBottomOf="@id/button_contents"
+            tools:visibility="invisible">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_review"
@@ -101,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
+                android:hint="@string/eng_reading_review"
                 android:paddingHorizontal="@dimen/spacing_item_normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -109,7 +150,8 @@
                     android:id="@+id/editText_review"
                     style="@style/Widget.Custom.Text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.book.review}" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,7 +7,7 @@
 
     <style name="Divider.Horizontal" parent="Divider">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">2dp</item>
 
     </style>
 

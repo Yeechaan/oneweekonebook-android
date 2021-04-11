@@ -9,18 +9,14 @@
             name="book"
             type="com.lee.oneweekonebook.database.model.Book" />
 
-        <variable
-            name="clickListener"
-            type="com.lee.oneweekonebook.ui.book.BookListener" />
-
         <import type="com.lee.oneweekonebook.utils.DateUtilsKt" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_book_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/spacing_item_large"
-        android:onClick="@{() -> clickListener.onClick(book)}">
+        android:layout_marginVertical="@dimen/spacing_large">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView_book"
@@ -115,28 +111,16 @@
             android:text="@{book.pubDate}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imageView_more"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_date"
             app:layout_constraintTop_toBottomOf="@id/textView_publisher"
             tools:text="Date" />
 
         <ImageView
-            android:id="@+id/imageView_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_item_normal"
-            android:padding="@dimen/spacing_item_small"
-            android:src="@drawable/ic_baseline_more"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_publisher" />
-
-        <ImageView
             android:id="@+id/imageView_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_start_line"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/textView_from"
             app:layout_constraintStart_toStartOf="@id/textView_title"
             app:layout_constraintTop_toTopOf="@id/textView_from" />
@@ -149,7 +133,6 @@
             android:layout_marginTop="@dimen/spacing_item_very_small"
             android:text="@{DateUtilsKt.convertLongToDateString(book.startDate)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_from"
@@ -162,7 +145,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
             android:src="@drawable/ic_finish_line"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/textView_from"
             app:layout_constraintStart_toEndOf="@id/textView_from"
             app:layout_constraintTop_toTopOf="@id/textView_from" />
@@ -175,7 +157,6 @@
             android:layout_marginTop="@dimen/spacing_item_very_small"
             android:text="@{DateUtilsKt.convertLongToDateString(book.endDate)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/imageView_to"
