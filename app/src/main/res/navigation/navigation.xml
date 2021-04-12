@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_homeFragment_to_suggestBookFragment"
             app:destination="@id/suggestBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_readingBookDetailFragment"
+            app:destination="@id/readingBookDetailFragment" />
     </fragment>
 
     <!--    wish-->
@@ -114,7 +117,8 @@
         <action
             android:id="@+id/action_readingBookFragment_to_historyBookFragment"
             app:destination="@id/historyFragment"
-            app:popUpTo="@id/historyFragment" />
+            app:popUpTo="@id/readingBookDetailFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <!--    add-->

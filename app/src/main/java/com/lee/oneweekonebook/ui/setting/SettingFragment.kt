@@ -2,7 +2,6 @@ package com.lee.oneweekonebook.ui.setting
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,4 +43,5 @@ class SettingFragment : Fragment() {
 
         return binding.root
     }
+
 }
