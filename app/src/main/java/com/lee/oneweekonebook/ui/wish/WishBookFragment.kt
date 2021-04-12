@@ -49,7 +49,7 @@ class WishBookFragment : Fragment() {
                     ConfirmDialog(
                         description = getString(R.string.dialog_book_add_description),
                         onConfirm = {
-                            viewModel.addReadingBook(bookId = book.id)
+                            this@WishBookFragment.viewModel.addReadingBook(bookId = book.id)
                             findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToHistoryReadingBookFragment(bookType = BOOK_TYPE_READING))
                             Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
                         }).show(childFragmentManager, ConfirmDialog.TAG)
@@ -64,7 +64,7 @@ class WishBookFragment : Fragment() {
                 addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             }
 
-            viewModel.books.observe(viewLifecycleOwner, {
+            this@WishBookFragment.viewModel.books.observe(viewLifecycleOwner, {
                 (recyclerViewWishBook.adapter as BookAdapter).submitList(it)
             })
 
