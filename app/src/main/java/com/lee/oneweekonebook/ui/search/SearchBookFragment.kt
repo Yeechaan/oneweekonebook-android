@@ -37,13 +37,15 @@ class SearchBookFragment : Fragment() {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
 
         val viewModelFactory = SearchBookViewModelFactory()
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(SearchBookViewModel::class.java)
+        val searchBookViewModel = ViewModelProvider(this, viewModelFactory).get(SearchBookViewModel::class.java)
 
         binding = FragmentSearchBookBinding.inflate(inflater, container, false)
             .apply {
                 inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                lifecycleOwner = viewLifecycleOwner
 
+                lifecycleOwner = this@SearchBookFragment
+                viewModel = searchBookViewModel
+                
                 // show keyboard
                 if (args.previous == PREVIOUS_ADD) {
                     editTextSearchBook.requestFocus()
@@ -60,7 +62,7 @@ class SearchBookFragment : Fragment() {
 
                             when {
                                 isNetworkConnected && !isTitleEmpty -> {
-                                    viewModel.searchBook(editTextSearchBook.text.toString())
+                                    searchBookViewModel.searchBook(editTextSearchBook.text.toString())
                                 }
                                 isTitleEmpty -> {
                                     Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
@@ -83,7 +85,7 @@ class SearchBookFragment : Fragment() {
                     addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 }
 
-                viewModel.books.observe(viewLifecycleOwner, {
+                searchBookViewModel.books.observe(viewLifecycleOwner, {
                     searchBookAdapter.data = it
                 })
             }

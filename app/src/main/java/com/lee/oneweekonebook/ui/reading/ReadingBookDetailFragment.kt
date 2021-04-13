@@ -18,12 +18,13 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookDetailBinding
 import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModelFactory
 import com.lee.oneweekonebook.utils.ConfirmDialog
 import com.lee.oneweekonebook.utils.gone
 
-class ReadingBookDetailFragment : Fragment() {
+class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
     var binding: FragmentReadingBookDetailBinding? = null
     private val args: ReadingBookDetailFragmentArgs by navArgs()

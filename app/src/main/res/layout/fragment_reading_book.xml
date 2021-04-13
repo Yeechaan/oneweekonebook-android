@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel" />
+            type="com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="searchBook"
             type="com.lee.oneweekonebook.ui.search.model.BookInfo" />
@@ -13,25 +14,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ToggleButton
+        <ImageButton
             android:id="@+id/button_favorite"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="@dimen/spacing_item_large"
             android:layout_marginEnd="@dimen/spacing_item_large"
             android:background="@drawable/ic_book_like"
-            android:text=""
-            android:textOff=""
-            android:textOn=""
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginHorizontal="@dimen/spacing_large"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/imageView_book"/>
+        <View
+            style="@style/Divider.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginHorizontal="@dimen/spacing_large"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/imageView_book"/>
 
         <ImageView
             android:id="@+id/imageView_book"
             android:layout_width="0dp"
-            android:layout_height="250dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="230dp"
+            android:layout_marginTop="@dimen/spacing_item_normal"
+            android:paddingVertical="@dimen/spacing_item_normal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_favorite" />
 
         <TextView
@@ -39,12 +54,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_item_normal"
             android:layout_marginEnd="@dimen/spacing_small"
             android:text="@{searchBook.title}"
             android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView_book"
             tools:text="Book Title" />
 
@@ -53,9 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_writer"
-            app:layout_constraintTop_toTopOf="@id/textView_writer"
             app:layout_constraintBottom_toBottomOf="@id/textView_writer"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_writer" />
 
         <TextView
             android:id="@+id/textView_writer"
@@ -76,9 +92,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_publisher"
-            app:layout_constraintTop_toTopOf="@id/textView_publisher"
             app:layout_constraintBottom_toBottomOf="@id/textView_publisher"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_publisher" />
 
         <TextView
             android:id="@+id/textView_publisher"
@@ -99,9 +115,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_date"
-            app:layout_constraintTop_toTopOf="@id/textView_date"
             app:layout_constraintBottom_toBottomOf="@id/textView_date"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_date" />
 
         <TextView
             android:id="@+id/textView_date"
@@ -122,9 +138,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_price"
-            app:layout_constraintTop_toTopOf="@id/textView_price"
             app:layout_constraintBottom_toBottomOf="@id/textView_price"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_price" />
 
         <TextView
             android:id="@+id/textView_price"
@@ -145,9 +161,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star"
-            app:layout_constraintTop_toTopOf="@id/textView_rate"
             app:layout_constraintBottom_toBottomOf="@id/textView_rate"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_rate" />
 
         <TextView
             android:id="@+id/textView_rate"
@@ -169,15 +185,16 @@
             android:layout_marginStart="@dimen/spacing_item_small"
             android:text="@{@string/book_review_count(searchBook.reviewCount)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
-            app:layout_constraintTop_toTopOf="@id/textView_rate"
             app:layout_constraintBottom_toBottomOf="@id/textView_rate"
             app:layout_constraintStart_toEndOf="@id/textView_rate"
-            tools:text="(10+)"/>
+            app:layout_constraintTop_toTopOf="@id/textView_rate"
+            tools:text="(10+)" />
 
         <TextView
             android:id="@+id/textView_book_about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_item_normal"
             android:text="@string/book_about"
             android:textAppearance="@style/TextAppearance.Custom.Body3.Bold"
             app:layout_constraintStart_toStartOf="@id/textView_title"
@@ -187,20 +204,21 @@
             android:id="@+id/imageView_link"
             android:layout_width="@dimen/spacing_large"
             android:layout_height="@dimen/spacing_large"
-            android:src="@drawable/ic_link"
             android:layout_marginStart="@dimen/spacing_item_normal"
-            app:layout_constraintTop_toTopOf="@id/textView_book_about"
+            android:src="@drawable/ic_link"
             app:layout_constraintBottom_toBottomOf="@id/textView_book_about"
-            app:layout_constraintStart_toEndOf="@id/textView_book_about"/>
+            app:layout_constraintStart_toEndOf="@id/textView_book_about"
+            app:layout_constraintTop_toTopOf="@id/textView_book_about" />
 
         <ScrollView
             android:id="@+id/view_book_description"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@id/textView_title"
-            app:layout_constraintEnd_toEndOf="@id/textView_title"
             app:layout_constraintBottom_toTopOf="@id/button_add_book"
+            app:layout_constraintEnd_toEndOf="@id/textView_title"
+            app:layout_constraintStart_toStartOf="@id/textView_title"
             app:layout_constraintTop_toBottomOf="@+id/textView_book_about">
+
             <TextView
                 android:id="@+id/textView_book_description"
                 android:layout_width="match_parent"
@@ -208,18 +226,19 @@
                 android:layout_marginHorizontal="@dimen/spacing_item_small"
                 android:text="@{searchBook.description}"
                 android:textAppearance="@style/TextAppearance.Custom.Body4"
-                tools:text="Just Do It, 승리를 상징하는 로고 스우시(Swoosh)로 전 세계인의 마음을 사로잡은 브랜드 나이키를 모르는 사람은 없다. 하지만 단돈 50달러에서 시작된 나이키의 창업 스토리, 그리고 그 뒤에 가려진 은둔의 경영자 필 나이트에 대해 알려진 바는 거의 없다. ‘신발 연구에 미친 사람’이란 은어인 [슈독Shoe Dog]은 가진 것이라곤 무모한 열정과 끈기밖에 없었던 24살 청년, 필 나이트가 일본 운동화를 수입해 팔던 보따리 장사를  세계적 브랜드 나이키로 일궈내기까지의 과정을 다룬, 최초의 자서전이자 나이키의 역사서이다. 그는 이 책에서 아디다스, 퓨마가 주도하고 있던 스포츠 용품 업계의 후발주자,  나이키가 어떻게 업계의 1인자가 되었는지, 그 창업과 혁신의 과정은 물론 그와 함께 지금의 나이..."/>
+                tools:text="Just Do It, 승리를 상징하는 로고 스우시(Swoosh)로 전 세계인의 마음을 사로잡은 브랜드 나이키를 모르는 사람은 없다. 하지만 단돈 50달러에서 시작된 나이키의 창업 스토리, 그리고 그 뒤에 가려진 은둔의 경영자 필 나이트에 대해 알려진 바는 거의 없다. ‘신발 연구에 미친 사람’이란 은어인 [슈독Shoe Dog]은 가진 것이라곤 무모한 열정과 끈기밖에 없었던 24살 청년, 필 나이트가 일본 운동화를 수입해 팔던 보따리 장사를  세계적 브랜드 나이키로 일궈내기까지의 과정을 다룬, 최초의 자서전이자 나이키의 역사서이다. 그는 이 책에서 아디다스, 퓨마가 주도하고 있던 스포츠 용품 업계의 후발주자,  나이키가 어떻게 업계의 1인자가 되었는지, 그 창업과 혁신의 과정은 물론 그와 함께 지금의 나이..." />
         </ScrollView>
 
         <com.google.android.material.button.MaterialButton
-            android:textAppearance="@style/TextAppearance.Custom.Body2"
-            style="@style/Widget.Custom.Button"
             android:id="@+id/button_add_book"
+            style="@style/Widget.Custom.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_item_small"
+            android:layout_marginBottom="@dimen/spacing_item_large"
             android:text="@string/add_book"
-            android:layout_marginVertical="@dimen/spacing_item_small"
-            app:layout_constraintTop_toBottomOf="@id/view_book_description"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:textAppearance="@style/TextAppearance.Custom.Body2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_book_description" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

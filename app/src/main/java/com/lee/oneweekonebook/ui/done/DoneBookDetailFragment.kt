@@ -14,10 +14,11 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.FragmentDoneBookDetailBinding
 import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookDetailViewModel
 import com.lee.oneweekonebook.ui.done.viewmodel.DoneBookDetailViewModelFactory
 
-class DoneBookDetailFragment : Fragment() {
+class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
     var binding: FragmentDoneBookDetailBinding? = null
     private val args by navArgs<DoneBookDetailFragmentArgs>()

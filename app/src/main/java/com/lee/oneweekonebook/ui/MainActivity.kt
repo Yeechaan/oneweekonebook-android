@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -24,6 +26,8 @@ import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.ActivityMainKotlinBinding
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
+import com.lee.oneweekonebook.utils.gone
+import com.lee.oneweekonebook.utils.visible
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -122,6 +126,22 @@ class MainActivity : AppCompatActivity() {
 
     fun setToolbarTitle(title: String) {
         binding.toolBarMain.title = title
+    }
+
+    fun showToolbarIcon() {
+        binding.toolBarMain.menu[0].isVisible = true
+    }
+
+    fun hideToolbarIcon() {
+        binding.toolBarMain.menu[0].isVisible = false
+    }
+
+    fun showBottomNavigation() {
+        binding.bottomNavigation.visible()
+    }
+
+    fun hideBottomNavigation() {
+        binding.bottomNavigation.gone()
     }
 
     fun registerPermissionResultListener(listener: PermissionResultListener) {

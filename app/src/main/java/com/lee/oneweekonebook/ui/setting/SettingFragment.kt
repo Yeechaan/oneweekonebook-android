@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.lee.oneweekonebook.BuildConfig
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSettingBinding
+import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 
-class SettingFragment : Fragment() {
+class SettingFragment : NoBottomNavigationToolbarIconFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentSettingBinding.inflate(inflater, container, false)
