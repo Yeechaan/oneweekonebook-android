@@ -41,7 +41,7 @@ class HomeReadingAdapter(private val homeReadingListener: HomeReadingListener) :
                 } else {
 //                    Glide.with(root.context).load(R.drawable.ic_book_add).into(imageViewBook)
                     imageViewBook.setImageResource(R.drawable.ic_book_add)
-                    imageViewBook.setPadding(120)
+                    imageViewBook.setPadding(100)
                 }
 
                 executePendingBindings()

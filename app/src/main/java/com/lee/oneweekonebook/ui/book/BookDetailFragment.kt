@@ -18,11 +18,12 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.databinding.FragmentBookDetailBinding
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
 import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
 import com.lee.oneweekonebook.utils.ConfirmDialog
 
-class BookDetailFragment : Fragment() {
+class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
     var binding: FragmentBookDetailBinding? = null
     private val args by navArgs<BookDetailFragmentArgs>()

@@ -25,7 +25,7 @@ import com.lee.oneweekonebook.utils.ConfirmDialog
 class WishBookFragment : Fragment() {
 
     var binding: FragmentWishBookBinding? = null
-    private lateinit var viewModel: WishBookViewModel
+    private lateinit var wishBookViewModel: WishBookViewModel
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -38,10 +38,11 @@ class WishBookFragment : Fragment() {
         val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
 
         val viewModelFactory = WishBookViewModelFactory(bookDao, application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(WishBookViewModel::class.java)
+        wishBookViewModel = ViewModelProvider(this, viewModelFactory).get(WishBookViewModel::class.java)
 
         binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@WishBookFragment
+            viewModel = wishBookViewModel
 
             val bookAdapter = BookAdapter(
                 BookListener { book ->
@@ -49,7 +50,7 @@ class WishBookFragment : Fragment() {
                     ConfirmDialog(
                         description = getString(R.string.dialog_book_add_description),
                         onConfirm = {
-                            this@WishBookFragment.viewModel.addReadingBook(bookId = book.id)
+                            wishBookViewModel.addReadingBook(bookId = book.id)
                             findNavController().navigate(HistoryFragmentDirections.actionHistoryWishFragmentToHistoryReadingBookFragment(bookType = BOOK_TYPE_READING))
                             Toast.makeText(requireContext(), getString(R.string.book_list_reading_add), Toast.LENGTH_SHORT).show()
                         }).show(childFragmentManager, ConfirmDialog.TAG)
@@ -64,7 +65,7 @@ class WishBookFragment : Fragment() {
                 addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             }
 
-            this@WishBookFragment.viewModel.books.observe(viewLifecycleOwner, {
+            wishBookViewModel.books.observe(viewLifecycleOwner, {
                 (recyclerViewWishBook.adapter as BookAdapter).submitList(it)
             })
 
@@ -84,7 +85,7 @@ class WishBookFragment : Fragment() {
                     ConfirmDialog(
                         description = getString(R.string.dialog_book_delete_description),
                         onConfirm = {
-                            viewModel.deleteBook(bookId = bookId)
+                            wishBookViewModel.deleteBook(bookId = bookId)
                             Toast.makeText(requireContext(), getString(R.string.book_list_delete), Toast.LENGTH_SHORT).show()
                         }
                     ).show(childFragmentManager, ConfirmDialog.TAG)

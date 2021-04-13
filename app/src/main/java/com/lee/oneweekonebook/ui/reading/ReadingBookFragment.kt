@@ -42,6 +42,7 @@ class ReadingBookFragment : Fragment() {
         binding = FragmentReadingBookBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = this@ReadingBookFragment
+                viewModel = readingBookViewModel
 
                 val bookAdapter = BookAdapter(
                     BookListener { book ->
