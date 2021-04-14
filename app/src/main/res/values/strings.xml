@@ -3,7 +3,7 @@
     <string name="admob_app_id">ca-app-pub-7727150178095243~2070810518</string>
     <string name="banner_ad_unit_id">ca-app-pub-7727150178095243/9287240969</string>
     <string name="banner_ad_unit_id_book">ca-app-pub-7727150178095243/4231786028</string>
-    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/63009781v11</string>
 
     <string name="splash_title">일주일책</string>
 
@@ -17,9 +17,9 @@
 
     <string name="home_title">일주일책</string>
     <string name="add_book">책 읽기 시작</string>
-    <string name="wish_title">읽고 싶은 책</string>
-    <string name="reading_title">읽고 있는 책</string>
-    <string name="done_title">다 읽은 책</string>
+    <string name="wish_title">좋아요</string>
+    <string name="reading_title">읽는중</string>
+    <string name="done_title">다읽은</string>
     <string name="search_title">검색</string>
     <string name="search_book_title">책 제목 입력</string>
     <string name="search_book_title_empty">입력된 내용이 없습니다</string>
@@ -58,10 +58,10 @@
 
     <string name="error_network_not_connected">네트워크 상태를 확인해주세요</string>
 
-    <string name="dialog_book_add_description">독서를 시작하시겠습니까?</string>
-    <string name="dialog_book_done_description">독서를 완료하시겠습니까?</string>
-    <string name="dialog_book_wish_description">읽고 싶은 책 목록에 추가하시겠습니까?</string>
-    <string name="dialog_book_delete_description">목록에서 삭제하시겠습니까?</string>
+    <string name="dialog_book_add_description">독서를 시작해 볼까요?</string>
+    <string name="dialog_book_done_description">독서를 완료하셨나요?</string>
+    <string name="dialog_book_wish_description">좋아요 목록에 추가할까요?</string>
+    <string name="dialog_book_delete_description">독서내역에서 삭제할까요?</string>
     <string name="dialog_book_confirm">시작하기</string>
     <string name="dialog_book_cancel">취소</string>
     <string name="dialog_book_positive">네!!</string>
