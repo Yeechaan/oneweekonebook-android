@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSuggestBookBinding
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBook
+import com.lee.oneweekonebook.ui.search.SearchBookAdapter
+import com.lee.oneweekonebook.ui.search.SearchBookListener
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModel
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModelFactory
 
@@ -43,18 +47,25 @@ class SuggestBookFragment : Fragment() {
                     }
                 }
 
-                val suggestBookAdapter = SuggestBookAdapter(SuggestBookListener { book ->
+                val bookAdapter = SearchBookAdapter(SearchBookListener { book ->
                     findNavController().navigate(SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(book = book))
                 })
-                val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-
                 recyclerViewSuggestBook.apply {
-                    layoutManager = gridLayoutManager
-                    adapter = suggestBookAdapter
+                    adapter = bookAdapter
+                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 }
 
+//                val suggestBookAdapter = SuggestBookAdapter(SuggestBookListener { book ->
+//                    findNavController().navigate(SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(book = book))
+//                })
+//                val gridLayoutManager = GridLayoutManager(requireContext(), 3)
+//                recyclerViewSuggestBook.apply {
+//                    layoutManager = gridLayoutManager
+//                    adapter = suggestBookAdapter
+//                }
+
                 viewModel.books.observe(viewLifecycleOwner, {
-                    suggestBookAdapter.data = it
+                    bookAdapter.data = it
                 })
             }
 
