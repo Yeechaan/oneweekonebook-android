@@ -87,6 +87,10 @@ class SearchBookFragment : Fragment() {
 
                 searchBookViewModel.books.observe(viewLifecycleOwner, {
                     searchBookAdapter.data = it
+
+                    if (it.isEmpty()) {
+                        Toast.makeText(requireContext(), getString(R.string.search_book_result_empty), Toast.LENGTH_SHORT).show()
+                    }
                 })
             }
 

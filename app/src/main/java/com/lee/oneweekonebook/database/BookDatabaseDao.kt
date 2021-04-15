@@ -32,7 +32,7 @@ interface BookDatabaseDao {
     fun deleteBook(id: Int)
 
     @Query("SELECT * FROM book_history_table WHERE title LIKE :title LIMIT 1")
-    fun getBookWithTitle(title: String): Book
+    fun getBookWithTitle(title: String): Book?
 
     @Query("DELETE FROM book_history_table")
     fun clear()

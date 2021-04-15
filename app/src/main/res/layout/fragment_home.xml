@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_large"
-            android:text="@string/reading_title"
+            android:text="@string/home_book_list"
             android:textAppearance="@style/TextAppearance.Custom.Body3.Bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,19 +33,42 @@
             android:layout_marginHorizontal="@dimen/spacing_small"
             android:background="@color/black"
             android:elevation="@dimen/spacing_item_very_small"
-            app:layout_constraintBottom_toTopOf="@id/recyclerView_reading_book"/>
+            app:layout_constraintBottom_toTopOf="@id/recyclerView_reading_book" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_reading_book"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_normal"
-            android:paddingVertical="@dimen/spacing_item_small"
-            android:paddingHorizontal="@dimen/spacing_large"
-            android:orientation="horizontal"
             android:elevation="@dimen/spacing_large"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_large"
+            android:paddingVertical="@dimen/spacing_item_very_small"
+            android:visibility="@{viewModel.books.size == 0 ? View.INVISIBLE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/textView_reading_book" />
+            app:layout_constraintTop_toBottomOf="@id/textView_reading_book"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_home_reading"/>
+
+        <ImageView
+            android:id="@+id/imageView_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_very_large"
+            android:src="@drawable/ic_book_shelf"
+            android:visibility="@{viewModel.books.size == 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/textView_reading_book"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_book_add"
+            android:textAppearance="@style/TextAppearance.Custom.Body4.Bold"
+            android:visibility="@{viewModel.books.size == 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/imageView_empty"
+            app:layout_constraintStart_toStartOf="@id/imageView_empty"
+            app:layout_constraintEnd_toEndOf="@id/imageView_empty" />
 
         <TextView
             android:id="@+id/textView_list"
@@ -64,20 +88,20 @@
             android:layout_marginHorizontal="@dimen/spacing_small"
             android:background="@color/black"
             android:elevation="@dimen/spacing_item_very_small"
-            app:layout_constraintBottom_toTopOf="@id/recyclerView_category_book"/>
+            app:layout_constraintBottom_toTopOf="@id/recyclerView_category_book" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_category_book"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_normal"
-            android:paddingVertical="@dimen/spacing_item_small"
             android:overScrollMode="never"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_category"
-            app:layout_constraintTop_toBottomOf="@id/textView_list"
+            android:paddingVertical="@dimen/spacing_item_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_list"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_category" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_suggest"

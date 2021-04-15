@@ -62,16 +62,13 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment())
                 }
 
+                imageViewEmpty.setOnClickListener {
+                    expandableFab.performClick()
+                }
+
                 val readingBookAdapter = HomeReadingAdapter(HomeReadingListener { book ->
-                    when (book.type) {
-                        BOOK_TYPE_UNKNOWN -> {
-                            expandableFab.performClick()
-                        }
-                        BOOK_TYPE_READING -> {
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookDetailFragment(bookId = book.id))
-                            (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
-                        }
-                    }
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookDetailFragment(bookId = book.id))
+                    (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                 })
                 recyclerViewReadingBook.apply {
                     adapter = readingBookAdapter

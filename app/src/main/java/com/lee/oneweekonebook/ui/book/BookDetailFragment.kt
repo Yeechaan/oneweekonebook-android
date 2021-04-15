@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.databinding.FragmentBookDetailBinding
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
@@ -24,6 +25,7 @@ import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
 import com.lee.oneweekonebook.utils.ConfirmDialog
+import com.orhanobut.logger.Logger
 
 class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
@@ -66,8 +68,6 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                             positiveMessage = getString(R.string.dialog_book_positive),
                             onConfirm = {
                                 bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
-                                findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
-                                (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                             }
                         ).show(childFragmentManager, ConfirmDialog.TAG)
                     }
@@ -78,15 +78,22 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                             positiveMessage = getString(R.string.dialog_book_positive),
                             onConfirm = {
                                 bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
-                                findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
-                                (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                             }
                         ).show(childFragmentManager, ConfirmDialog.TAG)
                     }
 
                     bookDetailViewModel.isBookSaved.observe(viewLifecycleOwner, {
-                        if (it) {
-                            Toast.makeText(requireContext(), "독서내역에 추가된 책 입니다!", Toast.LENGTH_LONG).show()
+                        Logger.d(it)
+                        when (it) {
+                            BOOK_TYPE_UNKNOWN -> Toast.makeText(requireContext(), "독서내역에 추가된 책 입니다!", Toast.LENGTH_SHORT).show()
+                            BOOK_TYPE_WISH -> {
+                                findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_WISH))
+                                (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                            }
+                            BOOK_TYPE_READING -> {
+                                findNavController().navigate(BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = BOOK_TYPE_READING))
+                                (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+                            }
                         }
                     })
                 }

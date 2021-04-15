@@ -23,6 +23,7 @@
     <string name="search_title">검색</string>
     <string name="search_book_title">책 제목 입력</string>
     <string name="search_book_title_empty">입력된 내용이 없습니다</string>
+    <string name="search_book_result_empty">검색된 내용이 없습니다</string>
     <string name="suggest_title">뭐읽지</string>
 
     <string name="wish_add_title">읽고 싶은 책 추가</string>
@@ -38,6 +39,9 @@
     <string name="book_about">책 소개</string>
     <string name="book_empty">독서내역이 없어요</string>
     <string name="book_search_empty">오늘 뭐 읽지?</string>
+
+    <string name="home_book_list">책꽃이</string>
+    <string name="home_book_add">선반에 추가하기</string>
 
     <string name="reading_save">내용이 저장되었습니다</string>
     <string name="reading_contents">기억에 남는 내용</string>

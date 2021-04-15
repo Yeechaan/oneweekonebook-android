@@ -4,6 +4,7 @@
     <dimen name="spacing_small">12dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="spacing_large">20dp</dimen>
+    <dimen name="spacing_very_large">24dp</dimen>
 
     <dimen name="spacing_item_very_small">2dp</dimen>
     <dimen name="spacing_item_small">4dp</dimen>

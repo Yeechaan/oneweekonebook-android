@@ -94,7 +94,8 @@
         <action
             android:id="@+id/action_bookDetailFragment_to_historyFragment"
             app:destination="@id/historyFragment"
-            app:popUpTo="@id/homeFragment" />
+            app:popUpTo="@id/bookDetailFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <!--    reading-->
