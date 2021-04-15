@@ -1,8 +1,6 @@
 package com.lee.oneweekonebook.ui.book.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BookType
 import com.lee.oneweekonebook.ui.search.model.BookInfo
@@ -13,12 +11,22 @@ import kotlinx.coroutines.launch
 
 class BookDetailViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
 
+    private val _isBookSaved = MutableLiveData(false)
+    val isBookSaved: LiveData<Boolean>
+        get() = _isBookSaved
+
     fun addBook(type: @BookType Int, bookInfo: BookInfo) {
         val book = bookInfo.asBook()
         book.type = type
 
         viewModelScope.launch(Dispatchers.IO) {
-            bookDao.insert(book)
+            val bookAlreadySaved = bookDao.getBookWithTitle(bookInfo.title)
+
+            if (bookAlreadySaved.title.isNotEmpty()) {
+                bookDao.insert(book)
+            } else {
+                _isBookSaved.value = true
+            }
         }
     }
 }
