@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainKotlinBinding
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private var permissionResultListener: PermissionResultListener? = null
 
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_kotlin)
         navController = findNavController(R.id.navigation_fragment)
 
-        val appBarConfiguration = AppBarConfiguration.Builder(
+        appBarConfiguration = AppBarConfiguration.Builder(
             R.id.homeFragment,
             R.id.searchBookFragment,
             R.id.historyFragment
@@ -87,8 +89,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigation() {
-        bottomNavigationView = binding.bottomNavigation
-
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.homeFragment, false)
             .build()
@@ -97,24 +97,42 @@ class MainActivity : AppCompatActivity() {
 //            putSerializable("dataMap", dataMap)
         }
 
+        bottomNavigationView = binding.bottomNavigation
+
         bottomNavigationView.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.menu_home -> {
-                    navController.navigate(R.id.homeFragment, args, navOptions)
-                    true
+            if (bottomNavigationView.selectedItemId != it.itemId) {
+                when (it.itemId) {
+                    R.id.menu_home -> {
+                        navController.navigate(R.id.homeFragment, args, navOptions)
+                        true
+                    }
+                    R.id.menu_search -> {
+                        navController.navigate(R.id.searchBookFragment, args, navOptions)
+                        true
+                    }
+                    R.id.menu_history -> {
+                        navController.navigate(R.id.historyFragment, args, navOptions)
+                        true
+                    }
+                    else -> {
+                        navController.navigate(R.id.homeFragment, args, navOptions)
+                        true
+                    }
                 }
-                R.id.menu_search -> {
-                    navController.navigate(R.id.searchBookFragment, args, navOptions)
-                    true
-                }
-                R.id.menu_history -> {
-                    navController.navigate(R.id.historyFragment, args, navOptions)
-                    true
-                }
-                else -> {
-                    false
-                }
-            }
+            } else false
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        val currentDestination = navController.currentDestination
+
+        when (currentDestination?.id) {
+            R.id.homeFragment -> finish()
+            else -> super.onBackPressed()
         }
     }
 
