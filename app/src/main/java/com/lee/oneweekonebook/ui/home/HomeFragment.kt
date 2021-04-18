@@ -54,6 +54,11 @@ class HomeFragment : Fragment() {
 //                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
 //                }
 
+                val wiseSaying = resources.getStringArray(R.array.wise_saying_list).random().split('/')
+                layoutWiseSaying.textViewSayingContents.text = wiseSaying[0]
+                layoutWiseSaying.textViewSayingWriter.text = "-${wiseSaying[1]}"
+
+
                 fabAddSearch.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment(previous = PREVIOUS_ADD))
                 }

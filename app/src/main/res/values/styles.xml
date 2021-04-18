@@ -9,6 +9,9 @@
 <!--        <item name="colorOnSurface">@color/gray</item>-->
 
         <item name="toolbarStyle">@style/Widget.Custom.Toolbar</item>
+
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
 </resources>
