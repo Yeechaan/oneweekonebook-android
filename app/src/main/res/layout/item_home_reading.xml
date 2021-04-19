@@ -20,16 +20,22 @@
         android:layout_marginHorizontal="@dimen/spacing_item_large"
         android:onClick="@{() -> clickListener.onClick(book)}">
 
-        <ImageView
-            android:id="@+id/imageView_book"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView_book"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:adjustViewBounds="true"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/textView_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_art" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView_book"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                tools:src="@drawable/ic_art" />
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:textAppearance="@style/TextAppearance.Custom.Body3"
@@ -39,9 +45,9 @@
             android:layout_marginBottom="@dimen/spacing_item_normal"
             android:text="@{book.title}"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/imageView_book"
-            app:layout_constraintEnd_toEndOf="@id/imageView_book"
-            app:layout_constraintTop_toBottomOf="@id/imageView_book"
+            app:layout_constraintStart_toStartOf="@id/cardView_book"
+            app:layout_constraintEnd_toEndOf="@id/cardView_book"
+            app:layout_constraintTop_toBottomOf="@id/cardView_book"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="title" />
     </androidx.constraintlayout.widget.ConstraintLayout>

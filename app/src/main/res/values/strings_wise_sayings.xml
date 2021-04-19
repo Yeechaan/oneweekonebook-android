@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sayings_1">남의 책을 읽는 데 시간을 보내라.\n남이 고생한 것에 의해 쉽게 자기를 개선할 수 있다./소크라테스</string>
+    <string name="sayings_2">가장 훌룡한 벗은 가장 좋은 책이다./체스터필드</string>
+    <string name="sayings_3">집은 책으로, 정원은 꽃으로 가득 채워라./앤듀르 랑그</string>
+    <string name="sayings_4">좋은 책을 읽는다는 것은\n과거의 가장 훌룡한 사람들과 대화하는 것이다./데카르트</string>
+    <string name="sayings_5">사귀는 벗을 보면 그 사람을 알 수 있듯이\n읽는 책을 보면 그 사람의 품격을 알 수 있다./스마일즈</string>
+    <string name="sayings_6">하루라도 책을 읽지 않으면 입에 가시가 돋힌다./안중근</string>
+    <string name="sayings_7">오늘의 나를 있게 한 것은 우리 마을 도서관이었다.\n하버드 졸업장보다 소중한 것이 독서하는 습관이다./빌 게이츠</string>
+    <string name="sayings_8">돈이 가득찬 지갑보다는\n책이 가득찬 서재를 가지는 것이 휠씬 좋아보인다./J.릴리</string>
+
+    <string-array name="wise_saying_list">
+        <item>@string/sayings_1</item>
+        <item>@string/sayings_2</item>
+        <item>@string/sayings_3</item>
+        <item>@string/sayings_4</item>
+        <item>@string/sayings_5</item>
+        <item>@string/sayings_6</item>
+        <item>@string/sayings_7</item>
+        <item>@string/sayings_8</item>
+    </string-array>
+
+</resources>

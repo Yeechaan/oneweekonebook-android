@@ -30,7 +30,7 @@
 
             <ImageView
                 android:id="@+id/imageView_book"
-                android:layout_width="80dp"
+                android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:scaleType="fitCenter" />
         </com.google.android.material.card.MaterialCardView>
