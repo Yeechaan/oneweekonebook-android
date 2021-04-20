@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
         binding = null
     }
 
-    // PresentFragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HOME)
 
