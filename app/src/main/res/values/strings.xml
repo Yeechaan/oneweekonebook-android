@@ -42,6 +42,8 @@
 
     <string name="home_book_list">책꽂이</string>
     <string name="home_book_add">선반에 책 추가하기</string>
+    <string name="home_wise_saying_content">\"%s\"</string>
+    <string name="home_wise_saying_writer">-%s</string>
 
     <string name="reading_save">내용이 저장되었습니다</string>
     <string name="reading_contents">기억에 남는 내용</string>

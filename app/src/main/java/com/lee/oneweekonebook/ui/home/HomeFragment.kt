@@ -54,8 +54,8 @@ class HomeFragment : Fragment() {
 //                }
 
                 val wiseSaying = resources.getStringArray(R.array.wise_saying_list).random().split('/')
-                layoutWiseSaying.textViewSayingContents.text = wiseSaying[0]
-                layoutWiseSaying.textViewSayingWriter.text = "-${wiseSaying[1]}"
+                layoutWiseSaying.textViewSayingContents.text = getString(R.string.home_wise_saying_content, wiseSaying[0])
+                layoutWiseSaying.textViewSayingWriter.text = getString(R.string.home_wise_saying_writer, wiseSaying[1])
 
 
                 fabAddSearch.setOnClickListener {
