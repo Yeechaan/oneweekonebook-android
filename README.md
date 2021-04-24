@@ -5,4 +5,4 @@ An android application for management book lists
 
 [play store](https://play.google.com/store/apps/details?id=com.lee.oneweekonebook)
 
-![home](https://github.com/Yeechaan/OneWeekOneBook_Android/blob/master/owob_home.jpeg&s=200)
+![home](https://github.com/Yeechaan/OneWeekOneBook_Android/blob/master/owob_home.jpeg){:height="50%" width="50%"}
