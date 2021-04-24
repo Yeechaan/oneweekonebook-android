@@ -5,4 +5,4 @@ An android application for management book lists
 
 [play store](https://play.google.com/store/apps/details?id=com.lee.oneweekonebook)
 
-<img src="https://play-lh.googleusercontent.com/dk4OvcNqQMy1el0Buqg4bleR9ZcgkU0hRChkPIhIJHxdAV-lykVnTaC6IWfoOUA8PUDD=w1920-h892-rw" height="300">
+<img src="https://play-lh.googleusercontent.com/dk4OvcNqQMy1el0Buqg4bleR9ZcgkU0hRChkPIhIJHxdAV-lykVnTaC6IWfoOUA8PUDD=w1920-h892-rw" height="400"><img src="https://play-lh.googleusercontent.com/dk4OvcNqQMy1el0Buqg4bleR9ZcgkU0hRChkPIhIJHxdAV-lykVnTaC6IWfoOUA8PUDD=w1920-h892-rw" height="400">
