@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.lee.oneweekonebook.ui.splash.SplashFragment"
-        android:label="@string/splash_title">
+        android:label="@string/app_title">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
