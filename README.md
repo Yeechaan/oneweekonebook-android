@@ -1,9 +1,14 @@
 # 일주일책
-An android application for management book lists
-
 일주일책 프로젝트는 읽고 싶은 책, 읽고 있는 책, 다 읽은 책 들을 관리하는 서비스입니다.
 
 <a href='https://play.google.com/store/apps/details?id=com.lee.oneweekonebook'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=90px/></a>
+
+* * *
+OneWeekOneBook is built with latest development tools and design patterns.
+- Written in Kotlin
+- Android Architecture Components (Viewmodels, Livedata, Room, Databinding)
+- MVVM
+- Signle Activity
 
 # 홈
 
