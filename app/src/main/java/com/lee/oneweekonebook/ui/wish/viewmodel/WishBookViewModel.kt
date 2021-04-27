@@ -8,26 +8,29 @@ import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
-import kotlinx.coroutines.Dispatchers
+import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WishBookViewModel(private val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
 
     val books = bookDao.getBooksByType(BOOK_TYPE_WISH)
 
     fun addReadingBook(bookId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val currentBook = bookDao.getBook(bookId)
-
             currentBook.apply {
                 type = BOOK_TYPE_READING
             }
-            bookDao.update(currentBook)
+
+            withContext(ioDispatcher) {
+                bookDao.update(currentBook)
+            }
         }
     }
 
     fun deleteBook(bookId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             bookDao.deleteBook(bookId)
         }
     }
@@ -35,8 +38,8 @@ class WishBookViewModel(private val bookDao: BookDatabaseDao, application: Appli
 }
 
 class WishBookViewModelFactory(
-        private val bookDatabaseDao: BookDatabaseDao,
-        private val application: Application
+    private val bookDatabaseDao: BookDatabaseDao,
+    private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

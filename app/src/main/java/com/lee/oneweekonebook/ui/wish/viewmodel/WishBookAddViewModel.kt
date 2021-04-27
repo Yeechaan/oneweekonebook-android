@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,7 +15,7 @@ class WishBookAddViewModel(private val bookDao: BookDatabaseDao, application: Ap
 
     fun saveBook(book: Book) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(ioDispatcher) {
                 bookDao.insert(book)
             }
         }
@@ -23,8 +24,8 @@ class WishBookAddViewModel(private val bookDao: BookDatabaseDao, application: Ap
 }
 
 class WishBookAddViewModelFactory(
-        private val bookDatabaseDao: BookDatabaseDao,
-        private val application: Application
+    private val bookDatabaseDao: BookDatabaseDao,
+    private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

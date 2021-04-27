@@ -4,8 +4,12 @@ import androidx.lifecycle.*
 import com.lee.oneweekonebook.network.BookApi
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.search.model.asBookList
+import com.lee.oneweekonebook.utils.ioDispatcher
 import com.orhanobut.logger.Logger
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SearchBookViewModel : ViewModel() {
 
@@ -16,7 +20,9 @@ class SearchBookViewModel : ViewModel() {
     fun searchBook(query: String) {
         viewModelScope.launch {
             try {
-                val response = BookApi.bookApiService.searchBookAsync(query = query).await()
+                val response = withContext(ioDispatcher) {
+                    BookApi.bookApiService.searchBookAsync(query = query).await()
+                }
                 _books.value = response.asBookList()
                 Logger.d(response)
             } catch (e: Exception) {
