@@ -3,6 +3,7 @@ package com.lee.oneweekonebook.ui.add.viewmodel
 import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,20 +14,20 @@ class AddBookViewModel(private val bookDao: BookDatabaseDao) : ViewModel() {
         get() = _book
 
     fun getBook(bookId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             val currentBook = bookDao.getBook(bookId)
             _book.postValue(currentBook)
         }
     }
 
     fun saveBook(book: Book) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
                 bookDao.insert(book)
         }
     }
 
     fun updateBook(book: Book) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             bookDao.update(book)
         }
     }
