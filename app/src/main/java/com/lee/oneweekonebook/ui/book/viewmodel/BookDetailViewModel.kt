@@ -6,6 +6,7 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.BookType
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.search.model.asBook
+import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -20,7 +21,7 @@ class BookDetailViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
         val book = bookInfo.asBook()
         book.type = type
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             val bookAlreadySaved = bookDao.getBookWithTitle(bookInfo.title)
 
             if (bookAlreadySaved == null) {

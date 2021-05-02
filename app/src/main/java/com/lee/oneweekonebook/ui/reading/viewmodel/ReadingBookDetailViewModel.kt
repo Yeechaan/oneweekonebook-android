@@ -5,6 +5,7 @@ import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BookType
+import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,7 +18,7 @@ class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) 
         get() = _isContentsPage
 
     fun saveBook(type: @BookType Int, contents: String, review: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             book.value?.let { it ->
                 it.contents = contents
                 it.review = review
