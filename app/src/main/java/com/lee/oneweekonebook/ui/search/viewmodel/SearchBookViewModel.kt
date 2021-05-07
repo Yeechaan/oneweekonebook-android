@@ -5,9 +5,6 @@ import com.lee.oneweekonebook.network.BookApi
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.search.model.asBookList
 import com.lee.oneweekonebook.utils.ioDispatcher
-import com.orhanobut.logger.Logger
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -24,21 +21,9 @@ class SearchBookViewModel : ViewModel() {
                     BookApi.bookApiService.searchBookAsync(query = query).await()
                 }
                 _books.value = response.asBookList()
-                Logger.d(response)
             } catch (e: Exception) {
-                Logger.d(e.message)
             }
         }
     }
 
-}
-
-class SearchBookViewModelFactory() : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SearchBookViewModel::class.java)) {
-            return SearchBookViewModel() as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

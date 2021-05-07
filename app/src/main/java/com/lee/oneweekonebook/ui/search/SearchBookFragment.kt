@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,7 +19,6 @@ import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.PREVIOUS_ADD
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
-import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModelFactory
 import com.lee.oneweekonebook.utils.isNetworkConnected
 
 class SearchBookFragment : Fragment() {
@@ -27,6 +26,7 @@ class SearchBookFragment : Fragment() {
     private val args: SearchBookFragmentArgs by navArgs()
     var binding: FragmentSearchBookBinding? = null
     lateinit var inputMethodManager: InputMethodManager
+    private val searchBookViewModel by viewModels<SearchBookViewModel>()
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -36,16 +36,13 @@ class SearchBookFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
 
-        val viewModelFactory = SearchBookViewModelFactory()
-        val searchBookViewModel = ViewModelProvider(this, viewModelFactory).get(SearchBookViewModel::class.java)
-
         binding = FragmentSearchBookBinding.inflate(inflater, container, false)
             .apply {
                 inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
                 lifecycleOwner = this@SearchBookFragment
                 viewModel = searchBookViewModel
-                
+
                 // show keyboard
                 if (args.previous == PREVIOUS_ADD) {
                     editTextSearchBook.requestFocus()
