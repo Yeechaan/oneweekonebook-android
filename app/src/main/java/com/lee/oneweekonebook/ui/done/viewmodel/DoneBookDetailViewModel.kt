@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.utils.DateUtils
+import com.lee.oneweekonebook.utils.ioDispatcher
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : V
     }
 
     fun saveReadingBook(contents: String, review: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             book.value?.let { it ->
                 it.contents = contents
                 it.review = review

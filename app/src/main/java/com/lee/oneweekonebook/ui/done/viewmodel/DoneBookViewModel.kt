@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,7 +14,7 @@ class DoneBookViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
     val books = bookDao.getBooksByType(BOOK_TYPE_DONE)
 
     fun deleteBook(bookId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             bookDao.deleteBook(bookId)
         }
     }
