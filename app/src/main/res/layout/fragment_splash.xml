@@ -13,7 +13,7 @@
         <ImageView
             android:layout_width="400dp"
             android:layout_height="400dp"
-            android:background="@drawable/ic_book"
+            android:background="@drawable/ic_app_icon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
