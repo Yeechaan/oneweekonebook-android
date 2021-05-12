@@ -23,7 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.database.model.*
 import com.lee.oneweekonebook.databinding.FragmentAddBookBinding
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.PermissionResultListener
@@ -47,6 +47,7 @@ class AddBookFragment : Fragment() {
 
     lateinit var currentPhotoPath: String
     private var savedPhotoPath: String = ""
+    private var bookType = 0
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -78,9 +79,9 @@ class AddBookFragment : Fragment() {
                     val publisher = editTextPublisher.text.toString()
 
                     if (args.bookId.isNullOrEmpty()) {
-                        addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
+                        addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = bookType))
                     } else {
-                        addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = args.bookType))
+                        addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = bookType))
                     }
 
                     findNavController().navigateUp()
@@ -97,6 +98,16 @@ class AddBookFragment : Fragment() {
                     editTextPublisher.setText(it.publisher)
                     savedPhotoPath = it.coverImage
                 })
+
+                radioGroup.setOnCheckedChangeListener { _, id ->
+                    bookType = when (id) {
+                        R.id.radio_wish -> BOOK_TYPE_WISH
+                        R.id.radio_reading -> BOOK_TYPE_READING
+                        R.id.radio_done -> BOOK_TYPE_DONE
+                        else -> BOOK_TYPE_UNKNOWN
+                    }
+
+                }
             }
 
         return binding?.root

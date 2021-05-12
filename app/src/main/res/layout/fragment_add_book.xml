@@ -37,6 +37,28 @@
                 app:layout_constraintTop_toBottomOf="@id/button_done"
                 app:srcCompat="@drawable/ic_baseline_add_photo_alternate" />
 
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_normal"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/imageView_cover">
+                <RadioButton android:id="@+id/radio_wish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/wish_title" />
+                <RadioButton android:id="@+id/radio_reading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reading_title" />
+                <RadioButton android:id="@+id/radio_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/done_title" />
+            </RadioGroup>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_title"
                 style="@style/Widget.Custom.Text.Search.Front"
@@ -45,7 +67,7 @@
                 android:layout_marginHorizontal="@dimen/spacing_normal"
                 android:layout_marginVertical="@dimen/spacing_item_normal"
                 android:hint="@string/book_title"
-                app:layout_constraintTop_toBottomOf="@id/imageView_cover">
+                app:layout_constraintTop_toBottomOf="@id/radioGroup">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_title"
