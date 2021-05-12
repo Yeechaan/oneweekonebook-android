@@ -10,22 +10,18 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.utils.ioDispatcher
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class WishBookViewModel(private val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
 
     val books = bookDao.getBooksByType(BOOK_TYPE_WISH)
 
     fun addReadingBook(bookId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(ioDispatcher) {
             val currentBook = bookDao.getBook(bookId)
             currentBook.apply {
                 type = BOOK_TYPE_READING
             }
-
-            withContext(ioDispatcher) {
-                bookDao.update(currentBook)
-            }
+            bookDao.update(currentBook)
         }
     }
 
