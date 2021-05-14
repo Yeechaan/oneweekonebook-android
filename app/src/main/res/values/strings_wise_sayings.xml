@@ -9,6 +9,8 @@
     <string name="sayings_6">하루라도 책을 읽지 않으면 입에 가시가 돋힌다./안중근</string>
     <string name="sayings_7">오늘의 나를 있게 한 것은 우리 마을 도서관이었다.\n하버드 졸업장보다 소중한 것이 독서하는 습관이다./빌 게이츠</string>
     <string name="sayings_8">돈이 가득찬 지갑보다는\n책이 가득찬 서재를 가지는 것이 휠씬 좋아보인다./J.릴리</string>
+    <string name="sayings_9">책이란 넓디 넓은 시간의 바다를 지나가는 배이다./프랜시스 베이컨</string>
+    <string name="sayings_10">약으로써 병을 고치듯이\n 독서로써 마음을 다스린다./율리우스 카이사르</string>
 
     <string-array name="wise_saying_list">
         <item>@string/sayings_1</item>
@@ -19,6 +21,8 @@
         <item>@string/sayings_6</item>
         <item>@string/sayings_7</item>
         <item>@string/sayings_8</item>
+        <item>@string/sayings_9</item>
+        <item>@string/sayings_10</item>
     </string-array>
 
 </resources>
