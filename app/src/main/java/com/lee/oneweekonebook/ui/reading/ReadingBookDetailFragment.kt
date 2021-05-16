@@ -1,13 +1,11 @@
 package com.lee.oneweekonebook.ui.reading
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -87,6 +85,14 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         Glide.with(root.context).load(it.coverImage).into(layoutBook.imageViewBook)
                     } else {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(layoutBook.imageViewBook)
+                    }
+                })
+
+                readingBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {
+                    if (it) {
+                        editTextContents.requestFocus()
+                    } else {
+                        editTextReview.requestFocus()
                     }
                 })
             }

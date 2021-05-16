@@ -66,6 +66,14 @@ class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(layoutBook.imageViewBook)
                     }
                 })
+
+                doneBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {
+                    if (it) {
+                        editTextContents.requestFocus()
+                    } else {
+                        editTextReview.requestFocus()
+                    }
+                })
             }
 
         return binding?.root
