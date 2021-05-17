@@ -25,6 +25,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/button_share_book"
+            style="@style/Widget.Custom.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_book_save"
+            app:layout_constraintEnd_toStartOf="@id/button_save_book"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <include
             android:id="@+id/layout_book"
             layout="@layout/layout_book"

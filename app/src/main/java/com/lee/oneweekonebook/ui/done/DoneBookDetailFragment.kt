@@ -1,5 +1,6 @@
 package com.lee.oneweekonebook.ui.done
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,17 @@ class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
                     doneBookDetailViewModel.saveReadingBook(contents = contents, review = review)
                     Toast.makeText(requireContext(), getString(R.string.reading_save), Toast.LENGTH_SHORT).show()
+                }
+
+                buttonShareBook.setOnClickListener {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                        type = "*/*"
+                    }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
                 }
 
                 buttonContents.setOnClickListener {
