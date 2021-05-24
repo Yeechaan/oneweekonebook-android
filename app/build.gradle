@@ -95,6 +95,9 @@ dependencies {
 
     // Oss Licences
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }
 repositories {
     mavenCentral()
