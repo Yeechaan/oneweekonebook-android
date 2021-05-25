@@ -86,7 +86,6 @@ class HomeFragment : Fragment() {
                 })
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
-                    // TODO 카테고리 클릭되면 상세페이지로 이동 (TabLayout 으로 구현)
                     if (isNetworkConnected(requireContext())) {
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(categoryId = categoryBook.type))
                     } else {
