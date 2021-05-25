@@ -119,18 +119,15 @@ class AddBookFragment : Fragment() {
 
             when (item.itemId) {
                 R.id.m1 -> {
-//                    (activity as MainActivity).rrequestPermission()
                     (activity as MainActivity).requirePermission()
 
-                    // 직접찍기
-//                    dispatchTakePictureIntent()
-                    Toast.makeText(requireContext(), "직접찍기", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.take_picture), Toast.LENGTH_SHORT).show()
                 }
                 R.id.m2 -> {
                     // 갤러리에서 가져오기
                     permissionGalleryLauncher.launch(pickPhotoIntent)
 
-                    Toast.makeText(requireContext(), "갤러리에서 가져오기", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.picture_from_gallery), Toast.LENGTH_SHORT).show()
                 }
             }
             true
@@ -244,6 +241,7 @@ class AddBookFragment : Fragment() {
         }
 
         override fun onDenied(showAgain: Boolean) {
+            Toast.makeText(requireContext(), getString(R.string.permission_denied_camera), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -257,7 +255,6 @@ class AddBookFragment : Fragment() {
                 savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
                 deleteImageFromSandbox()
 
-                // Todo android version 에 따라 filePath or fileUri 로 처리
                 val imageUri = Uri.parse(savedPhotoPath)
                 binding?.imageViewCover?.setImageURI(imageUri)
             }
