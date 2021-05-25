@@ -76,4 +76,9 @@
     <string name="setting_open_source">오픈소스 라이선스 확인하기</string>
     <string name="setting_app_version">현재 버전 %s</string>
 
+    <string name="permission_denied_camera">권한에 동의하지 않으면 책표지를 저장할 수 없습니다</string>
+
+    <string name="take_picture">표지 직접 촬영하기</string>
+    <string name="picture_from_gallery">갤러리에서 가져오기</string>
+
 </resources>
