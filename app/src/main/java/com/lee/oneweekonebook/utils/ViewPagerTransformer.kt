@@ -7,15 +7,15 @@ class ViewPagerTransformer : ViewPager2.PageTransformer {
 
     override fun transformPage(view: View, position: Float) {
         view.apply {
-            when {
+            alpha = when {
                 position <= -1f || position >= 1f -> {
-                    alpha = 0f
+                    0f
                 }
                 position == 0f -> {
-                    alpha = 1f
+                    1f
                 }
                 else -> {
-                    alpha = 1f - Math.abs(position)
+                    1f - Math.abs(position)
                 }
             }
         }

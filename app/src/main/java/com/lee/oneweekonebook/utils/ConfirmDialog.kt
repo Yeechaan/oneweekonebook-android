@@ -1,7 +1,6 @@
 package com.lee.oneweekonebook.utils
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -21,15 +20,15 @@ open class ConfirmDialog(
 
             val builder = AlertDialog.Builder(it)
             builder.setMessage(description)
-                .setPositiveButton(positiveMessage,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        onConfirm()
-                        dismiss()
-                    })
-                .setNegativeButton(negativeMessage,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        dismiss()
-                    })
+                .setPositiveButton(positiveMessage
+                ) { _, _ ->
+                    onConfirm()
+                    dismiss()
+                }
+                .setNegativeButton(negativeMessage
+                ) { _, _ ->
+                    dismiss()
+                }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

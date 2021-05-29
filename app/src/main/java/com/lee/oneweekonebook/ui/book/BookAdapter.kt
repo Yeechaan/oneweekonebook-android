@@ -13,6 +13,7 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemBookBinding
+import com.lee.oneweekonebook.utils.visible
 
 
 class BookAdapter(private val bookClickListener: BookListener, private val bookMoreClickListener: BookMoreListener) : ListAdapter<Book, BookAdapter.ViewHolder>(BookDiffCallback()) {
@@ -45,14 +46,14 @@ class BookAdapter(private val bookClickListener: BookListener, private val bookM
 
                 when (item.type) {
                     BOOK_TYPE_READING -> {
-                        imageViewFrom.visibility = View.VISIBLE
-                        textViewFrom.visibility = View.VISIBLE
+                        imageViewFrom.visible()
+                        textViewFrom.visible()
                     }
                     BOOK_TYPE_DONE -> {
-                        imageViewFrom.visibility = View.VISIBLE
-                        textViewFrom.visibility = View.VISIBLE
-                        imageViewTo.visibility = View.VISIBLE
-                        textViewTo.visibility = View.VISIBLE
+                        imageViewFrom.visible()
+                        textViewFrom.visible()
+                        imageViewTo.visible()
+                        textViewTo.visible()
                     }
                 }
 

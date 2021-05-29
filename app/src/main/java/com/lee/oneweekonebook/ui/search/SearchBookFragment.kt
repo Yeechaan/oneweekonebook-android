@@ -43,17 +43,13 @@ class SearchBookFragment : Fragment() {
                 lifecycleOwner = this@SearchBookFragment
                 viewModel = searchBookViewModel
 
-                // show keyboard
                 if (args.previous == PREVIOUS_ADD) {
-                    editTextSearchBook.requestFocus()
-                    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+                    showKeyboard()
                 }
 
                 editTextSearchBook.setOnEditorActionListener { textView, action, _ ->
                     when (action) {
                         EditorInfo.IME_ACTION_SEARCH -> {
-//                            inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
-
                             val isTitleEmpty = textView.text.isNullOrEmpty()
                             val isNetworkConnected = isNetworkConnected(requireContext())
 
@@ -93,4 +89,10 @@ class SearchBookFragment : Fragment() {
 
         return binding?.root
     }
+
+    private fun showKeyboard() {
+        binding?.editTextSearchBook?.requestFocus()
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+    }
+
 }
