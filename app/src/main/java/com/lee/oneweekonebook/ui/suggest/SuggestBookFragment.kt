@@ -42,7 +42,6 @@ class SuggestBookFragment : Fragment() {
 
                 swipeRefreshLayoutContainer.apply {
                     setOnRefreshListener {
-//                        viewModel.refreshBooks()
                         isRefreshing = false
                     }
                 }
@@ -54,15 +53,6 @@ class SuggestBookFragment : Fragment() {
                     adapter = bookAdapter
                     addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 }
-
-//                val suggestBookAdapter = SuggestBookAdapter(SuggestBookListener { book ->
-//                    findNavController().navigate(SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(book = book))
-//                })
-//                val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-//                recyclerViewSuggestBook.apply {
-//                    layoutManager = gridLayoutManager
-//                    adapter = suggestBookAdapter
-//                }
 
                 viewModel.books.observe(viewLifecycleOwner, {
                     bookAdapter.data = it

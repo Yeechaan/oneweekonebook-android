@@ -45,7 +45,7 @@ class AddBookFragment : Fragment() {
     var binding: FragmentAddBookBinding? = null
     private val args by navArgs<AddBookFragmentArgs>()
 
-    lateinit var currentPhotoPath: String
+    private var currentPhotoPath: String = ""
     private var savedPhotoPath: String = ""
     private var bookType = 0
 
@@ -186,7 +186,7 @@ class AddBookFragment : Fragment() {
 
     private fun saveMediaToStorage(bitmap: Bitmap): String {
         var savedFilePath = ""
-        val filename: String = "${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.jpg"
+        val filename = "${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.jpg"
         var fileOutputStream: OutputStream? = null
 
         //For devices running android >= Q
@@ -232,12 +232,8 @@ class AddBookFragment : Fragment() {
 
     private val permissionResultListener = object : PermissionResultListener {
         override fun onGranted() {
-            Logger.d("onGranted()")
-
             (activity as MainActivity).unregisterPermissionResultListener()
             dispatchTakePictureIntent()
-
-            Logger.d("permissionResultListener onGranted()")
         }
 
         override fun onDenied(showAgain: Boolean) {

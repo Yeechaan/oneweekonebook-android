@@ -58,12 +58,9 @@ object PhotoRotateAdapter {
     }
 
 
-    private fun modifyOrientation(bitmap: Bitmap, image_absolute_path: String): Bitmap {
-        val ei: ExifInterface = ExifInterface(image_absolute_path);
-        val orientation: Int =
-            ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-        when (orientation) {
+    private fun modifyOrientation(bitmap: Bitmap, imageAbsolutePath: String): Bitmap {
+        val ei: ExifInterface = ExifInterface(imageAbsolutePath);
+        when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
             ExifInterface.ORIENTATION_ROTATE_90 -> {
                 return rotate(bitmap, 90f)
             }
