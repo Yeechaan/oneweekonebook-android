@@ -30,7 +30,6 @@ import com.lee.oneweekonebook.ui.PermissionResultListener
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModel
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModelFactory
 import com.lee.oneweekonebook.utils.PhotoRotateAdapter
-import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.orhanobut.logger.Logger
 import java.io.File
 import java.io.FileOutputStream
@@ -125,7 +124,7 @@ class AddBookFragment : Fragment() {
                 }
                 R.id.m2 -> {
                     // 갤러리에서 가져오기
-                    permissionGalleryLauncher.launch(pickPhotoIntent)
+                    permissionGalleryLauncher.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
 
                     Toast.makeText(requireContext(), getString(R.string.picture_from_gallery), Toast.LENGTH_SHORT).show()
                 }
