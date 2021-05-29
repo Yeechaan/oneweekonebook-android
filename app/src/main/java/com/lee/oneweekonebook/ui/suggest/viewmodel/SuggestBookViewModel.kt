@@ -15,11 +15,6 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            // 책 추천
-//            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
-//            Logger.d(responseCategory)
-//            _books.value = responseCategory.asBookList()
-
             try {
                 val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
                 Logger.d(responseCategory)
@@ -27,19 +22,6 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
             } catch (e: Exception) {
                 Logger.d(e.message)
             }
-        }
-    }
-
-    fun refreshBooks() {
-        viewModelScope.launch {
-            // 책 추천
-//            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = RecommendBook().getRandomCategory()).await()
-//            Logger.d(responseCategory)
-//            _books.value = responseCategory.asBookList()
-
-//            val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
-//            Logger.d(responseCategory)
-//            _books.value = responseCategory.asBookList()
         }
     }
 
