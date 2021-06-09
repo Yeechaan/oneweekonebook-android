@@ -5,6 +5,7 @@ import com.lee.oneweekonebook.network.BookApi
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.search.model.asBookList
 import com.lee.oneweekonebook.utils.ioDispatcher
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,6 +23,7 @@ class SearchBookViewModel : ViewModel() {
                 }
                 _books.value = response.asBookList()
             } catch (e: Exception) {
+                Logger.d(e.message)
             }
         }
     }
