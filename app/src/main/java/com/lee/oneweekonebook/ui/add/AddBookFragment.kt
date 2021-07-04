@@ -30,7 +30,6 @@ import com.lee.oneweekonebook.ui.PermissionResultListener
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModel
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModelFactory
 import com.lee.oneweekonebook.utils.PhotoRotateAdapter
-import com.lee.oneweekonebook.utils.pickPhotoIntent
 import com.orhanobut.logger.Logger
 import java.io.File
 import java.io.FileOutputStream
@@ -45,7 +44,7 @@ class AddBookFragment : Fragment() {
     var binding: FragmentAddBookBinding? = null
     private val args by navArgs<AddBookFragmentArgs>()
 
-    lateinit var currentPhotoPath: String
+    private var currentPhotoPath: String = ""
     private var savedPhotoPath: String = ""
     private var bookType = 0
 
@@ -119,18 +118,15 @@ class AddBookFragment : Fragment() {
 
             when (item.itemId) {
                 R.id.m1 -> {
-//                    (activity as MainActivity).rrequestPermission()
                     (activity as MainActivity).requirePermission()
 
-                    // 직접찍기
-//                    dispatchTakePictureIntent()
-                    Toast.makeText(requireContext(), "직접찍기", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.take_picture), Toast.LENGTH_SHORT).show()
                 }
                 R.id.m2 -> {
                     // 갤러리에서 가져오기
-                    permissionGalleryLauncher.launch(pickPhotoIntent)
+                    permissionGalleryLauncher.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
 
-                    Toast.makeText(requireContext(), "갤러리에서 가져오기", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.picture_from_gallery), Toast.LENGTH_SHORT).show()
                 }
             }
             true
@@ -189,7 +185,7 @@ class AddBookFragment : Fragment() {
 
     private fun saveMediaToStorage(bitmap: Bitmap): String {
         var savedFilePath = ""
-        val filename: String = "${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.jpg"
+        val filename = "${SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())}.jpg"
         var fileOutputStream: OutputStream? = null
 
         //For devices running android >= Q
@@ -235,15 +231,12 @@ class AddBookFragment : Fragment() {
 
     private val permissionResultListener = object : PermissionResultListener {
         override fun onGranted() {
-            Logger.d("onGranted()")
-
             (activity as MainActivity).unregisterPermissionResultListener()
             dispatchTakePictureIntent()
-
-            Logger.d("permissionResultListener onGranted()")
         }
 
         override fun onDenied(showAgain: Boolean) {
+            Toast.makeText(requireContext(), getString(R.string.permission_denied_camera), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -257,7 +250,6 @@ class AddBookFragment : Fragment() {
                 savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
                 deleteImageFromSandbox()
 
-                // Todo android version 에 따라 filePath or fileUri 로 처리
                 val imageUri = Uri.parse(savedPhotoPath)
                 binding?.imageViewCover?.setImageURI(imageUri)
             }

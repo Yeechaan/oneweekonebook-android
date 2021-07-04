@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
@@ -22,7 +21,6 @@ import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
 import com.lee.oneweekonebook.utils.isNetworkConnected
-import com.orhanobut.logger.Logger
 
 const val PREVIOUS_ADD = 1
 
@@ -86,7 +84,6 @@ class HomeFragment : Fragment() {
                 })
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
-                    // TODO 카테고리 클릭되면 상세페이지로 이동 (TabLayout 으로 구현)
                     if (isNetworkConnected(requireContext())) {
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(categoryId = categoryBook.type))
                     } else {

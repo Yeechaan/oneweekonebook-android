@@ -25,7 +25,7 @@ class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) 
 
                 when (type) {
                     BOOK_TYPE_READING -> {
-                        // TODO 독서시간 저장
+                        // 추후 독서시간 저장 기능 구현
                     }
                     BOOK_TYPE_DONE -> {
                         it.type = BOOK_TYPE_DONE

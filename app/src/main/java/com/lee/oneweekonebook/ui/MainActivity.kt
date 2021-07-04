@@ -1,11 +1,8 @@
 package com.lee.oneweekonebook.ui
 
 import android.Manifest
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,8 +22,6 @@ import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.ActivityMainKotlinBinding
-import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
-import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModelFactory
 import com.lee.oneweekonebook.utils.gone
 import com.lee.oneweekonebook.utils.visible
 import com.orhanobut.logger.AndroidLogAdapter
@@ -48,10 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     private var permissionResultListener: PermissionResultListener? = null
 
-    private var permissionsRequired = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    private val PERMISSION_CALLBACK_CONSTANT = 100
-    private var permissionStatus: SharedPreferences? = null
-    private var sentToSettings = false
+    private var permissionsRequired =
+        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +63,12 @@ class MainActivity : AppCompatActivity() {
             R.id.historyFragment
         ).build()
 
+        initToolBar()
+        initBottomNavigation()
+        initLogger()
+    }
+
+    private fun initToolBar() {
         binding.toolBarMain.setupWithNavController(navController, appBarConfiguration)
         binding.toolBarMain.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -76,51 +76,47 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
 
-        initBottomNavigation()
+    private fun initBottomNavigation() {
+        bottomNavigationView = binding.bottomNavigation
 
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            if (bottomNavigationView.selectedItemId != it.itemId) {
+                val moveTo = when (it.itemId) {
+                    R.id.menu_home -> BOTTOM_MENU_HOME
+                    R.id.menu_search -> BOTTOM_MENU_SEARCH
+                    R.id.menu_history -> BOTTOM_MENU_HISTORY
+                    else -> BOTTOM_MENU_HOME
+                }
+                navigate(moveTo)
+                true
+            } else false
+        }
+    }
+
+    private fun navigate(moveTo: Int = BOTTOM_MENU_HOME) {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.homeFragment, false)
+            .build()
+        val args = Bundle()
+
+        val destination = when (moveTo) {
+            BOTTOM_MENU_HOME -> R.id.homeFragment
+            BOTTOM_MENU_SEARCH -> R.id.searchBookFragment
+            BOTTOM_MENU_HISTORY -> R.id.historyFragment
+            else -> R.id.homeFragment
+        }
+
+        navController.navigate(destination, args, navOptions)
+    }
+
+    private fun initLogger() {
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .methodCount(1)
             .tag(APPLICATION_ID)
             .build()
         Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
-
-        permissionStatus = getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
-    }
-
-    private fun initBottomNavigation() {
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.homeFragment, false)
-            .build()
-
-        val args = Bundle().apply {
-//            putSerializable("dataMap", dataMap)
-        }
-
-        bottomNavigationView = binding.bottomNavigation
-
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            if (bottomNavigationView.selectedItemId != it.itemId) {
-                when (it.itemId) {
-                    R.id.menu_home -> {
-                        navController.navigate(R.id.homeFragment, args, navOptions)
-                        true
-                    }
-                    R.id.menu_search -> {
-                        navController.navigate(R.id.searchBookFragment, args, navOptions)
-                        true
-                    }
-                    R.id.menu_history -> {
-                        navController.navigate(R.id.historyFragment, args, navOptions)
-                        true
-                    }
-                    else -> {
-                        navController.navigate(R.id.homeFragment, args, navOptions)
-                        true
-                    }
-                }
-            } else false
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -171,63 +167,31 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        permissions.map {
-            Logger.d(it)
-        }
-
         if (requestCode == 1) {
-            Logger.d("onRequestPermissionsResult")
-
             //check if all permissions are granted
-            var allgranted = false
+            var permissionAllGranted = false
             for (i in grantResults.indices) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    Logger.d("PERMISSION_GRANTED")
-
-                    allgranted = true
+                    permissionAllGranted = true
                 } else {
-                    Logger.d("PERMISSION_DENIED")
-
-                    allgranted = false
+                    permissionAllGranted = false
                     break
                 }
             }
 
-            if (allgranted) {
-                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            if (permissionAllGranted) {
                 permissionResultListener?.onGranted()
-
-            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
-                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
-
-                getAlertDialog()
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
+                permissionResultListener?.onDenied(false)
             } else {
-                Toast.makeText(applicationContext, "Unable to get Permission", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun getAlertDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Need Multiple Permissions")
-        builder.setMessage("This app needs permissions.")
-        builder.setPositiveButton("Grant") { dialog, which ->
-            dialog.cancel()
-            ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
-        }
-        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
-        builder.show()
-    }
-
-    override fun onPostResume() {
-        super.onPostResume()
-        if (sentToSettings) {
-            if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
-                //Got Permission
-                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+                Logger.d("permission all denied")
             }
         }
     }
@@ -246,7 +210,6 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, needPermissions.toTypedArray(), 1)
         } else {
             permissionResultListener?.onGranted()
-            Logger.d("requirePermission all")
         }
     }
 
