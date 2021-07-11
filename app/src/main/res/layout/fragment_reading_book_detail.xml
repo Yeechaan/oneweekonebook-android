@@ -121,8 +121,7 @@
                     android:id="@+id/editText_contents"
                     style="@style/Widget.Custom.Text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.book.contents}" />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -150,8 +149,7 @@
                     android:id="@+id/editText_review"
                     style="@style/Widget.Custom.Text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.book.review}" />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

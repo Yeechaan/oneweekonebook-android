@@ -86,6 +86,12 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     } else {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(layoutBook.imageViewBook)
                     }
+
+                    editTextContents.setText(it.contents)
+                    editTextContents.setSelection(it.contents.length)
+
+                    editTextReview.setText(it.review)
+                    editTextReview.setSelection(it.review.length)
                 })
 
                 readingBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {
