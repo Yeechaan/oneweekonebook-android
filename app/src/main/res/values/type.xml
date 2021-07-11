@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Custom.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body2" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body3" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body4" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body5" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body6" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+
+    <style name="TextAppearance.Custom.Body1.Bold" parent="TextAppearance.Custom.Body1">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body2.Bold" parent="TextAppearance.Custom.Body2">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body3.Bold" parent="TextAppearance.Custom.Body3">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body4.Bold" parent="TextAppearance.Custom.Body4">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body5.Bold" parent="TextAppearance.Custom.Body5">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Body6.Bold" parent="TextAppearance.Custom.Body6">
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
