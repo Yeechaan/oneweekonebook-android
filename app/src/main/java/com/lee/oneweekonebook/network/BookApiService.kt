@@ -1,6 +1,5 @@
 package com.lee.oneweekonebook.network
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
 import kotlinx.coroutines.Deferred
@@ -17,27 +16,26 @@ const val MAX_RESULT = 100
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .baseUrl(BASE_URL_INTERPARK)
     .build()
 
 interface BookApiService {
 
     @GET("api/search.api")
-    fun searchBookAsync(
+    suspend fun searchBookAsync(
         @Query("key") key: String = INTERPARK_KEY,
         @Query("query") query: String,
         @Query("output") output: String = OUTPUT_TYPE,
         @Query("maxResults") maxResults: Int = MAX_RESULT,
-    ): Deferred<SearchBookResponse>
+    ): SearchBookResponse
 
 
     @GET("api/recommend.api")
-    fun getSuggestBookAsync(
+    suspend fun getSuggestBookAsync(
         @Query("key") key: String = INTERPARK_KEY,
         @Query("categoryId") categoryId: Int,
         @Query("output") output: String = OUTPUT_TYPE,
-    ): Deferred<RecommendBookResponse>
+    ): RecommendBookResponse
 
 }
 
