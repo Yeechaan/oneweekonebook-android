@@ -73,9 +73,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_ver"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofit_ver"
 
-    // Retrofit Coroutines Adapter
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-
     // Logger
     implementation 'com.orhanobut:logger:2.2.0'
 

@@ -1,6 +1,5 @@
 package com.lee.oneweekonebook.network
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.SuggestBookResponse
 import kotlinx.coroutines.Deferred
@@ -17,7 +16,6 @@ private const val BASE_URL_INTERPARK = "http://book.interpark.com/api/recommend.
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .baseUrl(BASE_URL)
     .build()
 
@@ -35,7 +33,10 @@ interface NaverBookApiService {
         "X-Naver-Client-Secret: ocLrfBgqLF"
     )
     @GET("v1/search/image")
-    fun getBookImageAsync(@Query("query") query: String, @Query("display") display: Int = 1): Deferred<SuggestBookResponse>
+    fun getBookImageAsync(
+        @Query("query") query: String,
+        @Query("display") display: Int = 1
+    ): Deferred<SuggestBookResponse>
 
 }
 

@@ -16,7 +16,8 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
     init {
         viewModelScope.launch {
             try {
-                val responseCategory = BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId).await()
+                val responseCategory =
+                    BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId)
                 Logger.d(responseCategory)
                 _books.value = responseCategory.asBookList()
             } catch (e: Exception) {

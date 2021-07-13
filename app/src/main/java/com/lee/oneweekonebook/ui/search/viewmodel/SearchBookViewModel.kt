@@ -1,6 +1,9 @@
 package com.lee.oneweekonebook.ui.search.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.network.BookApi
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.search.model.asBookList
@@ -19,7 +22,7 @@ class SearchBookViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = withContext(ioDispatcher) {
-                    BookApi.bookApiService.searchBookAsync(query = query).await()
+                    BookApi.bookApiService.searchBookAsync(query = query)
                 }
                 _books.value = response.asBookList()
             } catch (e: Exception) {
