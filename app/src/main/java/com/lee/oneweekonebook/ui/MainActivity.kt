@@ -3,8 +3,6 @@ package com.lee.oneweekonebook.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
@@ -21,22 +20,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.BookDatabase
-import com.lee.oneweekonebook.databinding.ActivityMainKotlinBinding
+import com.lee.oneweekonebook.databinding.ActivityMainBinding
 import com.lee.oneweekonebook.utils.gone
 import com.lee.oneweekonebook.utils.visible
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import dagger.hilt.android.AndroidEntryPoint
 
 const val BOTTOM_MENU_HOME = 0
 const val BOTTOM_MENU_SEARCH = 1
 const val BOTTOM_MENU_HISTORY = 2
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var binding: ActivityMainBinding
 
-    private lateinit var binding: ActivityMainKotlinBinding
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -50,11 +50,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
-        val viewModelFactory = MainViewModelFactory(bookDao)
-        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_kotlin)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = findNavController(R.id.navigation_fragment)
 
         appBarConfiguration = AppBarConfiguration.Builder(
@@ -188,7 +184,14 @@ class MainActivity : AppCompatActivity() {
 
             if (permissionAllGranted) {
                 permissionResultListener?.onGranted()
-            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])) {
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    permissionsRequired[0]
+                ) || ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    permissionsRequired[1]
+                )
+            ) {
                 permissionResultListener?.onDenied(false)
             } else {
                 Logger.d("permission all denied")

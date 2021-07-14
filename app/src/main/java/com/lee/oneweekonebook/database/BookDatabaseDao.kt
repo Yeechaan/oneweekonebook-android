@@ -25,6 +25,9 @@ interface BookDatabaseDao {
     @Query("SELECT * FROM book_history_table WHERE type = :type")
     fun getBooksByType(type: Int): LiveData<List<Book>>
 
+    @Query("SELECT * FROM book_history_table WHERE type = :type")
+    fun getBooksType(type: Int): List<Book>
+
     @Query("SELECT * FROM book_history_table")
     fun getAllBooks(): LiveData<List<Book>>
 

@@ -1,24 +1,37 @@
 package com.lee.oneweekonebook.ui.home.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.lee.oneweekonebook.database.BookDatabaseDao
+import android.content.Context
+import androidx.lifecycle.*
+import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
+import com.lee.oneweekonebook.database.model.Book
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(bookDao: BookDatabaseDao) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    @ApplicationContext context: Context,
+) : ViewModel() {
 
-    val books = bookDao.getBooksByType(BOOK_TYPE_READING)
+    private val _books = MutableLiveData<List<Book>>()
+    val books: LiveData<List<Book>>
+        get() = _books
 
-}
-
-class HomeViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(bookDatabaseDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    val isBookEmpty = Transformations.map(books) {
+        it.isNullOrEmpty()
     }
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            _books.postValue(
+                BookDatabase.getInstance(context).bookDatabaseDao.getBooksType(
+                    BOOK_TYPE_READING
+                )
+            )
+        }
+    }
+
 }
