@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
@@ -19,30 +19,24 @@ import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
-import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModelFactory
 import com.lee.oneweekonebook.utils.isNetworkConnected
+import dagger.hilt.android.AndroidEntryPoint
 
 const val PREVIOUS_ADD = 1
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    var binding: FragmentHomeBinding? = null
+    private val homeViewModel by viewModels<HomeViewModel>()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HOME)
 
-        val application = requireNotNull(this.activity).application
-        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
-
-        val viewModelFactory = HomeViewModelFactory(bookDao)
-        val homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
             .apply {
                 viewModel = homeViewModel
                 lifecycleOwner = this@HomeFragment
@@ -51,13 +45,20 @@ class HomeFragment : Fragment() {
 //                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
 //                }
 
-                val wiseSaying = resources.getStringArray(R.array.wise_saying_list).random().split('/')
-                layoutWiseSaying.textViewSayingContents.text = getString(R.string.home_wise_saying_content, wiseSaying[0])
-                layoutWiseSaying.textViewSayingWriter.text = getString(R.string.home_wise_saying_writer, wiseSaying[1])
+                val wiseSaying =
+                    resources.getStringArray(R.array.wise_saying_list).random().split('/')
+                layoutWiseSaying.textViewSayingContents.text =
+                    getString(R.string.home_wise_saying_content, wiseSaying[0])
+                layoutWiseSaying.textViewSayingWriter.text =
+                    getString(R.string.home_wise_saying_writer, wiseSaying[1])
 
 
                 fabAddSearch.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment(previous = PREVIOUS_ADD))
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToSearchBookFragment(
+                            previous = PREVIOUS_ADD
+                        )
+                    )
                 }
 
                 fabAddCamera.setOnClickListener {
@@ -69,7 +70,11 @@ class HomeFragment : Fragment() {
                 }
 
                 val readingBookAdapter = HomeReadingAdapter(HomeReadingListener { book ->
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReadingBookDetailFragment(bookId = book.id))
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToReadingBookDetailFragment(
+                            bookId = book.id
+                        )
+                    )
                     (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                 })
                 recyclerViewReadingBook.apply {
@@ -85,9 +90,17 @@ class HomeFragment : Fragment() {
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
                     if (isNetworkConnected(requireContext())) {
-                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(categoryId = categoryBook.type))
+                        findNavController().navigate(
+                            HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment(
+                                categoryId = categoryBook.type
+                            )
+                        )
                     } else {
-                        Toast.makeText(requireContext(), getString(R.string.error_network_not_connected), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.error_network_not_connected),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
                 val gridLayoutManager = GridLayoutManager(requireContext(), 5)
@@ -98,7 +111,8 @@ class HomeFragment : Fragment() {
                 categoryBookAdapter.data = categoryBooks
 
             }
-        return binding?.root
+
+        return binding.root
     }
 
 }

@@ -59,7 +59,7 @@
                     android:layout_marginTop="@dimen/spacing_item_normal"
                     android:orientation="horizontal"
                     android:paddingVertical="@dimen/spacing_item_very_small"
-                    android:visibility="@{viewModel.books.size == 0 ? View.INVISIBLE : View.VISIBLE}"
+                    android:visibility="@{viewModel.isBookEmpty ? View.INVISIBLE : View.VISIBLE}"
                     android:background="@color/gray_very_light"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/textView_reading_book"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_very_large"
                     android:src="@drawable/ic_book_shelf"
-                    android:visibility="@{viewModel.books.size == 0 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.isBookEmpty ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView_reading_book" />
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/home_book_add"
                     android:textAppearance="@style/TextAppearance.Custom.Body4.Bold"
-                    android:visibility="@{viewModel.books.size == 0 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.isBookEmpty ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="@id/imageView_empty"
                     app:layout_constraintStart_toStartOf="@id/imageView_empty"
                     app:layout_constraintTop_toBottomOf="@id/imageView_empty" />
