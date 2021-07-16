@@ -22,7 +22,7 @@ private val retrofit = Retrofit.Builder()
 interface BookApiService {
 
     @GET("api/search.api")
-    suspend fun searchBookAsync(
+    suspend fun searchBook(
         @Query("key") key: String = INTERPARK_KEY,
         @Query("query") query: String,
         @Query("output") output: String = OUTPUT_TYPE,

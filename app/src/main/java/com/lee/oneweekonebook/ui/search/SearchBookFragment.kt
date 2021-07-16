@@ -20,7 +20,9 @@ import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.PREVIOUS_ADD
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
 import com.lee.oneweekonebook.utils.isNetworkConnected
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchBookFragment : Fragment() {
 
     private val args: SearchBookFragmentArgs by navArgs()

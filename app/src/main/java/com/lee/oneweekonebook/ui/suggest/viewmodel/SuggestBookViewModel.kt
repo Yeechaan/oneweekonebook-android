@@ -1,13 +1,19 @@
 package com.lee.oneweekonebook.ui.suggest.viewmodel
 
 import androidx.lifecycle.*
-import com.lee.oneweekonebook.network.BookApi
+import com.lee.oneweekonebook.repo.BookRequestRepository
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.suggest.model.asBookList
 import com.orhanobut.logger.Logger
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
+@HiltViewModel
+class SuggestBookViewModel @Inject constructor(
+    private val bookRequestRepository: BookRequestRepository,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _books = MutableLiveData<List<BookInfo>>()
     val books: LiveData<List<BookInfo>>
@@ -16,8 +22,8 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
     init {
         viewModelScope.launch {
             try {
-                val responseCategory =
-                    BookApi.bookApiService.getSuggestBookAsync(categoryId = categoryId)
+                val categoryId = savedStateHandle.get<Int>("categoryId") ?: 101
+                val responseCategory = bookRequestRepository.getRecommendationBook(categoryId)
                 Logger.d(responseCategory)
                 _books.value = responseCategory.asBookList()
             } catch (e: Exception) {
@@ -26,16 +32,4 @@ class SuggestBookViewModel(val categoryId: Int) : ViewModel() {
         }
     }
 
-}
-
-class SuggestBookViewModelFactory(
-    private val categoryId: Int,
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SuggestBookViewModel::class.java)) {
-            return SuggestBookViewModel(categoryId) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }
