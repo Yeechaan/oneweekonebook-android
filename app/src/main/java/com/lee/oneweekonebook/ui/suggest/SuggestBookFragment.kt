@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSuggestBookBinding
 import com.lee.oneweekonebook.ui.MainActivity
@@ -18,23 +16,29 @@ import com.lee.oneweekonebook.ui.home.model.categoryBook
 import com.lee.oneweekonebook.ui.search.SearchBookAdapter
 import com.lee.oneweekonebook.ui.search.SearchBookListener
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModel
-import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SuggestBookFragment : Fragment() {
 
     var binding: FragmentSuggestBookBinding? = null
     private val args by navArgs<SuggestBookFragmentArgs>()
+
+    private val suggestBookViewModel by viewModels<SuggestBookViewModel>()
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        (activity as MainActivity).setToolbarTitle(categoryBook[args.categoryId] ?: getString(R.string.suggest_title))
-
-        val viewModelFactory = SuggestBookViewModelFactory(args.categoryId)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(SuggestBookViewModel::class.java)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        (activity as MainActivity).setToolbarTitle(
+            categoryBook[args.categoryId] ?: getString(R.string.suggest_title)
+        )
 
         binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
             .apply {
@@ -47,14 +51,23 @@ class SuggestBookFragment : Fragment() {
                 }
 
                 val bookAdapter = SearchBookAdapter(SearchBookListener { book ->
-                    findNavController().navigate(SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(book = book))
+                    findNavController().navigate(
+                        SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
+                            book = book
+                        )
+                    )
                 })
                 recyclerViewSuggestBook.apply {
                     adapter = bookAdapter
-                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                    addItemDecoration(
+                        DividerItemDecoration(
+                            requireContext(),
+                            DividerItemDecoration.VERTICAL
+                        )
+                    )
                 }
 
-                viewModel.books.observe(viewLifecycleOwner, {
+                suggestBookViewModel.books.observe(viewLifecycleOwner, {
                     bookAdapter.data = it
                 })
             }
