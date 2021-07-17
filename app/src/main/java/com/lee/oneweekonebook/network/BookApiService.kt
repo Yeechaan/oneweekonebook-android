@@ -1,8 +1,8 @@
 package com.lee.oneweekonebook.network
 
+import com.lee.oneweekonebook.BuildConfig
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
-import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 
 private const val BASE_URL_INTERPARK = "http://book.interpark.com/"
-const val INTERPARK_KEY = "8892D72AADCAC82157036D312CA3FCF0F5BA6ED181C8404722D7D4418F1BDD2E"
+const val INTERPARK_KEY = BuildConfig.BOOK_API_KEY
 const val OUTPUT_TYPE = "json"
 const val MAX_RESULT = 100
 
