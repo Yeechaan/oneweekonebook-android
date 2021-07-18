@@ -1,33 +1,24 @@
 package com.lee.oneweekonebook.ui.done.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
+import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.utils.ioDispatcher
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DoneBookViewModel(val bookDao: BookDatabaseDao) : ViewModel() {
+@HiltViewModel
+class DoneBookViewModel @Inject constructor(
+    private val bookRepository: BookRepository
+) : ViewModel() {
 
-    val books = bookDao.getBooksByType(BOOK_TYPE_DONE)
+    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_DONE)
 
     fun deleteBook(bookId: Int) {
         viewModelScope.launch(ioDispatcher) {
-            bookDao.deleteBook(bookId)
+            bookRepository.deleteBookById(bookId)
         }
-    }
-}
-
-class DoneBookViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-    ) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DoneBookViewModel::class.java)) {
-            return DoneBookViewModel(bookDatabaseDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

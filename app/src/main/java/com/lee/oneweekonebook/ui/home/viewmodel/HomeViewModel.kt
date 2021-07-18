@@ -1,37 +1,21 @@
 package com.lee.oneweekonebook.ui.home.viewmodel
 
-import android.content.Context
-import androidx.lifecycle.*
-import com.lee.oneweekonebook.database.BookDatabase
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
-import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.repo.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    @ApplicationContext context: Context,
+    bookRepository: BookRepository
 ) : ViewModel() {
 
-    private val _books = MutableLiveData<List<Book>>()
-    val books: LiveData<List<Book>>
-        get() = _books
+    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_READING)
 
     val isBookEmpty = Transformations.map(books) {
         it.isNullOrEmpty()
-    }
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            _books.postValue(
-                BookDatabase.getInstance(context).bookDatabaseDao.getBooksType(
-                    BOOK_TYPE_READING
-                )
-            )
-        }
     }
 
 }

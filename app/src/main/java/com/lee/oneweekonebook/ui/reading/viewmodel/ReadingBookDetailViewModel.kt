@@ -1,17 +1,22 @@
 package com.lee.oneweekonebook.ui.reading.viewmodel
 
 import androidx.lifecycle.*
-import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BookType
+import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.utils.ioDispatcher
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
+@HiltViewModel
+class ReadingBookDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val bookRepository: BookRepository
+) : ViewModel() {
 
-    val book = bookDao.getBookAsync(bookId)
+    val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
 
     private val _isContentsPage = MutableLiveData(true)
     val isContentsPage: LiveData<Boolean>
@@ -32,7 +37,7 @@ class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) 
                         it.endDate = System.currentTimeMillis()
                     }
                 }
-                bookDao.update(it)
+                bookRepository.updateBook(it)
             }
         }
     }
@@ -41,18 +46,4 @@ class ReadingBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) 
         _isContentsPage.value = isContentsPage
     }
 
-}
-
-
-class ReadingBookDetailViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-    private val bookId: Int
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ReadingBookDetailViewModel::class.java)) {
-            return ReadingBookDetailViewModel(bookDatabaseDao, bookId) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }
