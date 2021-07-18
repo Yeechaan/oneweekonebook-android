@@ -5,29 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentEditBookBinding
 import com.lee.oneweekonebook.ui.edit.viewmodel.EditBookViewModel
-import com.lee.oneweekonebook.ui.edit.viewmodel.EditBookViewModelFactory
-import com.orhanobut.logger.Logger
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditBookFragment : Fragment() {
 
-    private val args: EditBookFragmentArgs by navArgs()
+    private val editBookViewModel by viewModels<EditBookViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val application = requireNotNull(this.activity).application
-        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
-
-        val viewModelFactory = EditBookViewModelFactory(bookDao, args.bookId)
-        val editBookViewModel = ViewModelProvider(this, viewModelFactory).get(EditBookViewModel::class.java)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val binding = FragmentEditBookBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = this@EditBookFragment
@@ -37,7 +33,8 @@ class EditBookFragment : Fragment() {
                     if (it.coverImage.isNotEmpty()) {
                         Glide.with(root.context).load(it.coverImage).into(imageViewBook)
                     } else {
-                        Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
+                        Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
+                            .into(imageViewBook)
                     }
                 })
 

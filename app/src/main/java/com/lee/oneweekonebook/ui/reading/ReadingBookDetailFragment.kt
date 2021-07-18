@@ -6,42 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.databinding.FragmentReadingBookDetailBinding
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel
-import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModelFactory
 import com.lee.oneweekonebook.utils.ConfirmDialog
 import com.lee.oneweekonebook.utils.gone
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
-    var binding: FragmentReadingBookDetailBinding? = null
-    private val args: ReadingBookDetailFragmentArgs by navArgs()
+    private val readingBookDetailViewModel by viewModels<ReadingBookDetailViewModel>()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-    @SuppressLint("ResourceAsColor")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val application = requireNotNull(this.activity).application
-        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
-
-        val viewModelFactory = ReadingBookDetailViewModelFactory(bookDao, args.bookId)
-        val readingBookDetailViewModel = ViewModelProvider(this, viewModelFactory).get(ReadingBookDetailViewModel::class.java)
-
-        binding = FragmentReadingBookDetailBinding.inflate(inflater, container, false)
+        val binding = FragmentReadingBookDetailBinding.inflate(inflater, container, false)
             .apply {
                 viewModel = readingBookDetailViewModel
                 lifecycleOwner = this@ReadingBookDetailFragment
@@ -62,8 +53,16 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                             val contents = editTextContents.text.toString()
                             val review = editTextReview.text.toString()
 
-                            readingBookDetailViewModel.saveBook(type = BOOK_TYPE_DONE, contents = contents, review = review)
-                            findNavController().navigate(ReadingBookDetailFragmentDirections.actionReadingBookFragmentToHistoryBookFragment(bookType = BOOK_TYPE_DONE))
+                            readingBookDetailViewModel.saveBook(
+                                type = BOOK_TYPE_DONE,
+                                contents = contents,
+                                review = review
+                            )
+                            findNavController().navigate(
+                                ReadingBookDetailFragmentDirections.actionReadingBookFragmentToHistoryBookFragment(
+                                    bookType = BOOK_TYPE_DONE
+                                )
+                            )
                         }
                     ).show(childFragmentManager, ConfirmDialog.TAG)
                 }
@@ -72,8 +71,16 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     val contents = editTextContents.text.toString()
                     val review = editTextReview.text.toString()
 
-                    readingBookDetailViewModel.saveBook(type = BOOK_TYPE_READING, contents = contents, review = review)
-                    Toast.makeText(requireContext(), getString(R.string.reading_save), Toast.LENGTH_SHORT).show()
+                    readingBookDetailViewModel.saveBook(
+                        type = BOOK_TYPE_READING,
+                        contents = contents,
+                        review = review
+                    )
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.reading_save),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 readingBookDetailViewModel.book.observe(viewLifecycleOwner, {
@@ -84,7 +91,8 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     if (it.coverImage.isNotEmpty()) {
                         Glide.with(root.context).load(it.coverImage).into(layoutBook.imageViewBook)
                     } else {
-                        Glide.with(root.context).load(R.drawable.ic_baseline_menu_book).into(layoutBook.imageViewBook)
+                        Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
+                            .into(layoutBook.imageViewBook)
                     }
 
                     editTextContents.setText(it.contents)
@@ -103,7 +111,7 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                 })
             }
 
-        return binding?.root
+        return binding.root
     }
 
 }

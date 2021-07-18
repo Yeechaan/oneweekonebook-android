@@ -1,47 +1,36 @@
 package com.lee.oneweekonebook.ui.wish.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
+import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.utils.ioDispatcher
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WishBookViewModel(private val bookDao: BookDatabaseDao, application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class WishBookViewModel @Inject constructor(
+    private val bookRepository: BookRepository
+) : ViewModel() {
 
-    val books = bookDao.getBooksByType(BOOK_TYPE_WISH)
+    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_WISH)
 
     fun addReadingBook(bookId: Int) {
         viewModelScope.launch(ioDispatcher) {
-            val currentBook = bookDao.getBook(bookId)
+            val currentBook = bookRepository.getBookById(bookId)
             currentBook.apply {
                 type = BOOK_TYPE_READING
             }
-            bookDao.update(currentBook)
+            bookRepository.updateBook(currentBook)
         }
     }
 
     fun deleteBook(bookId: Int) {
         viewModelScope.launch(ioDispatcher) {
-            bookDao.deleteBook(bookId)
+            bookRepository.deleteBookById(bookId)
         }
     }
 
-}
-
-class WishBookViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-    private val application: Application
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WishBookViewModel::class.java)) {
-            return WishBookViewModel(bookDatabaseDao, application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

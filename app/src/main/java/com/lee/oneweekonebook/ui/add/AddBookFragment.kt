@@ -18,19 +18,18 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.*
 import com.lee.oneweekonebook.databinding.FragmentAddBookBinding
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.PermissionResultListener
 import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModel
-import com.lee.oneweekonebook.ui.add.viewmodel.AddBookViewModelFactory
 import com.lee.oneweekonebook.utils.PhotoRotateAdapter
 import com.orhanobut.logger.Logger
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -38,9 +37,10 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class AddBookFragment : Fragment() {
 
+    private val addBookViewModel by viewModels<AddBookViewModel>()
     var binding: FragmentAddBookBinding? = null
     private val args by navArgs<AddBookFragmentArgs>()
 
@@ -53,15 +53,13 @@ class AddBookFragment : Fragment() {
         binding = null
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         (activity as MainActivity).registerPermissionResultListener(permissionResultListener)
-
-        val application = requireNotNull(this.activity).application
-        val bookDao = BookDatabase.getInstance(application).bookDatabaseDao
-
-        val viewModelFactory = AddBookViewModelFactory(bookDao)
-        val addBookViewModel = ViewModelProvider(this, viewModelFactory).get(AddBookViewModel::class.java)
 
         binding = FragmentAddBookBinding.inflate(inflater, container, false)
             .apply {
@@ -78,9 +76,26 @@ class AddBookFragment : Fragment() {
                     val publisher = editTextPublisher.text.toString()
 
                     if (args.bookId.isNullOrEmpty()) {
-                        addBookViewModel.saveBook(Book(title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = bookType))
+                        addBookViewModel.saveBook(
+                            Book(
+                                title = title,
+                                writer = writer,
+                                publisher = publisher,
+                                coverImage = savedPhotoPath,
+                                type = bookType
+                            )
+                        )
                     } else {
-                        addBookViewModel.updateBook(Book(id = args.bookId!!.toInt(), title = title, writer = writer, publisher = publisher, coverImage = savedPhotoPath, type = bookType))
+                        addBookViewModel.updateBook(
+                            Book(
+                                id = args.bookId!!.toInt(),
+                                title = title,
+                                writer = writer,
+                                publisher = publisher,
+                                coverImage = savedPhotoPath,
+                                type = bookType
+                            )
+                        )
                     }
 
                     findNavController().navigateUp()
@@ -120,13 +135,21 @@ class AddBookFragment : Fragment() {
                 R.id.m1 -> {
                     (activity as MainActivity).requirePermission()
 
-                    Toast.makeText(requireContext(), getString(R.string.take_picture), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.take_picture),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 R.id.m2 -> {
                     // 갤러리에서 가져오기
                     permissionGalleryLauncher.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
 
-                    Toast.makeText(requireContext(), getString(R.string.picture_from_gallery), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.picture_from_gallery),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             true
@@ -203,7 +226,8 @@ class AddBookFragment : Fragment() {
                 }
 
                 //Inserting the contentValues to contentResolver and getting the Uri
-                val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                val imageUri =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
                 savedFilePath = imageUri.toString()
 
                 //Opening an outputStream with the Uri that we got
@@ -236,34 +260,43 @@ class AddBookFragment : Fragment() {
         }
 
         override fun onDenied(showAgain: Boolean) {
-            Toast.makeText(requireContext(), getString(R.string.permission_denied_camera), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.permission_denied_camera),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
-    private var permissionCameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        when (result.resultCode) {
-            RESULT_OK -> {
-                // 원본 사진 저장 순서 : 앱 내부 사진 저장 -> Gallery 복사(uri 저장) -> 앱 내부 사진 삭제
-                val rotatedImageBitmap = PhotoRotateAdapter.getRotatedImageBitmap(File(currentPhotoPath), requireContext())
+    private var permissionCameraLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                RESULT_OK -> {
+                    // 원본 사진 저장 순서 : 앱 내부 사진 저장 -> Gallery 복사(uri 저장) -> 앱 내부 사진 삭제
+                    val rotatedImageBitmap = PhotoRotateAdapter.getRotatedImageBitmap(
+                        File(currentPhotoPath),
+                        requireContext()
+                    )
 
-                // copy photo from Internal Storage to Gallery
-                savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
-                deleteImageFromSandbox()
+                    // copy photo from Internal Storage to Gallery
+                    savedPhotoPath = saveMediaToStorage(rotatedImageBitmap)
+                    deleteImageFromSandbox()
 
-                val imageUri = Uri.parse(savedPhotoPath)
-                binding?.imageViewCover?.setImageURI(imageUri)
+                    val imageUri = Uri.parse(savedPhotoPath)
+                    binding?.imageViewCover?.setImageURI(imageUri)
+                }
             }
         }
-    }
 
-    private var permissionGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        when (result.resultCode) {
-            RESULT_OK -> {
-                savedPhotoPath = result.data?.data.toString()
-                val imageUri = Uri.parse(savedPhotoPath)
-                binding?.imageViewCover?.setImageURI(imageUri)
+    private var permissionGalleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                RESULT_OK -> {
+                    savedPhotoPath = result.data?.data.toString()
+                    val imageUri = Uri.parse(savedPhotoPath)
+                    binding?.imageViewCover?.setImageURI(imageUri)
+                }
             }
         }
-    }
 
 }

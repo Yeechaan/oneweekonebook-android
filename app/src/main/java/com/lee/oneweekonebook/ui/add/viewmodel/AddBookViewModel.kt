@@ -1,13 +1,21 @@
 package com.lee.oneweekonebook.ui.add.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.BookDatabaseDao
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.utils.ioDispatcher
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddBookViewModel(private val bookDao: BookDatabaseDao) : ViewModel() {
+@HiltViewModel
+class AddBookViewModel @Inject constructor(
+    private val bookRepository: BookRepository
+) : ViewModel() {
 
     private val _book = MutableLiveData<Book>()
     val book: LiveData<Book>
@@ -15,33 +23,21 @@ class AddBookViewModel(private val bookDao: BookDatabaseDao) : ViewModel() {
 
     fun getBook(bookId: Int) {
         viewModelScope.launch(ioDispatcher) {
-            val currentBook = bookDao.getBook(bookId)
+            val currentBook = bookRepository.getBookById(bookId)
             _book.postValue(currentBook)
         }
     }
 
     fun saveBook(book: Book) {
         viewModelScope.launch(ioDispatcher) {
-                bookDao.insert(book)
+            bookRepository.addBook(book)
         }
     }
 
     fun updateBook(book: Book) {
         viewModelScope.launch(ioDispatcher) {
-            bookDao.update(book)
+            bookRepository.updateBook(book)
         }
     }
 
-}
-
-class AddBookViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddBookViewModel::class.java)) {
-            return AddBookViewModel(bookDatabaseDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

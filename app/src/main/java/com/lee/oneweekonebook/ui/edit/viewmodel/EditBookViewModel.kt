@@ -1,42 +1,34 @@
 package com.lee.oneweekonebook.ui.edit.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.lee.oneweekonebook.database.BookDatabaseDao
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.repo.BookRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditBookViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
+@HiltViewModel
+class EditBookViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val bookRepository: BookRepository
+) : ViewModel() {
 
-    val book = bookDao.getBookAsync(bookId)
+    val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
 
-    fun editBook(book: Book) {
+    fun editBook(editBook: Book) {
         viewModelScope.launch(Dispatchers.IO) {
-            val currentBook = bookDao.getBook(bookId)
+            val currentBook = book.value ?: Book()
 
             currentBook.apply {
-                title = book.title
-                writer = book.writer
-                publisher = book.publisher
+                title = editBook.title
+                writer = editBook.writer
+                publisher = editBook.publisher
             }
-            bookDao.update(currentBook)
+            bookRepository.updateBook(currentBook)
         }
     }
 
-}
-
-class EditBookViewModelFactory(
-    private val bookDao: BookDatabaseDao,
-    private val bookId: Int
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EditBookViewModel::class.java)) {
-            return EditBookViewModel(bookDao, bookId) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }
