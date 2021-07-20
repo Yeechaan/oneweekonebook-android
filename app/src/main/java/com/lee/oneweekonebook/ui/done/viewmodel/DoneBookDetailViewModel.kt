@@ -1,17 +1,20 @@
 package com.lee.oneweekonebook.ui.done.viewmodel
 
 import androidx.lifecycle.*
-import com.lee.oneweekonebook.database.BookDatabaseDao
-import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.utils.DateUtils
 import com.lee.oneweekonebook.utils.ioDispatcher
-import com.orhanobut.logger.Logger
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : ViewModel() {
+@HiltViewModel
+class DoneBookDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val bookRepository: BookRepository
+) : ViewModel() {
 
-    val book = bookDao.getBookAsync(bookId)
+    val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
 
     private val _isContentsPage = MutableLiveData(true)
     val isContentsPage: LiveData<Boolean>
@@ -26,7 +29,7 @@ class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : V
             book.value?.let { it ->
                 it.contents = contents
                 it.review = review
-                bookDao.update(it)
+                bookRepository.updateBook(it)
             }
         }
     }
@@ -35,17 +38,4 @@ class DoneBookDetailViewModel(val bookDao: BookDatabaseDao, val bookId: Int) : V
         _isContentsPage.value = isContentsPage
     }
 
-}
-
-class DoneBookDetailViewModelFactory(
-    private val bookDatabaseDao: BookDatabaseDao,
-    private val bookId: Int
-) : ViewModelProvider.Factory {
-    @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DoneBookDetailViewModel::class.java)) {
-            return DoneBookDetailViewModel(bookDatabaseDao, bookId) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
 }

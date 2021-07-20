@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentHistoryBinding
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
-import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.done.DoneBookFragment
 import com.lee.oneweekonebook.ui.reading.ReadingBookFragment
@@ -25,18 +23,16 @@ const val BOOK_DONE = 2
 
 class HistoryFragment : Fragment() {
 
-    var binding: FragmentHistoryBinding? = null
     private val args by navArgs<HistoryFragmentArgs>()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
 
-        binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        val binding = FragmentHistoryBinding.inflate(inflater, container, false)
             .apply {
                 viewPagerHistory.apply {
                     adapter = HistoryAdapter(this@HistoryFragment)
@@ -45,7 +41,11 @@ class HistoryFragment : Fragment() {
                     setCurrentItem(args.bookType, false)
                 }
 
-                val tabIcons = listOf(R.drawable.ic_favorite, R.drawable.ic_baseline_menu_book, R.drawable.ic_baseline_book_done)
+                val tabIcons = listOf(
+                    R.drawable.ic_favorite,
+                    R.drawable.ic_baseline_menu_book,
+                    R.drawable.ic_baseline_book_done
+                )
 
                 TabLayoutMediator(tabLayoutHistory, viewPagerHistory) { tab, position ->
                     tab.text = getTabTitle(position)
@@ -54,7 +54,7 @@ class HistoryFragment : Fragment() {
 
             }
 
-        return binding?.root
+        return binding.root
     }
 
     private fun getTabTitle(position: Int): String? {
@@ -66,8 +66,7 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    inner class HistoryAdapter(fragment: Fragment)
-        : FragmentStateAdapter(fragment) {
+    inner class HistoryAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
         private val pageList: Map<Int, () -> Fragment> = mapOf(
             BOOK_WISH to { WishBookFragment() },

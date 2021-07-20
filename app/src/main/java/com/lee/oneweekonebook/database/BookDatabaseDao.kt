@@ -13,6 +13,9 @@ interface BookDatabaseDao {
     @Insert
     fun insert(book: Book)
 
+    @Query("SELECT * FROM book_history_table WHERE title LIKE :title LIMIT 1")
+    fun getBookByTitle(title: String): Book?
+
     @Update
     fun update(book: Book)
 
@@ -23,20 +26,9 @@ interface BookDatabaseDao {
     fun getBook(id: Int): Book
 
     @Query("SELECT * FROM book_history_table WHERE type = :type")
-    fun getBooksByType(type: Int): LiveData<List<Book>>
-
-    @Query("SELECT * FROM book_history_table WHERE type = :type")
-    fun getBooksType(type: Int): List<Book>
-
-    @Query("SELECT * FROM book_history_table")
-    fun getAllBooks(): LiveData<List<Book>>
+    fun getBooksByTypeAsync(type: Int): LiveData<List<Book>>
 
     @Query("DELETE FROM book_history_table where id = :id")
     fun deleteBook(id: Int)
 
-    @Query("SELECT * FROM book_history_table WHERE title LIKE :title LIMIT 1")
-    fun getBookWithTitle(title: String): Book?
-
-    @Query("DELETE FROM book_history_table")
-    fun clear()
 }
