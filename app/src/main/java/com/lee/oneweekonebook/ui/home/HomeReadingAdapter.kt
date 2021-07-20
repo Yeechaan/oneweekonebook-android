@@ -38,8 +38,6 @@ class HomeReadingAdapter(private val homeReadingListener: HomeReadingListener) :
 
                 if (item.coverImage.isNotEmpty()) {
                     Glide.with(root.context).load(item.coverImage).into(imageViewBook)
-                } else {
-                    Glide.with(root.context).load(R.drawable.ic_book_add).into(imageViewBook)
                 }
 
                 executePendingBindings()

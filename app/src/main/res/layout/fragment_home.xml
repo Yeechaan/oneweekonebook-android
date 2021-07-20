@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -18,8 +19,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:overScrollMode="never">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -52,19 +53,25 @@
                     android:elevation="@dimen/spacing_item_very_small"
                     app:layout_constraintBottom_toTopOf="@id/recyclerView_reading_book" />
 
-                <androidx.recyclerview.widget.RecyclerView
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/recyclerView_reading_book"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/spacing_item_normal"-->
+<!--                    android:background="@color/gray_very_light"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:paddingVertical="@dimen/spacing_item_very_small"-->
+<!--                    android:visibility="@{viewModel.isBookEmpty ? View.INVISIBLE : View.VISIBLE}"-->
+<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/textView_reading_book"-->
+<!--                    tools:itemCount="2"-->
+<!--                    tools:listitem="@layout/item_home_reading" />-->
+
+                <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/recyclerView_reading_book"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_item_normal"
-                    android:orientation="horizontal"
-                    android:paddingVertical="@dimen/spacing_item_very_small"
-                    android:visibility="@{viewModel.isBookEmpty ? View.INVISIBLE : View.VISIBLE}"
-                    android:background="@color/gray_very_light"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/textView_reading_book"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_home_reading" />
+                    app:layout_constraintTop_toBottomOf="@id/textView_reading_book" />
 
                 <ImageView
                     android:id="@+id/imageView_empty"
@@ -115,9 +122,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_item_normal"
                     android:layout_marginBottom="70dp"
+                    android:background="@color/gray_very_light"
                     android:overScrollMode="never"
                     android:paddingVertical="@dimen/spacing_item_small"
-                    android:background="@color/gray_very_light"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

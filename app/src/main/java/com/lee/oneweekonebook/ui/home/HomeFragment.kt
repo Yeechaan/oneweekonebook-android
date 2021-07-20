@@ -19,6 +19,7 @@ import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
+import com.lee.oneweekonebook.utils.addPreview
 import com.lee.oneweekonebook.utils.isNetworkConnected
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,6 +78,7 @@ class HomeFragment : Fragment() {
                     )
                     (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                 })
+                recyclerViewReadingBook.addPreview()
                 recyclerViewReadingBook.apply {
                     adapter = readingBookAdapter
                 }

@@ -11,4 +11,7 @@
     <dimen name="spacing_item_normal">8dp</dimen>
     <dimen name="spacing_item_large">12dp</dimen>
 
+    <dimen name="viewpager_next_item_visible">90dp</dimen>
+    <dimen name="viewpager_current_item_horizontal_margin">80dp</dimen>
+
 </resources>
