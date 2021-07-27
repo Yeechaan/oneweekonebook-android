@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">OneWeekOneBook</string>
-    <string name="admob_app_id">ca-app-pub-7727150178095243~2070810518</string>
-    <string name="banner_ad_unit_id">ca-app-pub-7727150178095243/9287240969</string>
-    <string name="banner_ad_unit_id_book">ca-app-pub-7727150178095243/4231786028</string>
-    <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/63009781v11</string>
-
     <string name="app_title">일주일책</string>
 
     <string name="home">홈</string>
