@@ -44,12 +44,6 @@ class SuggestBookFragment : Fragment() {
             .apply {
                 lifecycleOwner = this@SuggestBookFragment
 
-                swipeRefreshLayoutContainer.apply {
-                    setOnRefreshListener {
-                        isRefreshing = false
-                    }
-                }
-
                 val bookAdapter = SearchBookAdapter(SearchBookListener { book ->
                     findNavController().navigate(
                         SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
