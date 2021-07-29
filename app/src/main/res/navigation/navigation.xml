@@ -23,9 +23,6 @@
             android:id="@+id/action_homeFragment_to_searchBookFragment"
             app:destination="@id/searchBookFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_addBookFragment"
-            app:destination="@id/addBookFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_suggestBookFragment"
             app:destination="@id/suggestBookFragment" />
         <action
@@ -73,10 +70,6 @@
         android:id="@+id/searchBookFragment"
         android:name="com.lee.oneweekonebook.ui.search.SearchBookFragment"
         android:label="@string/search_title">
-        <argument
-            android:name="previous"
-            android:defaultValue="0"
-            app:argType="integer" />
         <action
             android:id="@+id/action_searchBookFragment_to_bookDetailFragment"
             app:destination="@id/bookDetailFragment" />
@@ -120,22 +113,6 @@
             app:destination="@id/historyFragment"
             app:popUpTo="@id/readingBookDetailFragment"
             app:popUpToInclusive="true"/>
-    </fragment>
-
-    <!--    add-->
-    <fragment
-        android:id="@+id/addBookFragment"
-        android:name="com.lee.oneweekonebook.ui.add.AddBookFragment"
-        android:label="@string/add_book">
-        <argument
-            android:name="bookType"
-            android:defaultValue="-1"
-            app:argType="integer" />
-        <argument
-            android:name="bookId"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
     </fragment>
 
     <!--    suggest-->

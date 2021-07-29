@@ -20,6 +20,7 @@
     <string name="search_book_title_empty">입력된 내용이 없습니다</string>
     <string name="search_book_result_empty">검색된 내용이 없습니다</string>
     <string name="suggest_title">뭐읽지</string>
+    <string name="search_add_book_label">검색하여 추가하기</string>
 
     <string name="wish_add_title">읽고 싶은 책 추가</string>
     <string name="done_edit_title">다 읽은 책 수정</string>

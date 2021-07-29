@@ -53,20 +53,6 @@
                     android:elevation="@dimen/spacing_item_very_small"
                     app:layout_constraintBottom_toTopOf="@id/recyclerView_reading_book" />
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/recyclerView_reading_book"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="@dimen/spacing_item_normal"-->
-<!--                    android:background="@color/gray_very_light"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:paddingVertical="@dimen/spacing_item_very_small"-->
-<!--                    android:visibility="@{viewModel.isBookEmpty ? View.INVISIBLE : View.VISIBLE}"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                    app:layout_constraintTop_toBottomOf="@id/textView_reading_book"-->
-<!--                    tools:itemCount="2"-->
-<!--                    tools:listitem="@layout/item_home_reading" />-->
-
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/recyclerView_reading_book"
                     android:layout_width="match_parent"
@@ -131,16 +117,6 @@
                     app:layout_constraintTop_toBottomOf="@id/textView_list"
                     tools:itemCount="2"
                     tools:listitem="@layout/item_category" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_suggest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="suggest"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -177,16 +153,7 @@
                 app:fab_color="@color/olive"
                 app:fab_icon="@drawable/ic_baseline_search"
                 app:label_backgroundColor="#808080"
-                app:label_text="검색하여 추가" />
-
-            <com.nambimobile.widgets.efab.FabOption
-                android:id="@+id/fab_add_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_color="@color/olive"
-                app:fab_icon="@drawable/ic_baseline_camera"
-                app:label_backgroundColor="#808080"
-                app:label_text="직접 추가" />
+                app:label_text="@string/search_add_book_label" />
 
         </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

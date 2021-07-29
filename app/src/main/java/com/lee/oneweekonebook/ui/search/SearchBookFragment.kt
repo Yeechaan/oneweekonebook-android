@@ -25,29 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchBookFragment : Fragment() {
 
-    private val args: SearchBookFragmentArgs by navArgs()
-    var binding: FragmentSearchBookBinding? = null
-    lateinit var inputMethodManager: InputMethodManager
     private val searchBookViewModel by viewModels<SearchBookViewModel>()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
 
-        binding = FragmentSearchBookBinding.inflate(inflater, container, false)
+        val binding = FragmentSearchBookBinding.inflate(inflater, container, false)
             .apply {
-                inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
                 lifecycleOwner = this@SearchBookFragment
                 viewModel = searchBookViewModel
-
-                if (args.previous == PREVIOUS_ADD) {
-                    showKeyboard()
-                }
 
                 editTextSearchBook.setOnEditorActionListener { textView, action, _ ->
                     when (action) {
@@ -89,12 +75,7 @@ class SearchBookFragment : Fragment() {
                 })
             }
 
-        return binding?.root
-    }
-
-    private fun showKeyboard() {
-        binding?.editTextSearchBook?.requestFocus()
-        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+        return binding.root
     }
 
 }
