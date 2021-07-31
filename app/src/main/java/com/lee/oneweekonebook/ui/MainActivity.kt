@@ -1,31 +1,20 @@
 package com.lee.oneweekonebook.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.lee.oneweekonebook.BuildConfig.APPLICATION_ID
 import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.databinding.ActivityMainBinding
 import com.lee.oneweekonebook.utils.gone
 import com.lee.oneweekonebook.utils.visible
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
 import dagger.hilt.android.AndroidEntryPoint
 
 const val BOTTOM_MENU_HOME = 0
@@ -41,12 +30,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    private var permissionResultListener: PermissionResultListener? = null
-
-    private var permissionsRequired =
-        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,7 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         initToolBar()
         initBottomNavigation()
-        initLogger()
     }
 
     private fun initToolBar() {
@@ -107,14 +89,6 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(destination, args, navOptions)
     }
 
-    private fun initLogger() {
-        val formatStrategy = PrettyFormatStrategy.newBuilder()
-            .methodCount(1)
-            .tag(APPLICATION_ID)
-            .build()
-        Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
@@ -154,71 +128,4 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.gone()
     }
 
-    fun registerPermissionResultListener(listener: PermissionResultListener) {
-        permissionResultListener = listener
-    }
-
-    fun unregisterPermissionResultListener() {
-        permissionResultListener = null
-    }
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == 1) {
-            //check if all permissions are granted
-            var permissionAllGranted = false
-            for (i in grantResults.indices) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    permissionAllGranted = true
-                } else {
-                    permissionAllGranted = false
-                    break
-                }
-            }
-
-            if (permissionAllGranted) {
-                permissionResultListener?.onGranted()
-            } else if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    permissionsRequired[0]
-                ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    permissionsRequired[1]
-                )
-            ) {
-                permissionResultListener?.onDenied(false)
-            } else {
-                Logger.d("permission all denied")
-            }
-        }
-    }
-
-    fun requirePermission() {
-        val needPermissions = arrayListOf<String>()
-
-        permissionsRequired.map {
-            if (ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED) {
-                needPermissions.add(it)
-            }
-        }
-        // android 10 에서는 external storage permission 동작 안함
-        // android 8 에서는 external storage permission 동작
-        if (needPermissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, needPermissions.toTypedArray(), 1)
-        } else {
-            permissionResultListener?.onGranted()
-        }
-    }
-
-}
-
-interface PermissionResultListener {
-    fun onGranted()
-    fun onDenied(showAgain: Boolean)
 }

@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
@@ -42,10 +41,6 @@ class HomeFragment : Fragment() {
                 viewModel = homeViewModel
                 lifecycleOwner = this@HomeFragment
 
-//                buttonSuggest.setOnClickListener {
-//                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSuggestBookFragment())
-//                }
-
                 val wiseSaying =
                     resources.getStringArray(R.array.wise_saying_list).random().split('/')
                 layoutWiseSaying.textViewSayingContents.text =
@@ -55,15 +50,7 @@ class HomeFragment : Fragment() {
 
 
                 fabAddSearch.setOnClickListener {
-                    findNavController().navigate(
-                        HomeFragmentDirections.actionHomeFragmentToSearchBookFragment(
-                            previous = PREVIOUS_ADD
-                        )
-                    )
-                }
-
-                fabAddCamera.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddBookFragment())
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchBookFragment())
                 }
 
                 imageViewEmpty.setOnClickListener {
@@ -105,6 +92,7 @@ class HomeFragment : Fragment() {
                         ).show()
                     }
                 })
+
                 val gridLayoutManager = GridLayoutManager(requireContext(), 5)
                 recyclerViewCategoryBook.apply {
                     layoutManager = gridLayoutManager
