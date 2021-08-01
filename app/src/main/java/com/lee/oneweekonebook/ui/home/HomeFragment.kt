@@ -22,8 +22,6 @@ import com.lee.oneweekonebook.utils.addPreview
 import com.lee.oneweekonebook.utils.isNetworkConnected
 import dagger.hilt.android.AndroidEntryPoint
 
-const val PREVIOUS_ADD = 1
-
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 

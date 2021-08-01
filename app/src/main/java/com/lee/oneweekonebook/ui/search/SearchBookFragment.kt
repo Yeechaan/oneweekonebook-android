@@ -1,23 +1,19 @@
 package com.lee.oneweekonebook.ui.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSearchBookBinding
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_SEARCH
 import com.lee.oneweekonebook.ui.MainActivity
-import com.lee.oneweekonebook.ui.home.PREVIOUS_ADD
 import com.lee.oneweekonebook.ui.search.viewmodel.SearchBookViewModel
 import com.lee.oneweekonebook.utils.isNetworkConnected
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +23,11 @@ class SearchBookFragment : Fragment() {
 
     private val searchBookViewModel by viewModels<SearchBookViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_SEARCH)
 
         val binding = FragmentSearchBookBinding.inflate(inflater, container, false)
@@ -46,10 +46,18 @@ class SearchBookFragment : Fragment() {
                                     searchBookViewModel.searchBook(editTextSearchBook.text.toString())
                                 }
                                 isTitleEmpty -> {
-                                    Toast.makeText(requireContext(), getString(R.string.search_book_title_empty), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        requireContext(),
+                                        getString(R.string.search_book_title_empty),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                                 !isNetworkConnected -> {
-                                    Toast.makeText(requireContext(), getString(R.string.error_network_not_connected), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        requireContext(),
+                                        getString(R.string.error_network_not_connected),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                             true
@@ -59,18 +67,31 @@ class SearchBookFragment : Fragment() {
                 }
 
                 val searchBookAdapter = SearchBookAdapter(SearchBookListener { book ->
-                    findNavController().navigate(SearchBookFragmentDirections.actionSearchBookFragmentToBookDetailFragment(book = book))
+                    findNavController().navigate(
+                        SearchBookFragmentDirections.actionSearchBookFragmentToBookDetailFragment(
+                            book = book
+                        )
+                    )
                 })
                 recyclerViewSearchBook.apply {
                     adapter = searchBookAdapter
-                    addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+                    addItemDecoration(
+                        DividerItemDecoration(
+                            requireContext(),
+                            DividerItemDecoration.VERTICAL
+                        )
+                    )
                 }
 
                 searchBookViewModel.books.observe(viewLifecycleOwner, {
                     searchBookAdapter.data = it
 
                     if (it.isEmpty()) {
-                        Toast.makeText(requireContext(), getString(R.string.search_book_result_empty), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.search_book_result_empty),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
             }
