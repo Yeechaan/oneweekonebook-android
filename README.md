@@ -28,7 +28,6 @@
 
 <p float="left">
   <img src="https://play-lh.googleusercontent.com/dk4OvcNqQMy1el0Buqg4bleR9ZcgkU0hRChkPIhIJHxdAV-lykVnTaC6IWfoOUA8PUDD=w1920-h892-rw" width="170" />
-  <img src="https://play-lh.googleusercontent.com/asreyKHSuvkQT9Rp8vybm-yUB1wvbnvk9sHmj8tzOTYOi41OUKD56Q1HTu9gHsL4EoI=w1920-h892-rw" width="170" /> 
 </p>
 
 #### <검색 화면>
