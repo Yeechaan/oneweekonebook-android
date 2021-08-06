@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
+import com.lee.oneweekonebook.common.ItemPickerBottomDialog
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
@@ -53,13 +55,21 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     }
 
                     buttonAddBook.setOnClickListener {
-                        ConfirmDialog(
-                            description = getString(R.string.dialog_book_add_description),
-                            positiveMessage = getString(R.string.dialog_book_positive),
-                            onConfirm = {
-                                bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
+//                        ConfirmDialog(
+//                            description = getString(R.string.dialog_book_add_description),
+//                            positiveMessage = getString(R.string.dialog_book_positive),
+//                            onConfirm = {
+//                                bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
+//                            }
+//                        ).show(childFragmentManager, ConfirmDialog.TAG)
+
+                        ItemPickerBottomDialog(
+                            title = "책 추가하기",
+                            items = listOf("좋아요", "독서 시작", "독서 완료"),
+                            onPick = { index, _ ->
+                                bookDetailViewModel.addBook(index, book)
                             }
-                        ).show(childFragmentManager, ConfirmDialog.TAG)
+                        ).show(childFragmentManager, tag)
                     }
 
                     buttonFavorite.setOnClickListener {
@@ -94,6 +104,16 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                                 findNavController().navigate(
                                     BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(
                                         bookType = BOOK_TYPE_READING
+                                    )
+                                )
+                                (activity as MainActivity).setBottomNavigationStatus(
+                                    BOTTOM_MENU_HISTORY
+                                )
+                            }
+                            BOOK_TYPE_DONE -> {
+                                findNavController().navigate(
+                                    BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(
+                                        bookType = BOOK_TYPE_DONE
                                     )
                                 )
                                 (activity as MainActivity).setBottomNavigationStatus(
