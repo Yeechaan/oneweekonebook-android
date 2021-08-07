@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearance.Picker" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Custom.BottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+    </style>
+
+</resources>
