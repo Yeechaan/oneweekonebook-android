@@ -55,31 +55,13 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     }
 
                     buttonAddBook.setOnClickListener {
-//                        ConfirmDialog(
-//                            description = getString(R.string.dialog_book_add_description),
-//                            positiveMessage = getString(R.string.dialog_book_positive),
-//                            onConfirm = {
-//                                bookDetailViewModel.addBook(BOOK_TYPE_READING, book)
-//                            }
-//                        ).show(childFragmentManager, ConfirmDialog.TAG)
-
                         ItemPickerBottomDialog(
-                            title = "책 추가하기",
-                            items = listOf("좋아요", "독서 시작", "독서 완료"),
+                            title = getString(R.string.add_book),
+                            items = listOf(getString(R.string.wish_title), getString(R.string.add_book_reading), getString(R.string.add_book_done)),
                             onPick = { index, _ ->
                                 bookDetailViewModel.addBook(index, book)
                             }
                         ).show(childFragmentManager, tag)
-                    }
-
-                    buttonFavorite.setOnClickListener {
-                        ConfirmDialog(
-                            description = getString(R.string.dialog_book_wish_description),
-                            positiveMessage = getString(R.string.dialog_book_positive),
-                            onConfirm = {
-                                bookDetailViewModel.addBook(BOOK_TYPE_WISH, book)
-                            }
-                        ).show(childFragmentManager, ConfirmDialog.TAG)
                     }
 
                     bookDetailViewModel.isBookSaved.observe(viewLifecycleOwner, {
