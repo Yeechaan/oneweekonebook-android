@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ShapeAppearance.Picker" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerSize">4dp</item>
+    <style name="ShapeAppearance.Custom.Button" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">16dp</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.Custom.BottomSheetDialog" parent="">

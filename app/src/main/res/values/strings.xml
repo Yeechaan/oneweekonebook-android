@@ -11,7 +11,9 @@
     <string name="delete">삭제하기</string>
 
     <string name="home_title">일주일책</string>
-    <string name="add_book">책 읽기 시작</string>
+    <string name="add_book">책 추가하기</string>
+    <string name="add_book_reading">독서 시작</string>
+    <string name="add_book_done">독서 완료</string>
     <string name="wish_title">좋아요</string>
     <string name="reading_title">읽는중</string>
     <string name="done_title">다읽은</string>

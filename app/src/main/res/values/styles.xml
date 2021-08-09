@@ -13,7 +13,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="itemPickerStyle">@style/Widget.Custom.Button.Picker</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Myd.BottomSheetDialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Custom.BottomSheetDialog</item>
 
     </style>
 

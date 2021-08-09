@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ThemeOverlay.Myd.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/Widget.Myd.BottomSheet</item>
+    <style name="ThemeOverlay.Custom.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Custom.BottomSheet</item>
     </style>
 
-    <style name="Widget.Myd.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+    <style name="Widget.Custom.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Custom.BottomSheetDialog</item>
     </style>
 
