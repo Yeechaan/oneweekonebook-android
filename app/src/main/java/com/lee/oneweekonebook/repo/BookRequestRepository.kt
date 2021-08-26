@@ -1,6 +1,6 @@
 package com.lee.oneweekonebook.repo
 
-import com.lee.oneweekonebook.network.BookApiQualifier
+import com.lee.oneweekonebook.di.BookApiQualifier
 import com.lee.oneweekonebook.network.BookApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
