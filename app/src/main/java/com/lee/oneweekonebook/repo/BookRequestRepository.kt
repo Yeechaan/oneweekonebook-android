@@ -1,7 +1,10 @@
 package com.lee.oneweekonebook.repo
 
+import com.lee.oneweekonebook.common.Result
 import com.lee.oneweekonebook.di.BookApiQualifier
 import com.lee.oneweekonebook.network.BookApiService
+import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
+import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -12,13 +15,35 @@ class BookRequestRepository @Inject constructor(
 
     suspend fun searchBook(
         query: String
-    ) = withContext(Dispatchers.IO) {
-        bookApiService.searchBook(query = query)
+    ): Result<SearchBookResponse> = withContext(Dispatchers.IO) {
+        try {
+            val response = bookApiService.searchBook(query = query)
+            val returnCode = response.returnCode
+            if (returnCode == "000") {
+                return@withContext Result.Success(response)
+            } else {
+                return@withContext Result.Error(returnCode)
+            }
+        } catch (e: Exception) {
+            return@withContext Result.Error(e.toString())
+        }
     }
+
 
     suspend fun getRecommendationBook(
         categoryId: Int
-    ) = withContext(Dispatchers.IO) {
-        bookApiService.getSuggestBookAsync(categoryId = categoryId)
+    ): Result<RecommendBookResponse> = withContext(Dispatchers.IO) {
+        try {
+            val response = bookApiService.getSuggestBookAsync(categoryId = categoryId)
+            val returnCode = response.returnCode
+            if (returnCode == "000") {
+                return@withContext Result.Success(response)
+            } else {
+                return@withContext Result.Error(returnCode)
+            }
+        } catch (e: Exception) {
+            return@withContext Result.Error(e.toString())
+        }
     }
+
 }

@@ -61,6 +61,7 @@
     <string name="tool_bar_setting_description">관리 페이지로 이동</string>
 
     <string name="error_network_not_connected">네트워크 상태를 확인해주세요</string>
+    <string name="error_api_service">서비스 연결에 오류가 있습니다\n지속적인 문제가 발생하면 관리자에게 문의해 주세요</string>
 
     <string name="dialog_book_add_description">독서를 시작해 볼까요?</string>
     <string name="dialog_book_done_description">독서를 완료하셨나요?</string>
