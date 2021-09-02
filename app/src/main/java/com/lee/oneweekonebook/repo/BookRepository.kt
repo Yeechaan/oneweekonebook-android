@@ -7,6 +7,7 @@ import javax.inject.Inject
 class BookRepository @Inject constructor(
     bookDatabase: BookDatabase
 ) {
+
     private val bookDatabaseDao = bookDatabase.bookDatabaseDao
 
     fun addBook(book: Book) = bookDatabaseDao.insert(book)
@@ -31,7 +32,5 @@ class BookRepository @Inject constructor(
         bookDatabaseDao.getBookByTitle(title)?.let {
             true
         } ?: false
-
-
 
 }
