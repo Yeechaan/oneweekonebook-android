@@ -1,6 +1,5 @@
 package com.lee.oneweekonebook.ui.reading
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
@@ -19,6 +17,7 @@ import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.reading.viewmodel.ReadingBookDetailViewModel
 import com.lee.oneweekonebook.utils.ConfirmDialog
 import com.lee.oneweekonebook.utils.gone
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,14 +49,7 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         description = getString(R.string.dialog_book_done_description),
                         positiveMessage = getString(R.string.dialog_book_positive),
                         onConfirm = {
-                            val contents = editTextContents.text.toString()
-                            val review = editTextReview.text.toString()
-
-                            readingBookDetailViewModel.saveBook(
-                                type = BOOK_TYPE_DONE,
-                                contents = contents,
-                                review = review
-                            )
+                            readingBookDetailViewModel.saveBook(type = BOOK_TYPE_DONE)
                             findNavController().navigate(
                                 ReadingBookDetailFragmentDirections.actionReadingBookFragmentToHistoryBookFragment(
                                     bookType = BOOK_TYPE_DONE
@@ -68,14 +60,7 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                 }
 
                 buttonSaveBook.setOnClickListener {
-                    val contents = editTextContents.text.toString()
-                    val review = editTextReview.text.toString()
-
-                    readingBookDetailViewModel.saveBook(
-                        type = BOOK_TYPE_READING,
-                        contents = contents,
-                        review = review
-                    )
+                    readingBookDetailViewModel.saveBook(type = BOOK_TYPE_READING)
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.reading_save),
@@ -86,6 +71,16 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                 readingBookDetailViewModel.book.observe(viewLifecycleOwner, {
                     (activity as MainActivity).setToolbarTitle(it.title)
 
+                    if (readingBookDetailViewModel.savedContents == null) {
+                        editTextContents.setText(it.contents)
+                        editTextContents.setSelection(it.contents.length)
+                    }
+
+                    if (readingBookDetailViewModel.savedReview == null) {
+                        editTextReview.setText(it.review)
+                        editTextReview.setSelection(it.review.length)
+                    }
+
                     layoutBook.imageViewTo.gone()
                     layoutBook.textViewTo.gone()
                     if (it.coverImage.isNotEmpty()) {
@@ -94,12 +89,6 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
                             .into(layoutBook.imageViewBook)
                     }
-
-                    editTextContents.setText(it.contents)
-                    editTextContents.setSelection(it.contents.length)
-
-                    editTextReview.setText(it.review)
-                    editTextReview.setSelection(it.review.length)
                 })
 
                 readingBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {

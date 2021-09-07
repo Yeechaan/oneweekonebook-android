@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:book="@{viewModel.book}"
-            app:layout_constraintTop_toBottomOf="@id/button_save_book"/>
+            app:layout_constraintTop_toBottomOf="@id/button_save_book" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_contents"
@@ -112,7 +112,8 @@
                     android:id="@+id/editText_contents"
                     style="@style/Widget.Custom.Text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.contents}" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -140,7 +141,8 @@
                     android:id="@+id/editText_review"
                     style="@style/Widget.Custom.Text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.review}" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

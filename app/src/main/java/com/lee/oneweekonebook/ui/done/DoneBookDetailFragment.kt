@@ -30,10 +30,7 @@ class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                 lifecycleOwner = this@DoneBookDetailFragment
 
                 buttonSaveBook.setOnClickListener {
-                    val contents = editTextContents.text.toString()
-                    val review = editTextReview.text.toString()
-
-                    doneBookDetailViewModel.saveReadingBook(contents = contents, review = review)
+                    doneBookDetailViewModel.saveReadingBook()
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.reading_save),
@@ -52,18 +49,22 @@ class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                 doneBookDetailViewModel.book.observe(viewLifecycleOwner, {
                     (activity as MainActivity).setToolbarTitle(it.title)
 
+                    if (doneBookDetailViewModel.savedContents == null) {
+                        editTextContents.setText(it.contents)
+                        editTextContents.setSelection(it.contents.length)
+                    }
+
+                    if (doneBookDetailViewModel.savedReview == null) {
+                        editTextReview.setText(it.review)
+                        editTextReview.setSelection(it.review.length)
+                    }
+
                     if (it.coverImage.isNotEmpty()) {
                         Glide.with(root.context).load(it.coverImage).into(layoutBook.imageViewBook)
                     } else {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
                             .into(layoutBook.imageViewBook)
                     }
-
-                    editTextContents.setText(it.contents)
-                    editTextContents.setSelection(it.contents.length)
-
-                    editTextReview.setText(it.review)
-                    editTextReview.setSelection(it.review.length)
                 })
 
                 doneBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {

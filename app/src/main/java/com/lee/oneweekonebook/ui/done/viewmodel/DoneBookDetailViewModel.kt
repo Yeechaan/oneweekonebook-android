@@ -10,11 +10,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DoneBookDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val bookRepository: BookRepository
 ) : ViewModel() {
 
     val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
+
+    val savedContents: String?
+        get() = savedStateHandle["contents"]
+    val contents = savedStateHandle.getLiveData<String>("contents")
+
+    val savedReview: String?
+        get() = savedStateHandle["review"]
+    val review = savedStateHandle.getLiveData<String>("review")
 
     private val _isContentsPage = MutableLiveData(true)
     val isContentsPage: LiveData<Boolean>
@@ -24,11 +32,11 @@ class DoneBookDetailViewModel @Inject constructor(
         DateUtils().formatBookPeriod(book.startDate, book.endDate)
     }
 
-    fun saveReadingBook(contents: String, review: String) {
+    fun saveReadingBook() {
         viewModelScope.launch(ioDispatcher) {
             book.value?.let { it ->
-                it.contents = contents
-                it.review = review
+                it.contents = savedContents ?: ""
+                it.review = savedReview ?: ""
                 bookRepository.updateBook(it)
             }
         }
