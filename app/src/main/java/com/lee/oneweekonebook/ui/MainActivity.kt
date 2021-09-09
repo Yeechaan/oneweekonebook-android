@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
@@ -15,6 +16,7 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.ActivityMainBinding
 import com.lee.oneweekonebook.utils.gone
 import com.lee.oneweekonebook.utils.visible
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 const val BOTTOM_MENU_HOME = 0
@@ -24,26 +26,43 @@ const val BOTTOM_MENU_HISTORY = 2
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+    private val binding: ActivityMainBinding
+        get() = _binding!!
 
     private lateinit var navController: NavController
-    private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var bottomNavigationView: BottomNavigationView
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        navController = findNavController(R.id.navigation_fragment)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.homeFragment,
-            R.id.searchBookFragment,
-            R.id.historyFragment
-        ).build()
+        binding.apply {
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.navigation_fragment) as NavHostFragment
+            navController = navHostFragment.navController
+            bottomNavigation.setupWithNavController(navController)
 
-        initToolBar()
-        initBottomNavigation()
+            initBottomNavigation()
+
+            appBarConfiguration = AppBarConfiguration.Builder(
+                R.id.homeFragment,
+                R.id.searchBookFragment,
+                R.id.historyFragment
+            ).build()
+
+            initToolBar()
+        }
+
     }
 
     private fun initToolBar() {
@@ -57,40 +76,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigation() {
-        bottomNavigationView = binding.bottomNavigation
-
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            if (bottomNavigationView.selectedItemId != it.itemId) {
-                val moveTo = when (it.itemId) {
-                    R.id.menu_home -> BOTTOM_MENU_HOME
-                    R.id.menu_search -> BOTTOM_MENU_SEARCH
-                    R.id.menu_history -> BOTTOM_MENU_HISTORY
-                    else -> BOTTOM_MENU_HOME
-                }
-                navigate(moveTo)
-                true
-            } else false
-        }
-    }
-
-    private fun navigate(moveTo: Int = BOTTOM_MENU_HOME) {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.homeFragment, false)
             .build()
         val args = Bundle()
 
-        val destination = when (moveTo) {
-            BOTTOM_MENU_HOME -> R.id.homeFragment
-            BOTTOM_MENU_SEARCH -> R.id.searchBookFragment
-            BOTTOM_MENU_HISTORY -> R.id.historyFragment
-            else -> R.id.homeFragment
+        bottomNavigationView = binding.bottomNavigation
+
+        bottomNavigationView.setOnItemSelectedListener {
+            if (bottomNavigationView.selectedItemId != it.itemId) {
+                navController.navigate(it.itemId, args, navOptions)
+                true
+            } else false
         }
-
-        navController.navigate(destination, args, navOptions)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {

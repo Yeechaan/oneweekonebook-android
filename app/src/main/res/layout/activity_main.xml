@@ -21,7 +21,7 @@
             app:menu="@menu/menu_tool_bar">
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/navigation_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"

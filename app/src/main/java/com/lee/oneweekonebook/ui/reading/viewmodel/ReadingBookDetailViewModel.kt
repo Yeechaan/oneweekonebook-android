@@ -23,7 +23,6 @@ class ReadingBookDetailViewModel @Inject constructor(
         get() = _isContentsPage
 
 
-
     val savedContents: String?
         get() = savedStateHandle["contents"]
     val contents = savedStateHandle.getLiveData<String>("contents")
