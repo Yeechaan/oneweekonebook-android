@@ -15,7 +15,7 @@
 - **Android Architecture Components** (Viewmodels, Livedata, Room, Databinding)
 - **MVVM**
 - **Signle Activity** Multiple Fragments (Navigation Component)
-- **Coroutines**
+- **Coroutines, Flow**
 - **Hilt, DI**
 - Retrofit
 - Glide
