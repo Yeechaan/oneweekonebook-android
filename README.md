@@ -16,9 +16,10 @@
 - **MVVM**
 - **Signle Activity** Multiple Fragments (Navigation Component)
 - **Coroutines, Flow**
-- **Hilt, DI**
+- **Hilt**
 - Retrofit
 - Glide
+-
 
 
 ***
