@@ -19,7 +19,6 @@
 - **Hilt, DI**
 - Retrofit
 - Glide
-- Clean Code
 
 
 ***
