@@ -18,6 +18,7 @@
 - **Coroutines, Flow**
 - **Hilt, DI**
 - Retrofit
+- glide
 
 ***
 ### 스크린샷
