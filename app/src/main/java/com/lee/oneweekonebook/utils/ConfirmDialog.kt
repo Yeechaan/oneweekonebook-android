@@ -20,12 +20,12 @@ open class ConfirmDialog(
 
             val builder = AlertDialog.Builder(it)
             builder.setMessage(description)
-                .setPositiveButton(positiveMessage
-                ) { _, _ ->
+                .setPositiveButton(positiveMessage) { _, _ ->
                     onConfirm()
                     dismiss()
                 }
-                .setNegativeButton(negativeMessage
+                .setNegativeButton(
+                    negativeMessage
                 ) { _, _ ->
                     dismiss()
                 }

@@ -111,6 +111,7 @@ fun ItemRecommend.asBook() = run {
         description = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString(),
         link = link,
         price = priceStandard,
+        isbn = isbn
     )
 }
 

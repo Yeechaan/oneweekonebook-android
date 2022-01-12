@@ -20,6 +20,7 @@ data class BookInfo(
     var description: String = "",
     var link: String = "",
     var price: Int = 0,
+    var isbn: String = ""
 ) : Serializable
 
 
@@ -37,7 +38,7 @@ fun Item.asBook() = run {
         categoryId = categoryId?.toInt() ?: 0,
         description = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString(),
         link = link,
-        price = priceStandard,
+        price = priceStandard
     )
 }
 
