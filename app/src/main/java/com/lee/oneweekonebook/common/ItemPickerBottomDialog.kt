@@ -12,7 +12,7 @@ class ItemPickerBottomDialog(
     private val title: String,
     private val items: List<String>,
     private val onPick: (Int, String) -> Unit = { _, _ -> },
-    private val onDismiss: () -> Unit = {}
+    private val onDismiss: () -> Unit
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
