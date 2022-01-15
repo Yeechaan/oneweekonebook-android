@@ -8,7 +8,8 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.ItemSearchBinding
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 
-class SearchBookAdapter(private val searchBookListener: SearchBookListener) : RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
+class SearchBookAdapter(private val searchBookListener: SearchBookListener) :
+    RecyclerView.Adapter<SearchBookAdapter.ViewHolder>() {
     var data = listOf<BookInfo>()
         set(value) {
             field = value
