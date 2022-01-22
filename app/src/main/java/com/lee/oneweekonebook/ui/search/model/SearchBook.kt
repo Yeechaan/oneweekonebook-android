@@ -31,7 +31,8 @@ fun Item.asBook() = run {
         title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
         writer = Html.fromHtml(author, Html.FROM_HTML_MODE_LEGACY).toString(),
         publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
-        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd").convertDateToString("yyyy-MM-dd"),
+        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd")
+            .convertDateToString("yyyy-MM-dd"),
         coverImage = coverLargeUrl,
         reviewRank = customerReviewRank,
         reviewCount = reviewCount,
