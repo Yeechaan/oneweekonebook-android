@@ -45,11 +45,7 @@ class SuggestBookFragment : Fragment() {
                 lifecycleOwner = this@SuggestBookFragment
 
                 val bookAdapter = SearchBookAdapter(SearchBookListener { book ->
-                    findNavController().navigate(
-                        SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
-                            book = book
-                        )
-                    )
+                    suggestBookViewModel.getBookInfo(book.isbn)
                 })
                 recyclerViewSuggestBook.apply {
                     adapter = bookAdapter
@@ -63,6 +59,18 @@ class SuggestBookFragment : Fragment() {
 
                 suggestBookViewModel.books.observe(viewLifecycleOwner, {
                     bookAdapter.data = it
+                })
+
+                suggestBookViewModel.bookInfo.observe(viewLifecycleOwner, {
+                    it?.let {
+                        findNavController().navigate(
+                            SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
+                                book = it
+                            )
+                        )
+
+                        suggestBookViewModel.doneBoonInfo()
+                    }
                 })
             }
 

@@ -20,6 +20,7 @@ data class BookInfo(
     var description: String = "",
     var link: String = "",
     var price: Int = 0,
+    var isbn: String = ""
 ) : Serializable
 
 
@@ -30,14 +31,15 @@ fun Item.asBook() = run {
         title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
         writer = Html.fromHtml(author, Html.FROM_HTML_MODE_LEGACY).toString(),
         publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
-        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd").convertDateToString("yyyy-MM-dd"),
+        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString().convertStringToDate("yyyyMMdd")
+            .convertDateToString("yyyy-MM-dd"),
         coverImage = coverLargeUrl,
         reviewRank = customerReviewRank,
         reviewCount = reviewCount,
         categoryId = categoryId?.toInt() ?: 0,
         description = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString(),
         link = link,
-        price = priceStandard,
+        price = priceStandard
     )
 }
 

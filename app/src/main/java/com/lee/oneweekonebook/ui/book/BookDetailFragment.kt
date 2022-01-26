@@ -60,6 +60,9 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                             items = listOf(getString(R.string.wish_title), getString(R.string.add_book_reading), getString(R.string.add_book_done)),
                             onPick = { index, _ ->
                                 bookDetailViewModel.addBook(index, book)
+                            },
+                            onDismiss = {
+
                             }
                         ).show(childFragmentManager, tag)
                     }
