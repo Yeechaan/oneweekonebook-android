@@ -1,7 +1,7 @@
 package com.lee.oneweekonebook.ui.home.viewmodel
 
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.repo.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,8 +14,7 @@ class HomeViewModel @Inject constructor(
 
     val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_READING)
 
-    val isBookEmpty = Transformations.map(books) {
+    val isBookEmpty = books.map {
         it.isNullOrEmpty()
     }
-
 }

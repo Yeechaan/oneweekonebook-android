@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
                     expandableFab.performClick()
                 }
 
-                val readingBookAdapter = HomeReadingAdapter(HomeReadingListener { book ->
+                val readingBookAdapter = HomeReadingBookAdapter(HomeReadingListener { book ->
                     findNavController().navigate(
                         HomeFragmentDirections.actionHomeFragmentToReadingBookDetailFragment(
                             bookId = book.id
@@ -64,16 +64,14 @@ class HomeFragment : Fragment() {
                     (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
                 })
                 recyclerViewReadingBook.addPreview()
-                recyclerViewReadingBook.apply {
-                    adapter = readingBookAdapter
-                }
-                homeViewModel.books.observe(viewLifecycleOwner, {
+                recyclerViewReadingBook.adapter = readingBookAdapter
+                homeViewModel.books.observe(viewLifecycleOwner) {
                     if (it.isEmpty()) {
-                        readingBookAdapter.data = listOf(Book(type = BOOK_TYPE_UNKNOWN))
+                        readingBookAdapter.submitList(listOf(Book(type = BOOK_TYPE_UNKNOWN)))
                     } else {
-                        readingBookAdapter.data = it
+                        readingBookAdapter.submitList(it)
                     }
-                })
+                }
 
                 val categoryBookAdapter = CategoryBookAdapter(CategoryBookListener { categoryBook ->
                     if (isNetworkConnected(requireContext())) {
