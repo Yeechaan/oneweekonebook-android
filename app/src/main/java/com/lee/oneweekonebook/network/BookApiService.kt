@@ -32,7 +32,7 @@ interface BookApiService {
     ): SearchBookResponse
 
     @GET("api/recommend.api")
-    suspend fun getSuggestBookAsync(
+    suspend fun getSuggestBook(
         @Query("key") key: String = INTERPARK_KEY,
         @Query("categoryId") categoryId: Int,
         @Query("output") output: String = OUTPUT_TYPE,

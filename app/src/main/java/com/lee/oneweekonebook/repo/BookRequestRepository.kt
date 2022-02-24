@@ -23,6 +23,7 @@ class BookRequestRepository @Inject constructor(
             if (returnCode == "000") {
                 return@withContext Result.Success(response)
             } else {
+                Logger.i("Api Issue searchBook : $returnCode")
                 return@withContext Result.Error(returnCode)
             }
         } catch (e: Exception) {
@@ -39,6 +40,7 @@ class BookRequestRepository @Inject constructor(
             if (returnCode == "000") {
                 return@withContext Result.Success(response)
             } else {
+                Logger.i("Api Issue searchBookByISBN : $returnCode")
                 return@withContext Result.Error(returnCode)
             }
         } catch (e: Exception) {
@@ -50,7 +52,7 @@ class BookRequestRepository @Inject constructor(
         categoryId: Int
     ): Result<RecommendBookResponse> = withContext(Dispatchers.IO) {
         try {
-            val response = bookApiService.getSuggestBookAsync(categoryId = categoryId)
+            val response = bookApiService.getSuggestBook(categoryId = categoryId)
 
             Logger.d(response)
 
@@ -58,6 +60,7 @@ class BookRequestRepository @Inject constructor(
             if (returnCode == "000") {
                 return@withContext Result.Success(response)
             } else {
+                Logger.i("Api Issue getSuggestBook : $returnCode")
                 return@withContext Result.Error(returnCode)
             }
         } catch (e: Exception) {
