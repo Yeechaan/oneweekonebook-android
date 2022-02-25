@@ -83,7 +83,7 @@ class SearchBookFragment : Fragment() {
                     )
                 }
 
-                searchBookViewModel.books.observe(viewLifecycleOwner, {
+                searchBookViewModel.books.observe(viewLifecycleOwner) {
                     searchBookAdapter.data = it
 
                     if (it.isEmpty()) {
@@ -93,7 +93,7 @@ class SearchBookFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                })
+                }
             }
 
         return binding.root

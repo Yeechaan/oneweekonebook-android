@@ -3,15 +3,18 @@ package com.lee.oneweekonebook.repo
 import com.lee.oneweekonebook.common.Result
 import com.lee.oneweekonebook.di.BookApiQualifier
 import com.lee.oneweekonebook.network.BookApiService
+import com.lee.oneweekonebook.network.RESPONSE_CODE_SUCCESS
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
 import com.orhanobut.logger.Logger
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BookRequestRepository @Inject constructor(
-    @BookApiQualifier private val bookApiService: BookApiService
+    @BookApiQualifier private val bookApiService: BookApiService,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun searchBook(
@@ -20,24 +23,26 @@ class BookRequestRepository @Inject constructor(
         try {
             val response = bookApiService.searchBook(query = query)
             val returnCode = response.returnCode
-            if (returnCode == "000") {
-                return@withContext Result.Success(response)
+
+            if (returnCode == RESPONSE_CODE_SUCCESS) {
+                Result.Success(response)
             } else {
                 Logger.i("Api Issue searchBook : $returnCode")
-                return@withContext Result.Error(returnCode)
+                Result.Error(returnCode)
             }
         } catch (e: Exception) {
-            return@withContext Result.Error(e.toString())
+            Result.Error(e.toString())
         }
     }
 
+
     suspend fun searchBookByISBN(
         isbn: String
-    ): Result<SearchBookResponse> = withContext(Dispatchers.IO) {
+    ): Result<SearchBookResponse> = withContext(ioDispatcher) {
         try {
             val response = bookApiService.searchBookByISBN(query = isbn)
             val returnCode = response.returnCode
-            if (returnCode == "000") {
+            if (returnCode == RESPONSE_CODE_SUCCESS) {
                 return@withContext Result.Success(response)
             } else {
                 Logger.i("Api Issue searchBookByISBN : $returnCode")
@@ -48,16 +53,17 @@ class BookRequestRepository @Inject constructor(
         }
     }
 
+
     suspend fun getRecommendationBook(
         categoryId: Int
-    ): Result<RecommendBookResponse> = withContext(Dispatchers.IO) {
+    ): Result<RecommendBookResponse> = withContext(ioDispatcher) {
         try {
             val response = bookApiService.getSuggestBook(categoryId = categoryId)
 
             Logger.d(response)
 
             val returnCode = response.returnCode
-            if (returnCode == "000") {
+            if (returnCode == RESPONSE_CODE_SUCCESS) {
                 return@withContext Result.Success(response)
             } else {
                 Logger.i("Api Issue getSuggestBook : $returnCode")

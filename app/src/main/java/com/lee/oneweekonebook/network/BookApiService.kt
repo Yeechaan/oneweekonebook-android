@@ -12,6 +12,7 @@ const val INTERPARK_KEY = BuildConfig.BOOK_API_KEY
 const val OUTPUT_TYPE = "json"
 const val QUERY_TYPE = "isbn"
 const val MAX_RESULT = 100
+const val RESPONSE_CODE_SUCCESS = "000"
 
 interface BookApiService {
     @GET("api/search.api")
