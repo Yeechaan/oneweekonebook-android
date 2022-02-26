@@ -94,6 +94,10 @@ class SearchBookFragment : Fragment() {
                         ).show()
                     }
                 }
+
+                searchBookViewModel.error.observe(viewLifecycleOwner) {
+                    Toast.makeText(requireContext(), getString(R.string.error_api_service), Toast.LENGTH_SHORT).show()
+                }
             }
 
         return binding.root

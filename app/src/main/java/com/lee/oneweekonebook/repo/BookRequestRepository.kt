@@ -6,20 +6,18 @@ import com.lee.oneweekonebook.network.BookApiService
 import com.lee.oneweekonebook.network.RESPONSE_CODE_SUCCESS
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
+import com.lee.oneweekonebook.utils.ioDispatcher
 import com.orhanobut.logger.Logger
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BookRequestRepository @Inject constructor(
     @BookApiQualifier private val bookApiService: BookApiService,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     suspend fun searchBook(
         query: String
-    ): Result<SearchBookResponse> = withContext(Dispatchers.IO) {
+    ): Result<SearchBookResponse> = withContext(ioDispatcher) {
         try {
             val response = bookApiService.searchBook(query = query)
             val returnCode = response.returnCode

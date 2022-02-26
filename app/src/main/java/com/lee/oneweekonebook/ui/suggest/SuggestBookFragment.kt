@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,11 +58,11 @@ class SuggestBookFragment : Fragment() {
                     )
                 }
 
-                suggestBookViewModel.books.observe(viewLifecycleOwner, {
+                suggestBookViewModel.books.observe(viewLifecycleOwner) {
                     bookAdapter.data = it
-                })
+                }
 
-                suggestBookViewModel.bookInfo.observe(viewLifecycleOwner, {
+                suggestBookViewModel.bookInfo.observe(viewLifecycleOwner) {
                     it?.let {
                         findNavController().navigate(
                             SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
@@ -71,7 +72,11 @@ class SuggestBookFragment : Fragment() {
 
                         suggestBookViewModel.doneBoonInfo()
                     }
-                })
+                }
+
+                suggestBookViewModel.error.observe(viewLifecycleOwner) {
+                    Toast.makeText(requireContext(), getString(R.string.error_api_service), Toast.LENGTH_SHORT).show()
+                }
             }
 
         return binding?.root
