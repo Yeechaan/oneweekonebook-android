@@ -4,6 +4,7 @@ import android.app.Application
 import com.lee.oneweekonebook.utils.CustomDiskLogAdapter
 import com.lee.oneweekonebook.utils.LOGGER_DIRECTORY_NAME
 import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.DiskLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import dagger.hilt.android.HiltAndroidApp
@@ -29,7 +30,8 @@ class MainApplication : Application() {
         val folder = "$diskPath/$LOGGER_DIRECTORY_NAME"
         val file = File(folder)
 
-        Logger.addLogAdapter(CustomDiskLogAdapter(file))
+        val customDiskLogAdapter = CustomDiskLogAdapter(folder = file)
+        Logger.addLogAdapter(customDiskLogAdapter)
     }
 
 }

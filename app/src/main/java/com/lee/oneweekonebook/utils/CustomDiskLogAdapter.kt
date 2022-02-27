@@ -13,12 +13,13 @@ import java.util.*
 
 const val LOGGER_DIRECTORY_NAME = "logger"
 const val LOGGER_TEXT_EXTENSION = ".txt"
-const val LOGGER_ZIP_EXTENSION = ".zip"
 const val LOGGER_MAX_FILE_SIZE = 500 * 1024
-const val LOGGER_MAX_FILE_COUNT = 5
+const val LOGGER_MAX_FILE_COUNT = 3
+const val LOGGER_FILE_DATE_FORMAT = "yyyy-MM-dd"
 
 class CustomDiskLogAdapter(
     folder: File,
+    logLevel: Int = Logger.INFO,
     maxFileSize: Int = LOGGER_MAX_FILE_SIZE,
     maxFileCount: Int = LOGGER_MAX_FILE_COUNT
 ) : LogAdapter {
@@ -26,7 +27,7 @@ class CustomDiskLogAdapter(
     private val formatStrategy: FormatStrategy
 
     init {
-        val logStrategy = MydDiskLogStrategy(folder, maxFileSize, maxFileCount)
+        val logStrategy = CustomDiskLogStrategy(folder, logLevel, maxFileSize, maxFileCount)
 
         formatStrategy = CsvFormatStrategy.newBuilder()
             .logStrategy(logStrategy)
@@ -44,8 +45,9 @@ class CustomDiskLogAdapter(
 }
 
 
-class MydDiskLogStrategy(
+class CustomDiskLogStrategy(
     private val folder: File,
+    private val logLevel: Int,
     private val maxFileSize: Int,
     private val maxFileCount: Int = 0
 ) : LogStrategy {
@@ -56,8 +58,7 @@ class MydDiskLogStrategy(
     private var fileIndex = 0
 
     override fun log(level: Int, tag: String?, message: String) {
-        // log level 이 INFO 이상이면 파일에 저장 (INFO, WARN, ERROR, ASSERT)
-        if (level >= Logger.INFO) {
+        if (level >= logLevel) {
             scope.launch {
                 saveLog(message)
             }
@@ -72,7 +73,7 @@ class MydDiskLogStrategy(
             fileWriter = getFileWriter()
             fileWriter.append(message)
             fileWriter.flush()
-//            fileWriter.close()
+            fileWriter.close()
         } catch (e: IOException) {
             if (fileWriter != null) {
                 try {
@@ -116,7 +117,12 @@ class MydDiskLogStrategy(
 
         logFile = File(
             folder,
-            "${SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())}_$fileIndex$LOGGER_TEXT_EXTENSION"
+            "${
+                SimpleDateFormat(
+                    LOGGER_FILE_DATE_FORMAT,
+                    Locale.getDefault()
+                ).format(Date())
+            }_$fileIndex$LOGGER_TEXT_EXTENSION"
         )
         fileIndex++
 
@@ -130,7 +136,11 @@ class MydDiskLogStrategy(
             subFiles.sortBy { it.name }
             val lastFileName = subFiles.last().name.split("_")
 
-            if (lastFileName[0] != SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()) && subFiles.count() >= maxFileCount) {
+            if (lastFileName[0] != SimpleDateFormat(
+                    LOGGER_FILE_DATE_FORMAT,
+                    Locale.getDefault()
+                ).format(Date()) && subFiles.count() >= maxFileCount
+            ) {
                 subFiles[0].delete()
             }
         }
