@@ -1,13 +1,14 @@
 package com.lee.oneweekonebook.ui.book.viewmodel
 
-import androidx.lifecycle.*
-import com.lee.oneweekonebook.database.BookDatabaseDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.BookType
 import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.search.model.asBook
-import com.lee.oneweekonebook.utils.ioDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class BookDetailViewModel @Inject constructor(
         val book = bookInfo.asBook()
         book.type = type
 
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             if (!bookRepository.isSameBookSaved(bookInfo.title)) {
                 bookRepository.addBook(book)
                 _isBookSaved.postValue(type)

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.repo.BookRepository
-import com.lee.oneweekonebook.utils.ioDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +16,7 @@ class DoneBookViewModel @Inject constructor(
     val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_DONE)
 
     fun deleteBook(bookId: Int) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             bookRepository.deleteBookById(bookId)
         }
     }
