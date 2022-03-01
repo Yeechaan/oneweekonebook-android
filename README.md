@@ -1,24 +1,24 @@
 ## 일주일책
-일주일책 프로젝트는 당신의 서재가 되어 **읽고 싶은, 독서 중인, 독서 완료한 책들을 관리**하는 서비스입니다.
+일주일책 프로젝트는 당신의 모바일 서재가 되어 **읽고 싶은, 독서 중인, 독서 완료한 책들을 관리**하는 서비스입니다.
 
 <a href='https://play.google.com/store/apps/details?id=com.lee.oneweekonebook'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height=90px/></a>
 
 * * *
-### 주요기능
-- **독서내역** (읽고 싶은 책, 현재 독서 중인 책, 독서 완료한 책들을 관리)
-- **검색기능** (책 제목으로 입력하여 해당 도서의 상세 정보 확인 및 독서내역에 추가)
-- **카테고리 별 추천 도서** 확인
-- **독서 관련 명언** (다양한 명언들을 홈 화면 상단에 표시)
+### 주요 기능
+- **카테고리 별 추천 도서**
+- **제목으로 도서 검색**
+- **독서 내역**
+- **독서 관련 명언**
 
-### 사용기술
-- Written in **Kotlin**
-- **Android Architecture Components** (Viewmodels, Livedata, Room, Databinding)
-- **MVVM**
-- **Signle Activity** Multiple Fragments (Navigation Component)
-- **Coroutines, Flow**
-- **Hilt, DI**
-- Retrofit
-- glide
+### 사용 기술
+- Written in Kotlin
+- Android Jetpack, Material Design
+- MVVM
+- Coroutines, Flow
+- Retrofit, Glide
+- Hilt, DI
+- Room
+- Single Activity Multiple Fragments (Navigation Component)
 
 ***
 ### 스크린샷
@@ -26,20 +26,20 @@
 #### <홈 화면>
 
 <p float="left">
-  <img src="https://play-lh.googleusercontent.com/dk4OvcNqQMy1el0Buqg4bleR9ZcgkU0hRChkPIhIJHxdAV-lykVnTaC6IWfoOUA8PUDD=w1920-h892-rw" width="170" />
+  <img src="https://user-images.githubusercontent.com/41672138/156165121-0df64318-2048-4230-b9e5-278dc7a2aeed.gif" width="170" />
 </p>
 
-#### <검색 화면>
+#### <도서 검색 화면>
 
 <p float="left">
-  <img src="https://play-lh.googleusercontent.com/XG156B7BMkh56iDJoRrbPIubIdp9IsQYEhqdKGjn607rKr5cjxTdZ_eKWgu4Zcpd29s=w1920-h892-rw" width="170" />
-  <img src="https://play-lh.googleusercontent.com/Em8dWQZYLGCSrM0b8MShC0t5DpcRxJaFmuXrSeaQ9MVbHFCtgDRVNyc4qr4pH-tebQ=w1920-h892-rw" width="170" /> 
+  <img src="https://user-images.githubusercontent.com/41672138/156165430-5e3b4866-86b7-49a4-badb-cd5a4dcb26bd.jpeg" width="170" />
+  <img src="https://user-images.githubusercontent.com/41672138/156165442-691441b1-bb5d-48a6-84ba-1fc415c2a2c4.jpeg" width="170" />
+  <img src="https://user-images.githubusercontent.com/41672138/156165450-89c5ef3b-38ac-4a73-9cd4-1794ccc690dc.jpeg" width="170" />
 </p>
                                                                                                                                
-#### <독서내역 화면>
+#### <독서 내역 화면>
 
 <p float="left">
-  <img src="https://play-lh.googleusercontent.com/2eY9Gh3QEdI7Ni_-rsaEG7AOa_Hv_DMW9tStNpQXwd-erro2wfH56uepMVAByd-3oEc=w1920-h892-rw" width="170" />
-  <img src="https://play-lh.googleusercontent.com/XeF5cO76xnSZZFIMWr7vmOJnsclTAlRLCFRsKvtbEeXVqehHw-2Sz2p-nGhX4vP5V4M=w1920-h892-rw" width="170" /> 
+  <img src="https://user-images.githubusercontent.com/41672138/156165325-e27f1518-fdc8-41f1-a40f-edbc2b28f248.gif" width="170" />
 </p>
 
