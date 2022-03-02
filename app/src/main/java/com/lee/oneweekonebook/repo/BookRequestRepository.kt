@@ -2,17 +2,19 @@ package com.lee.oneweekonebook.repo
 
 import com.lee.oneweekonebook.common.Result
 import com.lee.oneweekonebook.di.BookApiQualifier
+import com.lee.oneweekonebook.di.IoDispatcher
 import com.lee.oneweekonebook.network.BookApiService
 import com.lee.oneweekonebook.network.RESPONSE_CODE_SUCCESS
 import com.lee.oneweekonebook.ui.search.model.SearchBookResponse
 import com.lee.oneweekonebook.ui.suggest.model.RecommendBookResponse
-import com.lee.oneweekonebook.utils.ioDispatcher
 import com.orhanobut.logger.Logger
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BookRequestRepository @Inject constructor(
     @BookApiQualifier private val bookApiService: BookApiService,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     suspend fun searchBook(

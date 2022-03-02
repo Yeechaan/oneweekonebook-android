@@ -3,7 +3,6 @@ package com.lee.oneweekonebook.ui.done.viewmodel
 import androidx.lifecycle.*
 import com.lee.oneweekonebook.repo.BookRepository
 import com.lee.oneweekonebook.utils.DateUtils
-import com.lee.oneweekonebook.utils.ioDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +32,7 @@ class DoneBookDetailViewModel @Inject constructor(
     }
 
     fun saveReadingBook() {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             book.value?.let { it ->
                 it.contents = savedContents ?: ""
                 it.review = savedReview ?: ""

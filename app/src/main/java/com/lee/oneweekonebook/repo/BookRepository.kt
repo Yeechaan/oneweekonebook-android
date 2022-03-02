@@ -2,35 +2,31 @@ package com.lee.oneweekonebook.repo
 
 import com.lee.oneweekonebook.database.BookDatabase
 import com.lee.oneweekonebook.database.model.Book
+import com.lee.oneweekonebook.di.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BookRepository @Inject constructor(
-    bookDatabase: BookDatabase
+    bookDatabase: BookDatabase,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     private val bookDatabaseDao = bookDatabase.bookDatabaseDao
 
-    fun addBook(book: Book) = bookDatabaseDao.insert(book)
+    suspend fun addBook(book: Book) = withContext(ioDispatcher) { bookDatabaseDao.insert(book) }
 
-
-    fun updateBook(book: Book) = bookDatabaseDao.update(book)
-
+    suspend fun updateBook(book: Book) = withContext(ioDispatcher) { bookDatabaseDao.update(book) }
 
     fun getBookByIdAsync(id: Int) = bookDatabaseDao.getBookAsync(id)
 
-
-    fun getBookById(id: Int) = bookDatabaseDao.getBook(id)
-
+    suspend fun getBookById(id: Int) = withContext(ioDispatcher) { bookDatabaseDao.getBook(id) }
 
     fun getAllBookByTypeAsync(type: Int) = bookDatabaseDao.getBooksByTypeAsync(type)
 
+    suspend fun deleteBookById(id: Int) = withContext(ioDispatcher) { bookDatabaseDao.deleteBook(id) }
 
-    fun deleteBookById(id: Int) = bookDatabaseDao.deleteBook(id)
-
-
-    fun isSameBookSaved(title: String) =
-        bookDatabaseDao.getBookByTitle(title)?.let {
-            true
-        } ?: false
-
+    suspend fun isSameBookSaved(title: String) = withContext(ioDispatcher) {
+        bookDatabaseDao.getBookByTitle(title)?.let { true } ?: false
+    }
 }

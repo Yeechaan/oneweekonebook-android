@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.repo.BookRepository
-import com.lee.oneweekonebook.utils.ioDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +17,7 @@ class WishBookViewModel @Inject constructor(
     val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_WISH)
 
     fun addReadingBook(bookId: Int) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             val currentBook = bookRepository.getBookById(bookId)
             currentBook.apply {
                 type = BOOK_TYPE_READING
@@ -28,7 +27,7 @@ class WishBookViewModel @Inject constructor(
     }
 
     fun deleteBook(bookId: Int) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             bookRepository.deleteBookById(bookId)
         }
     }
