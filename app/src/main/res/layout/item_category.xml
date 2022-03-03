@@ -4,20 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="category"
             type="com.lee.oneweekonebook.ui.home.model.CategoryBook" />
+
         <variable
             name="clickListener"
             type="com.lee.oneweekonebook.ui.home.CategoryBookListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Widget.Custom.Clickable.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(category)}"
+        android:layout_marginHorizontal="@dimen/spacing_item_small"
         android:layout_marginVertical="@dimen/spacing_item_small"
-        android:layout_marginHorizontal="@dimen/spacing_item_small">
+        android:onClick="@{() -> clickListener.onClick(category)}">
 
         <ImageView
             android:id="@+id/imageView_icon"

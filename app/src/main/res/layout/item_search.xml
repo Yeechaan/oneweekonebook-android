@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="searchBook"
             type="com.lee.oneweekonebook.ui.search.model.BookInfo" />
+
         <variable
             name="clickListener"
             type="com.lee.oneweekonebook.ui.search.SearchBookListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/Widget.Custom.Clickable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(searchBook)}"
-        android:layout_marginVertical="@dimen/spacing_item_large">
+        android:layout_marginVertical="@dimen/spacing_item_large"
+        android:onClick="@{() -> clickListener.onClick(searchBook)}">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView_book"
@@ -53,9 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_writer"
-            app:layout_constraintTop_toTopOf="@id/textView_writer"
             app:layout_constraintBottom_toBottomOf="@id/textView_writer"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_writer" />
 
         <TextView
             android:id="@+id/textView_writer"
@@ -76,9 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_publisher"
-            app:layout_constraintTop_toTopOf="@id/textView_publisher"
             app:layout_constraintBottom_toBottomOf="@id/textView_publisher"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_publisher" />
 
         <TextView
             android:id="@+id/textView_publisher"
@@ -99,9 +102,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_date"
-            app:layout_constraintTop_toTopOf="@id/textView_date"
             app:layout_constraintBottom_toBottomOf="@id/textView_date"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_date" />
 
         <TextView
             android:id="@+id/textView_date"
@@ -122,9 +125,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star"
-            app:layout_constraintTop_toTopOf="@id/textView_rate"
             app:layout_constraintBottom_toBottomOf="@id/textView_rate"
-            app:layout_constraintStart_toStartOf="@id/textView_title"/>
+            app:layout_constraintStart_toStartOf="@id/textView_title"
+            app:layout_constraintTop_toTopOf="@id/textView_rate" />
 
         <TextView
             android:id="@+id/textView_rate"
@@ -146,10 +149,10 @@
             android:layout_marginStart="@dimen/spacing_item_small"
             android:text="@{@string/book_review_count(searchBook.reviewCount)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
-            app:layout_constraintTop_toTopOf="@id/textView_rate"
             app:layout_constraintBottom_toBottomOf="@id/textView_rate"
             app:layout_constraintStart_toEndOf="@id/textView_rate"
-            tools:text="(10+)"/>
+            app:layout_constraintTop_toTopOf="@id/textView_rate"
+            tools:text="(10+)" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

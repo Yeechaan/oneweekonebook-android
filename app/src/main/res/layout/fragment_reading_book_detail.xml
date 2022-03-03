@@ -16,21 +16,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
+        <TextView
             android:id="@+id/button_save_book"
-            style="@style/Widget.Custom.Button.Small"
+            style="@style/Widget.Custom.Text.Clickable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_book_save"
+            android:text="@string/book_save"
+            app:drawableStartCompat="@drawable/ic_book_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
+        <TextView
             android:id="@+id/button_done_book"
-            style="@style/Widget.Custom.Button.Small"
+            style="@style/Widget.Custom.Text.Clickable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_book_done"
+            android:text="@string/add_book_done"
+            app:drawableStartCompat="@drawable/ic_book_done"
             app:layout_constraintEnd_toStartOf="@id/button_save_book"
             app:layout_constraintTop_toTopOf="parent" />
 

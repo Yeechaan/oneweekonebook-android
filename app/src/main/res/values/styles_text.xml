@@ -17,4 +17,10 @@
         <item name="errorEnabled">false</item>
     </style>
 
+    <style name="Widget.Custom.Text.Clickable" parent="Widget.MaterialComponents.Button">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
