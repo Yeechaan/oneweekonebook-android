@@ -6,7 +6,6 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BookType
 import com.lee.oneweekonebook.repo.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,7 +45,7 @@ class ReadingBookDetailViewModel @Inject constructor(
                 }
             }
 
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 bookRepository.updateBook(it)
             }
         }

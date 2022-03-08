@@ -68,7 +68,7 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     ).show()
                 }
 
-                readingBookDetailViewModel.book.observe(viewLifecycleOwner, {
+                readingBookDetailViewModel.book.observe(viewLifecycleOwner) {
                     (activity as MainActivity).setToolbarTitle(it.title)
 
                     if (readingBookDetailViewModel.savedContents == null) {
@@ -89,15 +89,15 @@ class ReadingBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
                             .into(layoutBook.imageViewBook)
                     }
-                })
+                }
 
-                readingBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {
+                readingBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner) {
                     if (it) {
                         editTextContents.requestFocus()
                     } else {
                         editTextReview.requestFocus()
                     }
-                })
+                }
             }
 
         return binding.root

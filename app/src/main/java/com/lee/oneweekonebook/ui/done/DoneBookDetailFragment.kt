@@ -46,7 +46,7 @@ class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     doneBookDetailViewModel.setCurrentPage(isContentsPage = false)
                 }
 
-                doneBookDetailViewModel.book.observe(viewLifecycleOwner, {
+                doneBookDetailViewModel.book.observe(viewLifecycleOwner) {
                     (activity as MainActivity).setToolbarTitle(it.title)
 
                     if (doneBookDetailViewModel.savedContents == null) {
@@ -65,15 +65,15 @@ class DoneBookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
                             .into(layoutBook.imageViewBook)
                     }
-                })
+                }
 
-                doneBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner, {
+                doneBookDetailViewModel.isContentsPage.observe(viewLifecycleOwner) {
                     if (it) {
                         editTextContents.requestFocus()
                     } else {
                         editTextReview.requestFocus()
                     }
-                })
+                }
             }
 
         return binding.root

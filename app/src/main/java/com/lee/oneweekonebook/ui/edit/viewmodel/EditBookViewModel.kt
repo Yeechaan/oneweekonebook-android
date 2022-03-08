@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.repo.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +18,7 @@ class EditBookViewModel @Inject constructor(
     val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
 
     fun editBook(editBook: Book) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val currentBook = book.value ?: Book()
 
             currentBook.apply {

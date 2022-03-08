@@ -29,14 +29,14 @@ class EditBookFragment : Fragment() {
                 lifecycleOwner = this@EditBookFragment
                 viewModel = editBookViewModel
 
-                editBookViewModel.book.observe(viewLifecycleOwner, {
+                editBookViewModel.book.observe(viewLifecycleOwner) {
                     if (it.coverImage.isNotEmpty()) {
                         Glide.with(root.context).load(it.coverImage).into(imageViewBook)
                     } else {
                         Glide.with(root.context).load(R.drawable.ic_baseline_menu_book)
                             .into(imageViewBook)
                     }
-                })
+                }
 
                 buttonDone.setOnClickListener {
                     val editedBook = Book(

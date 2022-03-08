@@ -58,9 +58,9 @@ class DoneBookFragment : Fragment() {
                     )
                 }
 
-                doneBookViewModel.books.observe(viewLifecycleOwner, {
+                doneBookViewModel.books.observe(viewLifecycleOwner) {
                     (recyclerViewDoneBook.adapter as BookAdapter).submitList(it)
-                })
+                }
             }
 
         return binding.root

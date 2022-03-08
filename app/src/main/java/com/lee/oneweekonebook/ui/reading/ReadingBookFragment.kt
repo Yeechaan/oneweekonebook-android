@@ -57,9 +57,9 @@ class ReadingBookFragment : Fragment() {
                     )
                 }
 
-                readingBookViewModel.books.observe(viewLifecycleOwner, {
+                readingBookViewModel.books.observe(viewLifecycleOwner) {
                     (recyclerViewReadingBook.adapter as BookAdapter).submitList(it)
-                })
+                }
 
             }
 

@@ -69,9 +69,9 @@ class WishBookFragment : Fragment() {
                 )
             }
 
-            wishBookViewModel.books.observe(viewLifecycleOwner, {
+            wishBookViewModel.books.observe(viewLifecycleOwner) {
                 (recyclerViewWishBook.adapter as BookAdapter).submitList(it)
-            })
+            }
 
         }
 
