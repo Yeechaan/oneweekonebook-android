@@ -109,6 +109,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // ReadMoreTextView
+    implementation 'kr.co.prnd:readmore-textview:1.0.0'
 }
 repositories {
     mavenCentral()

@@ -51,6 +51,7 @@
 
     <string name="book_save">저장</string>
     <string name="book_save_contents">내용 저장하기</string>
+    <string name="book_rank_review_count">%.1f (%d)</string>
     <string name="book_review_count">(%d)</string>
 
     <string name="home_category">카테고리</string>
