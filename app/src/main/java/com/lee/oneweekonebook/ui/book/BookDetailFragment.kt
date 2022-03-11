@@ -67,7 +67,7 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         ).show(childFragmentManager, tag)
                     }
 
-                    bookDetailViewModel.isBookSaved.observe(viewLifecycleOwner, {
+                    bookDetailViewModel.isBookSaved.observe(viewLifecycleOwner) {
                         Logger.d(it)
                         when (it) {
                             BOOK_TYPE_UNKNOWN -> Toast.makeText(
@@ -106,7 +106,7 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                                 )
                             }
                         }
-                    })
+                    }
                 }
 
             }
