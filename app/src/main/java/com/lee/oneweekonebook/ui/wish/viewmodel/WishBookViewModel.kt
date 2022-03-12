@@ -1,6 +1,7 @@
 package com.lee.oneweekonebook.ui.wish.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
@@ -14,7 +15,7 @@ class WishBookViewModel @Inject constructor(
     private val bookRepository: BookRepository
 ) : ViewModel() {
 
-    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_WISH)
+    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_WISH).asLiveData()
 
     fun addReadingBook(bookId: Int) {
         viewModelScope.launch {

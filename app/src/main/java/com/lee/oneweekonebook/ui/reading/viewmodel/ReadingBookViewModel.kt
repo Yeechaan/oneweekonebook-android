@@ -1,6 +1,7 @@
 package com.lee.oneweekonebook.ui.reading.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.repo.BookRepository
@@ -13,7 +14,7 @@ class ReadingBookViewModel @Inject constructor(
     private val bookRepository: BookRepository
 ) : ViewModel() {
 
-    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_READING)
+    val books = bookRepository.getAllBookByTypeAsync(BOOK_TYPE_READING).asLiveData()
 
     fun deleteBook(bookId: Int) {
         viewModelScope.launch {

@@ -29,9 +29,9 @@ class BookDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (!bookRepository.isSameBookSaved(bookInfo.title)) {
                 bookRepository.addBook(book)
-                _isBookSaved.postValue(type)
+                _isBookSaved.value = type
             } else {
-                _isBookSaved.postValue(BOOK_TYPE_UNKNOWN)
+                _isBookSaved.value = BOOK_TYPE_UNKNOWN
             }
         }
     }
