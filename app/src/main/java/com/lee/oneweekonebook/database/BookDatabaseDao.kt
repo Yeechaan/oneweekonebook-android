@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.lee.oneweekonebook.database.model.Book
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookDatabaseDao {
@@ -26,7 +27,7 @@ interface BookDatabaseDao {
     fun getBook(id: Int): Book
 
     @Query("SELECT * FROM book_history_table WHERE type = :type")
-    fun getBooksByTypeAsync(type: Int): LiveData<List<Book>>
+    fun getBooksByTypeAsync(type: Int): Flow<List<Book>>
 
     @Query("DELETE FROM book_history_table where id = :id")
     fun deleteBook(id: Int)
