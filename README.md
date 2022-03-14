@@ -32,9 +32,9 @@
 #### <도서 검색 화면>
 
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/41672138/156165430-5e3b4866-86b7-49a4-badb-cd5a4dcb26bd.jpeg" width="170" />
-  <img src="https://user-images.githubusercontent.com/41672138/156165442-691441b1-bb5d-48a6-84ba-1fc415c2a2c4.jpeg" width="170" />
-  <img src="https://user-images.githubusercontent.com/41672138/156165450-89c5ef3b-38ac-4a73-9cd4-1794ccc690dc.jpeg" width="170" />
+  <img src="https://user-images.githubusercontent.com/41672138/158178266-a3531b88-08f7-4be1-9741-35fe37df73d4.jpeg" width="170" />
+  <img src="https://user-images.githubusercontent.com/41672138/158178279-a9f7f13c-99fc-4681-9a7e-2c19496e69cd.jpeg" width="170" />
+  <img src="https://user-images.githubusercontent.com/41672138/158178288-7a513197-eb96-4c41-8ae4-e95d8a4353e5.jpeg" width="170" />
 </p>
                                                                                                                                
 #### <독서 내역 화면>
