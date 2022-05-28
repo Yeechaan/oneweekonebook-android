@@ -23,8 +23,6 @@ v
 Fapp/src/main/java/com/lee/oneweekonebook/ui/search/model/SearchBook.kt,c/0/c0985650066d49e2aa130e75937cd5efb537f25d
 y
 Iapp/src/main/java/com/lee/oneweekonebook/ui/suggest/SuggestBookAdapter.kt,1/9/19c2bdfe8cb197197a3ff58f41adbbf809ead948
-v
-Fapp/src/main/java/com/lee/oneweekonebook/ui/book/BookDetailFragment.kt,7/4/7404eb79963148de88e53cee6376b1d62a5ef183
 Å
 Qapp/src/main/java/com/lee/oneweekonebook/ui/book/viewmodel/BookDetailViewModel.kt,8/2/8263bbf0ceb8df9198925b01e183203c09f05e68
 r
