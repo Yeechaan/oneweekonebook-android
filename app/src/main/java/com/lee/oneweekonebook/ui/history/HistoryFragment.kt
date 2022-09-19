@@ -25,6 +25,22 @@ class HistoryFragment : Fragment() {
 
     private val args by navArgs<HistoryFragmentArgs>()
 
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
+
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
+
+        binding.viewPagerHistory.adapter = null
+
+        _binding = null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,14 +48,11 @@ class HistoryFragment : Fragment() {
     ): View {
         (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
 
-        val binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
             .apply {
-                viewPagerHistory.apply {
-                    adapter = HistoryAdapter(this@HistoryFragment)
-                    setPageTransformer(ViewPagerTransformer())
-
-                    setCurrentItem(args.bookType, false)
-                }
+                viewPagerHistory.adapter = HistoryAdapter(this@HistoryFragment)
+                viewPagerHistory.setPageTransformer(ViewPagerTransformer())
+                viewPagerHistory.setCurrentItem(args.bookType, false)
 
                 val tabIcons = listOf(
                     R.drawable.ic_favorite,
@@ -47,11 +60,11 @@ class HistoryFragment : Fragment() {
                     R.drawable.ic_baseline_book_done
                 )
 
-                TabLayoutMediator(tabLayoutHistory, viewPagerHistory) { tab, position ->
+                tabLayoutMediator = TabLayoutMediator(tabLayoutHistory, viewPagerHistory) { tab, position ->
                     tab.text = getTabTitle(position)
                     tab.setIcon(tabIcons[position])
-                }.attach()
-
+                }
+                tabLayoutMediator?.attach()
             }
 
         return binding.root
