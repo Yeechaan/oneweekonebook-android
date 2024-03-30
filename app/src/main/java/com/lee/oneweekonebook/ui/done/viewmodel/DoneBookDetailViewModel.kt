@@ -27,10 +27,6 @@ class DoneBookDetailViewModel @Inject constructor(
     val isContentsPage: LiveData<Boolean>
         get() = _isContentsPage
 
-    val bookPeriodFormat = Transformations.map(book) { book ->
-        DateUtils().formatBookPeriod(book.startDate, book.endDate)
-    }
-
     fun saveReadingBook() {
         viewModelScope.launch {
             book.value?.let { it ->

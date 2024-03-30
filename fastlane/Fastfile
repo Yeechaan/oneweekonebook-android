@@ -1,0 +1,72 @@
+PACKAGE_NAME = "com.lee.oneweekonebook"
+PLAYSTORE_KEY_PATH = nil
+TRACK_TYPE_PRODUCTION = "production"
+TRACK_TYPE_INTERNAL = "internal"
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+
+
+  desc "Build release version as aab"
+  lane :build_release do |values|
+    PLAYSTORE_KEY_PATH = values[:playstore_key_path]
+
+    # 유효한 버전코드를 생성
+    store_version_code = create_version_code
+
+    # 프로젝트에 버전코드 적용
+    android_set_version_code(
+      version_code: store_version_code
+    )
+
+    # 기존에 빌드된 파일들을 제거하고
+    gradle(task: 'clean')
+
+    # bundle(aab), build_type(Release)로 빌드 및 스토어 키로 사이닝
+    gradle(
+      task: "bundleRelease",
+      properties: {
+        "android.injected.signing.store.file" => values[:keystore_path],
+        "android.injected.signing.store.password" => values[:keystore_password],
+        "android.injected.signing.key.alias" => values[:keystore_alias],
+        "android.injected.signing.key.password" => values[:keystore_password],
+      }
+    )
+  end
+
+  desc "Deploy a release version to the Google Play as internal"
+  lane :deploy_internal do |values|
+
+    # internal(내부 테스트) 버전으로 배포한다
+    upload_to_play_store(
+      track: TRACK_TYPE_INTERNAL,
+      aab: values[:aab_path],
+      json_key: values[:playstore_key_path],
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_screenshots: true,
+      skip_upload_images: true,
+      skip_upload_apk: true,
+      )
+  end
+end
