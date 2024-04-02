@@ -7,15 +7,6 @@
     <include app:graph="@navigation/navigation_setting" />
 
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.lee.oneweekonebook.ui.splash.SplashFragment"
-        android:label="@string/app_title">
-        <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.lee.oneweekonebook.ui.home.HomeFragment"
         android:label="@string/home_title">
@@ -79,16 +70,19 @@
         android:id="@+id/bookDetailFragment"
         android:name="com.lee.oneweekonebook.ui.book.BookDetailFragment"
         android:label="@string/book_about">
+<!--        <argument-->
+<!--            android:name="book"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:argType="com.lee.oneweekonebook.ui.search.model.BookInfo"-->
+<!--            app:nullable="true" />-->
         <argument
-            android:name="book"
-            android:defaultValue="@null"
-            app:argType="com.lee.oneweekonebook.ui.search.model.BookInfo"
-            app:nullable="true" />
+            android:name="isbn"
+            app:argType="string" />
         <action
             android:id="@+id/action_bookDetailFragment_to_historyFragment"
             app:destination="@id/historyFragment"
             app:popUpTo="@id/bookDetailFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!--    reading-->
@@ -112,7 +106,7 @@
             android:id="@+id/action_readingBookFragment_to_historyBookFragment"
             app:destination="@id/historyFragment"
             app:popUpTo="@id/readingBookDetailFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!--    suggest-->
