@@ -20,7 +20,7 @@ data class BookInfo(
     var description: String = "",
     var link: String = "",
     var price: Int = 0,
-    var isbn: String = ""
+    var isbn: String = "",
 ) : Serializable
 
 
@@ -39,17 +39,19 @@ fun Item.asBook() = run {
         categoryId = categoryId?.toInt() ?: 0,
         description = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY).toString(),
         link = link,
-        price = priceStandard
+        price = priceStandard,
+        isbn = isbn ?: ""
     )
 }
 
 
-fun BookInfo.asBook() = run {
+fun BookInfo.asBook(type: Int) = run {
     Book(
         title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
         writer = Html.fromHtml(writer, Html.FROM_HTML_MODE_LEGACY).toString(),
         publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
         coverImage = coverImage,
         pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString(),
+        type = type
     )
 }

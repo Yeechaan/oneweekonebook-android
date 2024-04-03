@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -15,22 +16,22 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Custom.Text.Search.Front"
             android:id="@+id/layout_search_book"
+            style="@style/Widget.Custom.Text.Search.Front"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_search_book"
-            android:hint="@string/search_book_title"
-            android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginEnd="@dimen/spacing_small"
-            app:layout_constraintTop_toTopOf="parent"
+            android:hint="@string/search_book_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconDrawable="@drawable/ic_search_book">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Widget.Custom.Text"
                 android:id="@+id/editText_search_book"
+                style="@style/Widget.Custom.Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionSearch"
@@ -42,19 +43,19 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/spacing_small"
-            android:visibility="@{viewModel.books.size == 0 ? View.GONE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_search_book"
+            android:visibility="@{viewModel.isEmpty() ? View.GONE : View.VISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_search_book" />
 
         <ImageView
             android:id="@+id/imageView_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_book_open"
-            android:visibility="@{viewModel.books.size == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.isEmpty() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/textView_empty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -70,12 +71,23 @@
             android:gravity="center"
             android:text="@string/book_search_empty"
             android:textAppearance="@style/TextAppearance.Custom.Body3.Bold"
-            android:visibility="@{viewModel.books.size == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.isEmpty() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_empty" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:show="@{viewModel.uiState}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

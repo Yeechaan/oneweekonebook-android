@@ -60,7 +60,7 @@ data class Item(
     @SerializedName("discountRate")
     val discountRate: String,
     @SerializedName("isbn")
-    val isbn: String,
+    val isbn: String?,
     @SerializedName("itemId")
     val itemId: Int,
     @SerializedName("link")

@@ -5,49 +5,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.databinding.FragmentSuggestBookBinding
 import com.lee.oneweekonebook.ui.MainActivity
+import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
 import com.lee.oneweekonebook.ui.home.model.categoryBook
 import com.lee.oneweekonebook.ui.search.SearchBookAdapter
 import com.lee.oneweekonebook.ui.search.SearchBookListener
+import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookUiState
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SuggestBookFragment : Fragment() {
-
-    var binding: FragmentSuggestBookBinding? = null
-    private val args by navArgs<SuggestBookFragmentArgs>()
+class SuggestBookFragment : NoBottomNavigationToolbarIconFragment() {
 
     private val suggestBookViewModel by viewModels<SuggestBookViewModel>()
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
+    private val args by navArgs<SuggestBookFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         (activity as MainActivity).setToolbarTitle(
             categoryBook[args.categoryId] ?: getString(R.string.suggest_title)
         )
 
-        binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
+        val binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = this@SuggestBookFragment
 
                 val bookAdapter = SearchBookAdapter(SearchBookListener { book ->
-                    suggestBookViewModel.getBookInfo(book.isbn)
+                    findNavController().navigate(
+                        SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
+                            isbn = book.isbn
+                        )
+                    )
                 })
+
                 recyclerViewSuggestBook.apply {
                     adapter = bookAdapter
                     addItemDecoration(
@@ -58,28 +60,23 @@ class SuggestBookFragment : Fragment() {
                     )
                 }
 
-                suggestBookViewModel.books.observe(viewLifecycleOwner) {
-                    bookAdapter.data = it
-                }
+                lifecycleScope.launch {
+                    suggestBookViewModel.uiState.collectLatest {
+                        when (it) {
+                            is SuggestBookUiState.Loading -> {}
+                            is SuggestBookUiState.Error -> {
+                                Toast.makeText(requireContext(), getString(R.string.error_api_service), Toast.LENGTH_SHORT).show()
+                            }
 
-                suggestBookViewModel.bookInfo.observe(viewLifecycleOwner) {
-                    it?.let {
-                        findNavController().navigate(
-                            SuggestBookFragmentDirections.actionSuggestBookFragmentToBookDetailFragment(
-                                book = it
-                            )
-                        )
-
-                        suggestBookViewModel.doneBoonInfo()
+                            is SuggestBookUiState.Success -> {
+                                bookAdapter.data = it.books
+                            }
+                        }
                     }
-                }
-
-                suggestBookViewModel.error.observe(viewLifecycleOwner) {
-                    Toast.makeText(requireContext(), getString(R.string.error_api_service), Toast.LENGTH_SHORT).show()
                 }
             }
 
-        return binding?.root
+        return binding.root
     }
 
 }
