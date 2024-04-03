@@ -3,6 +3,51 @@ PLAYSTORE_KEY_PATH = nil
 TRACK_TYPE_PRODUCTION = "production"
 TRACK_TYPE_INTERNAL = "internal"
 
+def today_formatted
+  Date.today.strftime('%Y%m%d')
+end
+
+# ex) 220607001
+def default_version_code
+  "#{today_formatted}001"[2..]
+end
+
+def version_code_from_play_store(trackType)
+  google_play_track_version_codes(
+    package_name: PACKAGE_NAME,
+    track: trackType, # production, beta, alpha, internal
+    json_key: PLAYSTORE_KEY_PATH
+  )[0]
+end
+
+# play store의 배포된 앱(production, internal)의 최신 버전코드를 가져온다
+def latest_version_code_from_play_store
+  production_version_code = version_code_from_play_store(TRACK_TYPE_PRODUCTION)
+  internal_version_code = version_code_from_play_store(TRACK_TYPE_INTERNAL)
+  if production_version_code >= internal_version_code
+    return production_version_code
+  else
+    return internal_version_code
+  end
+end
+
+def create_version_code
+  # 최신 버전코드
+  latest_version_code = latest_version_code_from_play_store.to_s
+
+  # 디폴트 버전코드 (오늘 기준으로 생성)
+  version_code = default_version_code
+
+  if version_code > latest_version_code
+    return version_code
+  else
+    version_code_index = latest_version_code[6..]
+    new_index = version_code_index.to_i + 1
+    new_version_code = "#{latest_version_code[0..5]}%03d" % new_index
+    return new_version_code
+  end
+end
+
 default_platform(:android)
 
 platform :android do
