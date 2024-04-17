@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,6 +21,8 @@ import com.lee.oneweekonebook.ui.search.SearchBookAdapter
 import com.lee.oneweekonebook.ui.search.SearchBookListener
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookUiState
 import com.lee.oneweekonebook.ui.suggest.viewmodel.SuggestBookViewModel
+import com.lee.oneweekonebook.utils.gone
+import com.lee.oneweekonebook.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,9 +38,7 @@ class SuggestBookFragment : NoBottomNavigationToolbarIconFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        (activity as MainActivity).setToolbarTitle(
-            categoryBook[args.categoryId] ?: getString(R.string.suggest_title)
-        )
+        (activity as MainActivity).setToolbarTitle(categoryBook[args.categoryId] ?: getString(R.string.suggest_title))
 
         val binding = FragmentSuggestBookBinding.inflate(inflater, container, false)
             .apply {
@@ -61,15 +63,22 @@ class SuggestBookFragment : NoBottomNavigationToolbarIconFragment() {
                 }
 
                 lifecycleScope.launch {
-                    suggestBookViewModel.uiState.collectLatest {
-                        when (it) {
-                            is SuggestBookUiState.Loading -> {}
-                            is SuggestBookUiState.Error -> {
-                                Toast.makeText(requireContext(), getString(R.string.error_api_service), Toast.LENGTH_SHORT).show()
-                            }
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        suggestBookViewModel.uiState.collectLatest {
+                            when (it) {
+                                is SuggestBookUiState.Loading -> {
+                                    progressCircular.visible()
+                                }
 
-                            is SuggestBookUiState.Success -> {
-                                bookAdapter.data = it.books
+                                is SuggestBookUiState.Error -> {
+                                    progressCircular.gone()
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                }
+
+                                is SuggestBookUiState.Success -> {
+                                    progressCircular.gone()
+                                    bookAdapter.data = it.books
+                                }
                             }
                         }
                     }
@@ -78,5 +87,4 @@ class SuggestBookFragment : NoBottomNavigationToolbarIconFragment() {
 
         return binding.root
     }
-
 }

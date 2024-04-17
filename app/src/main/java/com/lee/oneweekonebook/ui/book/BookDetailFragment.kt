@@ -8,20 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.common.ItemPickerBottomDialog
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
-import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.databinding.FragmentBookDetailBinding
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.NoBottomNavigationToolbarIconFragment
-import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailUiState
 import com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +34,20 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
 
     private val bookDetailViewModel by viewModels<BookDetailViewModel>()
 
+    /**
+     * 화면 이동에 대한 상태를 제어하기 위한 필드
+     *
+     * ViewModel에서 비지니스 로직 실행 후 observable하게 다음 화면으로 이동한 경우,
+     * 기존 화면으로 돌아오려고 할 때 ViewModel의 상태가 유지되고 있어(navigation back stack) 돌아오지 못하는 경우가 있다.
+     *
+     * 공식문서에 따르면 Navigation logic은 UI의 관심사이기에 ViewModel이 아닌 UI에서 상태를 관리하라고 권장한다.
+     * https://developer.android.com/topic/architecture/ui-layer/events#navigation-events-destination-back-stack
+     * */
+    private var validationInProgress: Boolean = false
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-//        bookDetailViewModel.clearState()
     }
 
     override fun onCreateView(
@@ -49,38 +56,47 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBookDetailBinding.inflate(inflater, container, false)
-        lifecycleScope.launch {
-            bookDetailViewModel.uiState.collectLatest {
-                when (it) {
-                    is BookDetailUiState.Success -> {
-                        bookSuccess(it.bookInfo)
-                    }
-
-                    is BookDetailUiState.Saved -> {
-                        bookSaved(it.bookType)
-                    }
-
-                    is BookDetailUiState.Error -> {
-                        Toast.makeText(requireContext(), getString(R.string.error_api_service), Toast.LENGTH_SHORT).show()
-                    }
-
-                    is BookDetailUiState.Loading -> {}
-                }
-            }
-        }
-
         return binding.root
     }
 
-    private fun bookSuccess(book: BookInfo) {
-        binding.apply {
-            searchBook = book
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = bookDetailViewModel
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookDetailViewModel.uiState.collectLatest { uiState ->
+                    uiState.errorMessage?.let {
+                        showErrorMessage(it)
+                        bookDetailViewModel.userMessageShown()
+                    }
+
+                    uiState.bookInfo?.let {
+                        setBookInfo(it)
+                    }
+
+                    uiState.savedBookType?.let {
+                        bookSaved(it)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setBookInfo(book: BookInfo) {
+        binding.apply {
             if (book.coverImage.isNotEmpty()) {
                 Glide.with(requireContext()).load(book.coverImage).into(imageViewBook)
             } else {
-                Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book)
-                    .into(imageViewBook)
+                Glide.with(requireContext()).load(R.drawable.ic_baseline_menu_book).into(imageViewBook)
             }
 
             imageViewLink.setOnClickListener {
@@ -98,9 +114,7 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                     ),
                     onPick = { index, _ ->
                         bookDetailViewModel.addBook(index, book)
-                    },
-                    onDismiss = {
-
+                        validationInProgress = true
                     }
                 ).show(childFragmentManager, tag)
             }
@@ -108,45 +122,12 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
     }
 
     private fun bookSaved(bookType: Int) {
-        when (bookType) {
-            BOOK_TYPE_UNKNOWN -> Toast.makeText(
-                requireContext(),
-                "독서내역에 추가된 책 입니다!",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            BOOK_TYPE_WISH -> {
-                findNavController().navigate(
-                    BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(
-                        bookType = BOOK_TYPE_WISH
-                    )
-                )
-                (activity as MainActivity).setBottomNavigationStatus(
-                    BOTTOM_MENU_HISTORY
-                )
-            }
-
-            BOOK_TYPE_READING -> {
-                findNavController().navigate(
-                    BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(
-                        bookType = BOOK_TYPE_READING
-                    )
-                )
-                (activity as MainActivity).setBottomNavigationStatus(
-                    BOTTOM_MENU_HISTORY
-                )
-            }
-
-            BOOK_TYPE_DONE -> {
-                findNavController().navigate(
-                    BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(
-                        bookType = BOOK_TYPE_DONE
-                    )
-                )
-                (activity as MainActivity).setBottomNavigationStatus(
-                    BOTTOM_MENU_HISTORY
-                )
-            }
+        if (validationInProgress) {
+            findNavController().navigate(
+                BookDetailFragmentDirections.actionBookDetailFragmentToHistoryFragment(bookType = bookType)
+            )
+            (activity as MainActivity).setBottomNavigationStatus(BOTTOM_MENU_HISTORY)
+            validationInProgress = false
         }
     }
 

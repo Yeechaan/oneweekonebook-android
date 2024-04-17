@@ -27,12 +27,8 @@ Uapp/src/main/java/com/lee/oneweekonebook/ui/suggest/viewmodel/SuggestBookViewMo
 Napp/src/main/java/com/lee/oneweekonebook/ui/search/model/SearchBookResponse.kt,2/2/22eb6f579732312277eee245c988065903ca48a3
 z
 Japp/src/main/java/com/lee/oneweekonebook/ui/suggest/model/RecommendBook.kt,5/a/5a010482c014cda36ee9012c28fd5229caca5991
-p
-@app/src/main/java/com/lee/oneweekonebook/model/ReviewResponse.kt,0/8/08a9ef958e17f23d4eb69699a667f25c10663896
 r
 Bapp/src/main/java/com/lee/oneweekonebook/network/BookApiService.kt,e/8/e84389514e4bb145fc43dd8ad0b6faf0c0b1af56
-r
-Bapp/src/main/java/com/lee/oneweekonebook/network/OWOBApiService.kt,f/d/fd0d03d3ea3fce3f2bc92fe301837f83e270e543
 v
 Fapp/src/main/java/com/lee/oneweekonebook/repo/BookRequestRepository.kt,3/c/3ce51ff63f9463ddf7ca00555154a177f4ec7c19
 l
@@ -41,22 +37,14 @@ x
 Happ/src/main/java/com/lee/oneweekonebook/ui/search/SearchBookFragment.kt,a/2/a26b17066c3d0cdfb021c53cfcb0cf47375bcd64
 w
 Gapp/src/main/java/com/lee/oneweekonebook/ui/search/SearchBookAdapter.kt,c/2/c2a01d59754365690c9fd3ce391d2fedde3303fd
-h
-8app/src/main/java/com/lee/oneweekonebook/model/Review.kt,2/d/2ddd9ef35cb104a90a10c52152de465e0caf73dd
 ƒ
 Sapp/src/main/java/com/lee/oneweekonebook/ui/search/viewmodel/SearchBookViewModel.kt,7/b/7b5556c0950b2607f360cc8912b5ab5df57a2a0b
 i
 9app/src/main/java/com/lee/oneweekonebook/common/Result.kt,8/2/8246a12c4cf6f4c05cea1246ecbeaf38246438ab
-t
-Dapp/src/main/java/com/lee/oneweekonebook/ui/review/ReviewFragment.kt,2/a/2a65ceccf211e872a99a70413c0bb9b2c492ec5e
 v
 Fapp/src/main/java/com/lee/oneweekonebook/ui/setting/SettingFragment.kt,b/7/b78d865d97c104a7ea54f9afbca831145d848133
-s
-Capp/src/main/java/com/lee/oneweekonebook/ui/review/ReviewAdapter.kt,6/6/66bbe8f3fb06c0f71b6bd4fb081a706a87d4ab52
 A
 fastlane/Fastfile,9/f/9f0f12aa0bd74d8115ab3d187b7d8ddcfcc1cc70
-l
-<app/src/main/java/com/lee/oneweekonebook/di/OWOBApiModule.kt,2/6/266d0ef128db4184f4c559343aeec18efd351670
 m
 =app/src/test/java/com/lee/oneweekonebook/ExampleUnitTest.java,e/b/eb59fdb9e1965bd271711ab8444729cceb66af11
 s
@@ -67,10 +55,6 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 7
 Gemfile,d/e/de3150c01c3a946a6168173c4116741379fe3579
-i
-9app/src/test/java/com/lee/oneweekonebook/SerializeTest.kt,7/b/7bf4298a3f7ce74c9d1062372cc8b8e61dfbc7a1
-u
-Eapp/src/main/java/com/lee/oneweekonebook/ui/review/ReviewViewModel.kt,6/5/6551dc72e4221079afc211c6034e26a1fd342e01
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
@@ -96,3 +80,11 @@ A
 gradlew.bat,2/a/2a45a911a8f1836b0b6c5b758962572012d8f8c3
 @
 fastlane/Appfile,d/d/ddf39850cdaab54b2acc5d5d2ed28021943024ad
+?
+settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
+k
+;app/src/main/java/com/lee/oneweekonebook/MainApplication.kt,e/d/edd6336a759e905a772e58d531551b554e7593b8
+„
+Tapp/src/main/java/com/lee/oneweekonebook/ui/NoBottomNavigationToolbarIconFragment.kt,7/9/79bfc8668531212ac4ecb7dec421756c25d98f0c
+z
+Japp/src/main/java/com/lee/oneweekonebook/ui/suggest/SuggestBookFragment.kt,d/c/dc88780e9e7f35776456e4a6c264ab2f5a81031a

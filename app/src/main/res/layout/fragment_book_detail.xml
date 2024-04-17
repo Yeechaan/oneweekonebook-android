@@ -5,14 +5,27 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="searchBook"
-            type="com.lee.oneweekonebook.ui.search.model.BookInfo" />
+            name="viewModel"
+            type="com.lee.oneweekonebook.ui.book.viewmodel.BookDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.uiState.loading == true ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView_book"
@@ -31,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_very_large"
-            android:text="@{searchBook.title}"
+            android:text="@{viewModel.uiState.bookInfo.title}"
             android:textAppearance="@style/TextAppearance.Custom.Body2.Bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -45,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_normal"
             android:drawablePadding="@dimen/spacing_item_small"
-            android:text="@{searchBook.writer}"
+            android:text="@{viewModel.uiState.bookInfo.writer}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:drawableStartCompat="@drawable/ic_writer"
             app:layout_constraintStart_toStartOf="@id/textView_title"
@@ -58,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_very_small"
             android:drawablePadding="@dimen/spacing_item_small"
-            android:text="@{searchBook.publisher}"
+            android:text="@{viewModel.uiState.bookInfo.publisher}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:drawableStartCompat="@drawable/ic_publisher"
             app:layout_constraintStart_toStartOf="@id/textView_title"
@@ -71,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_very_small"
             android:drawablePadding="@dimen/spacing_item_small"
-            android:text="@{searchBook.pubDate}"
+            android:text="@{viewModel.uiState.bookInfo.pubDate}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:drawableStartCompat="@drawable/ic_date"
             app:layout_constraintStart_toStartOf="@id/textView_title"
@@ -84,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_very_small"
             android:drawablePadding="@dimen/spacing_item_small"
-            android:text="@{String.valueOf(searchBook.price)}"
+            android:text="@{String.valueOf(viewModel.uiState.bookInfo.price)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:drawableStartCompat="@drawable/ic_price"
             app:layout_constraintStart_toStartOf="@id/textView_title"
@@ -97,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_item_very_small"
             android:drawablePadding="@dimen/spacing_item_small"
-            android:text="@{@string/book_rank_review_count(searchBook.reviewRank, searchBook.reviewCount)}"
+            android:text="@{@string/book_rank_review_count(viewModel.uiState.bookInfo.reviewRank, viewModel.uiState.bookInfo.reviewCount)}"
             android:textAppearance="@style/TextAppearance.Custom.Body5"
             app:drawableStartCompat="@drawable/ic_star"
             app:layout_constraintStart_toStartOf="@id/textView_title"
@@ -136,7 +149,7 @@
             <kr.co.prnd.readmore.ReadMoreTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{searchBook.description}"
+                android:text="@{viewModel.uiState.bookInfo.description}"
                 android:textAppearance="@style/TextAppearance.Custom.Body4"
                 app:readMoreColor="@color/colorPrimary"
                 app:readMoreMaxLine="5"

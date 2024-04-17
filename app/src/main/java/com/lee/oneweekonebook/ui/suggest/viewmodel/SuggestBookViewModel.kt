@@ -7,7 +7,6 @@ import com.lee.oneweekonebook.common.Result
 import com.lee.oneweekonebook.repo.BookRequestRepository
 import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.ui.suggest.model.asBookList
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 sealed interface SuggestBookUiState {
     data class Success(val books: List<BookInfo>) : SuggestBookUiState
-    object Error : SuggestBookUiState
+    data class Error(val message: String) : SuggestBookUiState
     object Loading : SuggestBookUiState
 }
 
@@ -30,18 +29,21 @@ class SuggestBookViewModel @Inject constructor(
     val uiState: StateFlow<SuggestBookUiState>
         get() = _uiState
 
-
     init {
-        viewModelScope.launch {
-            val categoryId = savedStateHandle.get<Int>("categoryId") ?: 101
+        val categoryId = savedStateHandle.get<Int>("categoryId") ?: 101
+        getBooks(categoryId)
+    }
 
-            when (val result = bookRequestRepository.getRecommendationBook(categoryId)) {
+    private fun getBooks(categoryId: Int) {
+        viewModelScope.launch {
+            val result = bookRequestRepository.getRecommendationBook(categoryId)
+            when (result) {
                 is Result.Success -> {
                     _uiState.value = SuggestBookUiState.Success(result.data.asBookList())
                 }
 
                 is Result.Error -> {
-                    _uiState.value = SuggestBookUiState.Error
+                    _uiState.value = SuggestBookUiState.Error("서비스 연결에 오류가 있습니다\\n지속적인 문제가 발생하면 관리자에게 문의해 주세요")
                 }
             }
         }

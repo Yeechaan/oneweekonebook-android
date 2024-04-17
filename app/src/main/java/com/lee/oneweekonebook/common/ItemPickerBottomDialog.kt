@@ -12,13 +12,13 @@ class ItemPickerBottomDialog(
     private val title: String,
     private val items: List<String>,
     private val onPick: (Int, String) -> Unit = { _, _ -> },
-    private val onDismiss: () -> Unit
+    private val onDismiss: () -> Unit = {},
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = BottomDialogItemPickerBinding.inflate(inflater, container, false)
             .apply {

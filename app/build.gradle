@@ -125,6 +125,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
+    // ViewBindingPropertyDelegate
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-full:1.5.9'
 }
 repositories {
     mavenCentral()
