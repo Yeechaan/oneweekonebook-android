@@ -3,7 +3,6 @@ package com.lee.oneweekonebook.ui.book
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +12,12 @@ import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemBookBinding
+import com.lee.oneweekonebook.mapper.BookDomain
+import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.utils.visible
 
 
-class BookAdapter(private val bookClickListener: BookListener, private val bookMoreClickListener: BookMoreListener) : ListAdapter<Book, BookAdapter.ViewHolder>(BookDiffCallback()) {
+class BookAdapter(private val bookClickListener: BookListener, private val bookMoreClickListener: BookMoreListener) : ListAdapter<BookDomain, BookAdapter.ViewHolder>(BookDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -29,7 +30,7 @@ class BookAdapter(private val bookClickListener: BookListener, private val bookM
 
     class ViewHolder private constructor(val binding: ItemBookBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Book, bookClickListener: BookListener, moreClickListener: BookMoreListener) {
+        fun bind(item: BookDomain, bookClickListener: BookListener, moreClickListener: BookMoreListener) {
             binding.apply {
                 book = item
                 clickListener = bookClickListener
@@ -72,19 +73,19 @@ class BookAdapter(private val bookClickListener: BookListener, private val bookM
 }
 
 
-class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
-    override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
+class BookDiffCallback : DiffUtil.ItemCallback<BookDomain>() {
+    override fun areItemsTheSame(oldItem: BookDomain, newItem: BookDomain): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
+    override fun areContentsTheSame(oldItem: BookDomain, newItem: BookDomain): Boolean {
         return oldItem == newItem
     }
 
 }
 
-class BookListener(val clickListener: (book: Book) -> Unit) {
-    fun onClick(book: Book) = clickListener(book)
+class BookListener(val clickListener: (book: BookDomain) -> Unit) {
+    fun onClick(book: BookDomain) = clickListener(book)
 }
 
 class BookMoreListener(val clickListener: (view: View, bookId: Int) -> Unit) {

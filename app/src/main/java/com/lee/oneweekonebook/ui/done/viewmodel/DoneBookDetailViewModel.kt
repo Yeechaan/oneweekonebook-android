@@ -1,19 +1,23 @@
 package com.lee.oneweekonebook.ui.done.viewmodel
 
-import androidx.lifecycle.*
-import com.lee.oneweekonebook.repo.BookRepository
-import com.lee.oneweekonebook.utils.DateUtils
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.lee.oneweekonebook.repository.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DoneBookDetailViewModel @Inject constructor(
+    private val bookRepository: BookRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val bookRepository: BookRepository
 ) : ViewModel() {
 
-    val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
+    val book = bookRepository.getBook(savedStateHandle["bookId"] ?: 0).asLiveData()
 
     val savedContents: String?
         get() = savedStateHandle["contents"]

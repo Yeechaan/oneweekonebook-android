@@ -2,20 +2,17 @@ package com.lee.oneweekonebook.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.marginLeft
-import androidx.core.view.setPadding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.lee.oneweekonebook.R
-import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.ItemHomeReadingBinding
+import com.lee.oneweekonebook.mapper.BookDomain
 
 
 class HomeReadingBookAdapter(
-    private val bookClickListener: HomeReadingListener
-) : ListAdapter<Book, RecyclerView.ViewHolder>(DiffUtiImpl()) {
+    private val bookClickListener: HomeReadingListener,
+) : ListAdapter<BookDomain, RecyclerView.ViewHolder>(DiffUtiImpl()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -31,7 +28,7 @@ class HomeReadingBookAdapter(
         val binding: ItemHomeReadingBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Book, bookClickListener: HomeReadingListener) = binding.run {
+        fun bind(item: BookDomain, bookClickListener: HomeReadingListener) = binding.run {
             book = item
             clickListener = bookClickListener
 
@@ -41,15 +38,15 @@ class HomeReadingBookAdapter(
         }
     }
 
-    class DiffUtiImpl : DiffUtil.ItemCallback<Book>() {
-        override fun areItemsTheSame(oldItem: Book, newItem: Book) =
+    class DiffUtiImpl : DiffUtil.ItemCallback<BookDomain>() {
+        override fun areItemsTheSame(oldItem: BookDomain, newItem: BookDomain) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Book, newItem: Book) =
+        override fun areContentsTheSame(oldItem: BookDomain, newItem: BookDomain) =
             oldItem == newItem
     }
 }
 
-class HomeReadingListener(val clickListener: (book: Book) -> Unit) {
-    fun onClick(book: Book) = clickListener(book)
+class HomeReadingListener(val clickListener: (book: BookDomain) -> Unit) {
+    fun onClick(book: BookDomain) = clickListener(book)
 }

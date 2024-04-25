@@ -1,21 +1,26 @@
 package com.lee.oneweekonebook.ui.reading.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_DONE
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_READING
 import com.lee.oneweekonebook.database.model.BookType
-import com.lee.oneweekonebook.repo.BookRepository
+import com.lee.oneweekonebook.repository.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ReadingBookDetailViewModel @Inject constructor(
+    private val bookRepository: BookRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val bookRepository: BookRepository
 ) : ViewModel() {
 
-    val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
+    val book = bookRepository.getBook(savedStateHandle["bookId"] ?: 0).asLiveData()
 
     private val _isContentsPage = MutableLiveData(true)
     val isContentsPage: LiveData<Boolean>
@@ -39,6 +44,7 @@ class ReadingBookDetailViewModel @Inject constructor(
                 BOOK_TYPE_READING -> {
                     // 추후 독서시간 저장 기능 구현
                 }
+
                 BOOK_TYPE_DONE -> {
                     it.type = BOOK_TYPE_DONE
                     it.endDate = System.currentTimeMillis()

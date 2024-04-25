@@ -7,7 +7,7 @@
 
         <variable
             name="book"
-            type="com.lee.oneweekonebook.database.model.Book" />
+            type="com.lee.oneweekonebook.mapper.BookDomain" />
 
         <import type="com.lee.oneweekonebook.utils.DateUtilsKt" />
     </data>

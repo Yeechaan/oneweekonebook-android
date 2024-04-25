@@ -3,10 +3,8 @@ package com.lee.oneweekonebook.ui.suggest.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.oneweekonebook.common.Result
-import com.lee.oneweekonebook.repo.BookRequestRepository
+import com.lee.oneweekonebook.repository.BookRepository
 import com.lee.oneweekonebook.ui.search.model.BookInfo
-import com.lee.oneweekonebook.ui.suggest.model.asBookList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +19,7 @@ sealed interface SuggestBookUiState {
 
 @HiltViewModel
 class SuggestBookViewModel @Inject constructor(
-    private val bookRequestRepository: BookRequestRepository,
+    private val bookRepository: BookRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -36,16 +34,15 @@ class SuggestBookViewModel @Inject constructor(
 
     private fun getBooks(categoryId: Int) {
         viewModelScope.launch {
-            val result = bookRequestRepository.getRecommendationBook(categoryId)
-            when (result) {
-                is Result.Success -> {
-                    _uiState.value = SuggestBookUiState.Success(result.data.asBookList())
-                }
-
-                is Result.Error -> {
+            val result = bookRepository.searchRecommendationBooks(categoryId)
+            result.fold(
+                onSuccess = {
+                    _uiState.value = SuggestBookUiState.Success(it)
+                },
+                onFailure = {
                     _uiState.value = SuggestBookUiState.Error("서비스 연결에 오류가 있습니다\\n지속적인 문제가 발생하면 관리자에게 문의해 주세요")
                 }
-            }
+            )
         }
     }
 

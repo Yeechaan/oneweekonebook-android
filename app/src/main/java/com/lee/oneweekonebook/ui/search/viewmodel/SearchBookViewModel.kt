@@ -2,10 +2,8 @@ package com.lee.oneweekonebook.ui.search.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.oneweekonebook.common.Result
-import com.lee.oneweekonebook.repo.BookRequestRepository
+import com.lee.oneweekonebook.repository.BookRepository
 import com.lee.oneweekonebook.ui.search.model.BookInfo
-import com.lee.oneweekonebook.ui.search.model.asBookList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +19,7 @@ sealed interface SearchBookUiState {
 
 @HiltViewModel
 class SearchBookViewModel @Inject constructor(
-    private val bookRequestRepository: BookRequestRepository,
+    private val bookRepository: BookRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<SearchBookUiState>(SearchBookUiState.Init)
@@ -36,17 +34,17 @@ class SearchBookViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = SearchBookUiState.Loading
 
-            when (val result = bookRequestRepository.searchBook(query)) {
-                is Result.Success -> {
-                    val books = result.data.asBookList()
+            val result = bookRepository.searchBookByTitle(query)
+            result.fold(
+                onSuccess = { books ->
                     _uiState.value = SearchBookUiState.Success(books)
                     _isEmpty.value = books.isEmpty()
-                }
-
-                is Result.Error -> {
+                },
+                onFailure = { exception ->
+                    exception.message
                     _uiState.value = SearchBookUiState.Error
                 }
-            }
+            )
         }
     }
 

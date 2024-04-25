@@ -88,3 +88,17 @@ k
 Tapp/src/main/java/com/lee/oneweekonebook/ui/NoBottomNavigationToolbarIconFragment.kt,7/9/79bfc8668531212ac4ecb7dec421756c25d98f0c
 z
 Japp/src/main/java/com/lee/oneweekonebook/ui/suggest/SuggestBookFragment.kt,d/c/dc88780e9e7f35776456e4a6c264ab2f5a81031a
+k
+;app/src/main/java/com/lee/oneweekonebook/utils/ViewUtils.kt,a/f/afebf1b5a713a8c78b04c593c90a9be17667bb8b
+v
+Fapp/src/main/java/com/lee/oneweekonebook/ui/home/HomeReadingAdapter.kt,9/3/939550b7c2358842b6fb9a0726448cb9584cbff4
+z
+Japp/src/main/java/com/lee/oneweekonebook/ui/reading/ReadingBookFragment.kt,0/e/0eea67697ea4e79199ed6f892922ea2f06e662e2
+p
+@app/src/main/java/com/lee/oneweekonebook/utils/BindingAdapter.kt,4/3/433e8180e27579f1ce4948b4831b34da3e6d955a
+t
+Dapp/src/main/java/com/lee/oneweekonebook/database/BookDatabaseDao.kt,a/a/aa5d55fe0912c10d02e9c0135cc7d68d86ca650c
+o
+?app/src/main/java/com/lee/oneweekonebook/di/CoroutinesModule.kt,b/a/bac3fae4779d70ca1c5b9fa41e37554a52126121
+n
+>app/src/main/java/com/lee/oneweekonebook/utils/NetworkUtils.kt,8/9/89a7489ea273f158f8726374abf775383b160860

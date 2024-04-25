@@ -3,12 +3,9 @@ package com.lee.oneweekonebook.ui.book.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.oneweekonebook.common.Result
 import com.lee.oneweekonebook.database.model.BookType
-import com.lee.oneweekonebook.repo.BookRepository
-import com.lee.oneweekonebook.repo.BookRequestRepository
+import com.lee.oneweekonebook.repository.BookRepository
 import com.lee.oneweekonebook.ui.search.model.BookInfo
-import com.lee.oneweekonebook.ui.search.model.asBook
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +29,6 @@ data class BookDetailUiState(
 @HiltViewModel
 class BookDetailViewModel @Inject constructor(
     private val bookRepository: BookRepository,
-    private val bookRequestRepository: BookRequestRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -49,33 +45,35 @@ class BookDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true) }
 
-            val book = bookRequestRepository.searchBookByISBN(isbn)
-            when (book) {
-                is Result.Success -> {
-                    val bookInfo = book.data.item.firstOrNull()?.asBook() ?: BookInfo()
+            val result = bookRepository.searchBookByISBN(isbn)
+            result.fold(
+                onSuccess = { bookInfo ->
                     _uiState.update { it.copy(bookInfo = bookInfo, loading = false) }
-                }
-
-                is Result.Error -> {
+                },
+                onFailure = {
                     _uiState.update { it.copy(errorMessage = "서비스 연결에 오류가 있습니다\\n지속적인 문제가 발생하면 관리자에게 문의해 주세요", loading = false) }
                 }
-            }
+            )
         }
     }
 
-    fun addBook(type: @BookType Int, bookInfo: BookInfo) {
+    fun addBook(type: @BookType Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(loading = true) }
 
-            val isSameBookSaved = bookRepository.isSameBookSaved(bookInfo.title)
+            val bookInfo = _uiState.value.bookInfo ?: BookInfo()
+
+            println("###")
+            println("$bookInfo")
+
+            val isSameBookSaved = bookRepository.isSameBookSaved(bookInfo.isbn)
             if (isSameBookSaved) {
                 _uiState.update { it.copy(savedBookType = null, errorMessage = "독서내역에 추가된 책 입니다!", loading = false) }
                 return@launch
             }
 
-            val book = bookInfo.asBook(type)
-            bookRepository.addBook(book)
-            _uiState.update { it.copy(savedBookType = book.type, loading = false) }
+            bookRepository.saveBook(bookInfo)
+            _uiState.update { it.copy(savedBookType = type, loading = false) }
         }
     }
 

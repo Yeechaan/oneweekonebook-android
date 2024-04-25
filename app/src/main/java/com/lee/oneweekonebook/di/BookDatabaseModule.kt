@@ -3,6 +3,7 @@ package com.lee.oneweekonebook.di
 import android.content.Context
 import androidx.room.Room
 import com.lee.oneweekonebook.database.BookDatabase
+import com.lee.oneweekonebook.database.MIGRATION_2_3
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +20,6 @@ class BookDatabaseModule {
             context,
             BookDatabase::class.java,
             "book_history_database"
-        ).build()
+        ).addMigrations(MIGRATION_2_3).build()
 
 }

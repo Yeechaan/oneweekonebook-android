@@ -113,7 +113,7 @@ class BookDetailFragment : NoBottomNavigationToolbarIconFragment() {
                         getString(R.string.add_book_done)
                     ),
                     onPick = { index, _ ->
-                        bookDetailViewModel.addBook(index, book)
+                        bookDetailViewModel.addBook(index)
                         validationInProgress = true
                     }
                 ).show(childFragmentManager, tag)

@@ -2,31 +2,27 @@ package com.lee.oneweekonebook.ui.edit.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.lee.oneweekonebook.database.model.Book
-import com.lee.oneweekonebook.repo.BookRepository
+import com.lee.oneweekonebook.repository.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EditBookViewModel @Inject constructor(
+    private val bookRepository: BookRepository,
     savedStateHandle: SavedStateHandle,
-    private val bookRepository: BookRepository
 ) : ViewModel() {
 
-    val book = bookRepository.getBookByIdAsync(savedStateHandle["bookId"] ?: 0)
+    val book = bookRepository.getBook(savedStateHandle["bookId"] ?: 0).asLiveData()
 
-    fun editBook(editBook: Book) {
+    fun editBook() {
         viewModelScope.launch {
-            val currentBook = book.value ?: Book()
-
-            currentBook.apply {
-                title = editBook.title
-                writer = editBook.writer
-                publisher = editBook.publisher
+            book.value?.let {
+                bookRepository.updateBook(it)
             }
-            bookRepository.updateBook(currentBook)
         }
     }
 

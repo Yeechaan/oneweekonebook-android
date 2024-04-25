@@ -34,6 +34,8 @@ data class Book(
         var endDate: Long = startDate,
         @ColumnInfo(name = "type")
         var type: Int = BOOK_TYPE_UNKNOWN,
+        @ColumnInfo(name = "isbn")
+        var isbn: String = "",
 )
 
 const val BOOK_TYPE_UNKNOWN = -1

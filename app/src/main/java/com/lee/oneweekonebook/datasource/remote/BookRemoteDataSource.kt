@@ -1,6 +1,5 @@
-package com.lee.oneweekonebook.repo
+package com.lee.oneweekonebook.datasource.remote
 
-import com.lee.oneweekonebook.common.Result
 import com.lee.oneweekonebook.di.BookApiQualifier
 import com.lee.oneweekonebook.di.IoDispatcher
 import com.lee.oneweekonebook.network.BookApiService
@@ -12,7 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class BookRequestRepository @Inject constructor(
+class BookRemoteDataSource @Inject constructor(
     @BookApiQualifier private val bookApiService: BookApiService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
@@ -25,19 +24,19 @@ class BookRequestRepository @Inject constructor(
             if (response.isSuccessful && body != null) {
                 val returnCode = body.returnCode
                 if (returnCode == RESPONSE_CODE_SUCCESS) {
-                    Result.Success(body)
+                    Result.success(body)
                 } else {
                     Logger.i("Api Issue searchBookByISBN : $returnCode")
-                    Result.Error(returnCode)
+                    Result.failure(Exception(returnCode))
                 }
             } else {
                 // 응답 코드가 [200..300)에 포함되지 않는 경우
                 val responseCode = response.code()
                 Logger.i("Network Issue : $responseCode")
-                Result.Error(responseCode.toString())
+                Result.failure(Exception(responseCode.toString()))
             }
         } catch (e: Exception) {
-            Result.Error(e.toString())
+            Result.failure(Exception(e.toString()))
         }
     }
 
@@ -50,19 +49,19 @@ class BookRequestRepository @Inject constructor(
             if (response.isSuccessful && body != null) {
                 val returnCode = body.returnCode
                 if (returnCode == RESPONSE_CODE_SUCCESS) {
-                    Result.Success(body)
+                    Result.success(body)
                 } else {
                     Logger.i("Api Issue searchBookByISBN : $returnCode")
-                    Result.Error(returnCode)
+                    Result.failure(Exception(returnCode))
                 }
             } else {
                 // 응답 코드가 [200..300)에 포함되지 않는 경우
                 val responseCode = response.code()
                 Logger.i("Network Issue : $responseCode")
-                Result.Error(responseCode.toString())
+                Result.failure(Exception(responseCode.toString()))
             }
         } catch (e: Exception) {
-            Result.Error(e.toString())
+            Result.failure(e)
         }
     }
 
@@ -75,20 +74,19 @@ class BookRequestRepository @Inject constructor(
             if (response.isSuccessful && body != null) {
                 val returnCode = body.returnCode
                 if (returnCode == RESPONSE_CODE_SUCCESS) {
-                    Result.Success(body)
+                    Result.success(body)
                 } else {
                     Logger.i("Api Issue getSuggestBook : $returnCode")
-                    Result.Error(returnCode)
+                    Result.failure(Exception(returnCode))
                 }
             } else {
                 // 응답 코드가 [200..300)에 포함되지 않는 경우
                 val responseCode = response.code()
                 Logger.i("Network Issue : $responseCode")
-                Result.Error(responseCode.toString())
+                Result.failure(Exception(responseCode.toString()))
             }
         } catch (e: Exception) {
-            Result.Error(e.toString())
+            Result.failure(e)
         }
     }
-
 }

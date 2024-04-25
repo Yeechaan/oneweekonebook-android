@@ -15,11 +15,13 @@ import com.lee.oneweekonebook.R
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.databinding.FragmentHomeBinding
+import com.lee.oneweekonebook.mapper.BookDomain
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HISTORY
 import com.lee.oneweekonebook.ui.BOTTOM_MENU_HOME
 import com.lee.oneweekonebook.ui.MainActivity
 import com.lee.oneweekonebook.ui.home.model.categoryBooks
 import com.lee.oneweekonebook.ui.home.viewmodel.HomeViewModel
+import com.lee.oneweekonebook.ui.search.model.BookInfo
 import com.lee.oneweekonebook.utils.addPreview
 import com.lee.oneweekonebook.utils.isNetworkConnected
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,7 +76,7 @@ class HomeFragment : Fragment() {
             recyclerViewReadingBook.adapter = readingBookAdapter
             homeViewModel.books.observe(viewLifecycleOwner) {
                 if (it.isEmpty()) {
-                    readingBookAdapter.submitList(listOf(Book(type = BOOK_TYPE_UNKNOWN)))
+                    readingBookAdapter.submitList(listOf(BookDomain(type = BOOK_TYPE_UNKNOWN)))
                 } else {
                     readingBookAdapter.submitList(it)
                 }
