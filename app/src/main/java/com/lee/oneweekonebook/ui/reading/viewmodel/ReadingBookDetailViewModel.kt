@@ -36,9 +36,10 @@ class ReadingBookDetailViewModel @Inject constructor(
     val review = savedStateHandle.getLiveData<String>("review")
 
     fun saveBook(type: @BookType Int) {
-        book.value?.let { it ->
+        book.value?.let {
             it.contents = savedContents ?: ""
             it.review = savedReview ?: ""
+            it.type = type
 
             when (type) {
                 BOOK_TYPE_READING -> {

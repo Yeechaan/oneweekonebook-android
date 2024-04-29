@@ -63,9 +63,6 @@ class BookDetailViewModel @Inject constructor(
 
             val bookInfo = _uiState.value.bookInfo ?: BookInfo()
 
-            println("###")
-            println("$bookInfo")
-
             val isSameBookSaved = bookRepository.isSameBookSaved(bookInfo.isbn)
             if (isSameBookSaved) {
                 _uiState.update { it.copy(savedBookType = null, errorMessage = "독서내역에 추가된 책 입니다!", loading = false) }

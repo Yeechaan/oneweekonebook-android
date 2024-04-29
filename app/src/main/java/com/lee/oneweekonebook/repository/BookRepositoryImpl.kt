@@ -59,10 +59,6 @@ class BookRepositoryImpl @Inject constructor(
 
     override suspend fun saveBook(bookInfo: BookInfo) {
         val book = bookInfo.asBook()
-
-        println("###")
-        println("$book")
-
         bookLocalDataSource.insertBook(book)
     }
 

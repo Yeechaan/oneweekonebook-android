@@ -3,6 +3,7 @@ package com.lee.oneweekonebook.ui.search.model
 import android.text.Html
 import androidx.annotation.Keep
 import com.lee.oneweekonebook.database.model.BOOK_TYPE_UNKNOWN
+import com.lee.oneweekonebook.database.model.BOOK_TYPE_WISH
 import com.lee.oneweekonebook.database.model.Book
 import com.lee.oneweekonebook.utils.convertDateToString
 import com.lee.oneweekonebook.utils.convertStringToDate
@@ -52,30 +53,25 @@ fun Item.asBook() = run {
 
 fun BookInfo.asBook() = run {
     Book(
-        title = Html.fromHtml(title, Html.FROM_HTML_MODE_LEGACY).toString(),
-        writer = Html.fromHtml(writer, Html.FROM_HTML_MODE_LEGACY).toString(),
-        publisher = Html.fromHtml(publisher, Html.FROM_HTML_MODE_LEGACY).toString(),
+        title = title,
+        writer = writer,
+        publisher = publisher,
         coverImage = coverImage,
-        pubDate = Html.fromHtml(pubDate, Html.FROM_HTML_MODE_LEGACY).toString(),
+        pubDate = pubDate,
+        type = BOOK_TYPE_WISH,
         isbn = isbn
     )
 }
 
 fun BookInfo.asData() = run {
     Book(
-        id = 0,
-        title = "",
-        writer = "",
-        publisher = "",
-        pubDate = "",
-        coverImage = "",
-        subTitle = "",
-        page = "",
-        contents = "",
-        review = "",
-        startDate = 0,
-        endDate = 0,
-        type = 0,
-        isbn = ""
+        id = id,
+        title = title,
+        writer = writer,
+        publisher = publisher,
+        pubDate = pubDate,
+        coverImage = coverImage,
+        type = type,
+        isbn = isbn
     )
 }

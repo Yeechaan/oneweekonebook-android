@@ -8,6 +8,9 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lee.oneweekonebook.R
@@ -20,18 +23,36 @@ import com.lee.oneweekonebook.ui.history.HistoryFragmentDirections
 import com.lee.oneweekonebook.ui.wish.viewmodel.WishBookViewModel
 import com.lee.oneweekonebook.utils.ConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WishBookFragment : Fragment() {
 
+    private var _binding: FragmentWishBookBinding? = null
+    private val binding get() = _binding!!
+
     private val wishBookViewModel by viewModels<WishBookViewModel>()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        val binding = FragmentWishBookBinding.inflate(inflater, container, false).apply {
+        _binding = FragmentWishBookBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        wishBookViewModel.loadBooks()
+
+        binding.apply {
             lifecycleOwner = this@WishBookFragment
             viewModel = wishBookViewModel
 
@@ -69,13 +90,16 @@ class WishBookFragment : Fragment() {
                 )
             }
 
-            wishBookViewModel.books.observe(viewLifecycleOwner) {
-                (recyclerViewWishBook.adapter as BookAdapter).submitList(it)
+            lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    wishBookViewModel.uiState.collectLatest { uiState ->
+                        uiState.books?.let {
+                            (recyclerViewWishBook.adapter as BookAdapter).submitList(it)
+                        }
+                    }
+                }
             }
-
         }
-
-        return binding.root
     }
 
     private fun setPopupBookSelection(popupMenu: PopupMenu, bookId: Int) {
@@ -89,6 +113,7 @@ class WishBookFragment : Fragment() {
                         )
                     )
                 }
+
                 R.id.menu_delete -> {
                     ConfirmDialog(
                         description = getString(R.string.dialog_book_delete_description),
